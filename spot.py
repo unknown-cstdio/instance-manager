@@ -4,12 +4,28 @@ import pandas as pd
 import numpy as np
 import datetime
 import urllib.request, json 
+import requests
+import adal
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import List, Dict
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
 
 ec2 = boto3.client('ec2')
 ce = boto3.client('ce')
+
+def get_azure_token():
+    tenant = "baf0d65c-c774-4040-a1a6-0ff03fd61dd6"
+    client_id = "b1ccd7c7-3a4f-442b-a7cd-a32d230c9027"
+    secret = "7ah8Q~noLahye3SSl~HjLVpo.DdojpGe2Sl36dll"
+    authority_url = 'https://login.microsoftonline.com/'+tenant
+    context = adal.AuthenticationContext(authority_url)
+    token = context.acquire_token_with_client_credentials(
+        resource = 'https://management.azure.com/',
+        client_id = client_id,
+        client_secret = secret
+    )
+    return token['accessToken']
 
 def get_instance_type(types):
     response = ec2.describe_instance_types(
@@ -54,7 +70,33 @@ def update_spot_prices():
     df.to_csv('spot_prices.csv')
     return df
 
-def update_azure_prices():
+def update_azure_vm_sizes():
+    token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjVCM25SeHRRN2ppOGVORGMzRnkwNUtmOTdaRSIsImtpZCI6IjVCM25SeHRRN2ppOGVORGMzRnkwNUtmOTdaRSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0L2JhZjBkNjVjLWM3NzQtNDA0MC1hMWE2LTBmZjAzZmQ2MWRkNi8iLCJpYXQiOjE3MDUwMDUwMDEsIm5iZiI6MTcwNTAwNTAwMSwiZXhwIjoxNzA1MDA5MjM4LCJhY3IiOiIxIiwiYWlvIjoiQVdRQW0vOFZBQUFBQyt5bVpJdTNxdU01TUk5V3c4ZnlrODcrQ3JaY2duTG1FV0JZUUVRRkczR3NCWUROSEZ0S3BuSDhJcWlEbWVYUC9WRGF4VnVWdkIwOTV0VVpBdDVzYmE1NzJYSkE0UFJ3bElXeFByTHZUVjRPQk9aMWZFMHZSWlVxdk84dnZ6NDkiLCJhbXIiOlsicHdkIl0sImFwcGlkIjoiMThmYmNhMTYtMjIyNC00NWY2LTg1YjAtZjdiZjJiMzliM2YzIiwiYXBwaWRhY3IiOiIwIiwiZmFtaWx5X25hbWUiOiJQZWkiLCJnaXZlbl9uYW1lIjoiSmlueXUiLCJncm91cHMiOlsiYmVjZWJlNTUtOTBhZi00ZjAzLWFiNjUtYjE3ZGYyMDVjOGRjIiwiMGY5OTJkN2UtMDMxYS00M2Y0LWJjZmQtMmU0YzMwMzY5YWMwIiwiMmU3ZGZjZjQtNzBlOC00MGQxLWJkNjktNDMyMjJlYjgwOGEyIl0sImlkdHlwIjoidXNlciIsImlwYWRkciI6IjE2OC41LjE4NS4yNiIsIm5hbWUiOiJKaW55dSBQZWkiLCJvaWQiOiJhZmQ2YjA1Zi1jYzA2LTQzZmUtOGVjMy1hZTkwMWUwNGFjMDciLCJvbnByZW1fc2lkIjoiUy0xLTUtMjEtMzk4MTcxODI5Mi0zMTQ3MDE3NDM3LTI0NTU3MjQyOTctMjU2OTMxIiwicHVpZCI6IjEwMDMyMDAwRDY4QjkzREEiLCJyaCI6IjAuQVZrQVhOYnd1blRIUUVDaHBnX3dQOVlkMWtaSWYza0F1dGRQdWtQYXdmajJNQk5aQVBFLiIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInN1YiI6ImZwSU1zUGo2TGpxMHhOQ1FVTEM3NzlnVy1GQ3poWDV0Rk9hTTZzOVA2WTgiLCJ0aWQiOiJiYWYwZDY1Yy1jNzc0LTQwNDAtYTFhNi0wZmYwM2ZkNjFkZDYiLCJ1bmlxdWVfbmFtZSI6ImpwOTVAcmljZS5lZHUiLCJ1cG4iOiJqcDk1QHJpY2UuZWR1IiwidXRpIjoiUnVyNllqQ3lyVTJFV1Q0RmFMby1BQSIsInZlciI6IjEuMCIsIndpZHMiOlsiYjc5ZmJmNGQtM2VmOS00Njg5LTgxNDMtNzZiMTk0ZTg1NTA5Il0sInhtc19jYWUiOiIxIiwieG1zX3RjZHQiOjE1OTQ5MTg2MzF9.0-p5FaqFZQJ3UmB6Hg6UwQEGFm6-3p_bFRTt5OaBtJTqZjYefUjOpUyPAIXMVaPm-f8euCgx1JMv4zgwp63spcgFG370nUYmzfBWX_dCSaoWI2fCdRbxW3Z9qEEEo1sJIQ08HR7WORdWQcreWuOdZmGoRhwU_P78SdTW90-hnqIRQvggGN7_WGcN1_HxIcyrsa09v5pIXrad_noJsmCiwUvRmXBq2PFi5IbHs2vn5qbOEE_9d2xpK_cO48YtuctTmYPe5D1ATEzIR3ENNaNpH5EimvhOsCWHdmGsZ4DBZHoGBStQZBiAl_YmJ5vD9F-e_gcIGnw083Qy5xkdAfC3vw"
+    url = "https://management.azure.com/subscriptions/0e51cc83-16a9-4ea1-b6f9-ba23ddfcc8bf/providers/Microsoft.Compute/skus?api-version=2021-07-01&$filter=location eq 'eastus'"
+    headers = {
+        "Authorization": "Bearer " + token
+    }
+    max_nic = {}
+    next_page_link = url
+    while next_page_link != None:
+        response = requests.get(next_page_link, headers=headers)
+        data = response.json()
+        for item in data['value']:
+            if "capabilities" in item.keys():
+                capabilities = item['capabilities']
+                for c_item in capabilities:
+                    if c_item['name'] == 'MaxNetworkInterfaces':
+                        max_nic[item['name']] = c_item['value']
+        next_page_link = None
+    #write to csv
+    df = pd.DataFrame(max_nic.items(), columns=['InstanceType', 'MaximumNetworkInterfaces'])
+    df.to_csv('azure_vm_sizes.csv')
+
+
+def update_azure_prices(update_nic=False):
+    if update_nic:
+        update_azure_vm_sizes()
+    nic_info = pd.read_csv('azure_vm_sizes.csv')
     next_page_link = "https://prices.azure.com/api/retail/prices?$skip=0&$filter=serviceName%20eq%20%27Virtual%20Machines%27%20and%20priceType%20eq%20%27Consumption%27%20and%20armRegionName%20eq%20%27eastus%27"
     spot_prices: List[Dict[str, str]] = []
     while next_page_link != None:
@@ -62,19 +104,42 @@ def update_azure_prices():
             data = json.loads(url.read().decode())
             for item in data['Items']:
                 if 'Spot' in item['skuName']:
-                    spot_prices.append({
-                        'AvailabilityZone': item['location'],
-                        'InstanceType': item['skuName'],
-                        'MaximumNetworkInterfaces': 1,
-                        'SpotPrice': item['retailPrice'],
-                        'PricePerInterface': item['retailPrice'],
-                        'Timestamp': item['effectiveStartDate']  
-                    })
+                    instance_type_name = item['skuName'].split('Spot')[0].strip()
+                    if instance_type_name in nic_info['InstanceType'].values:
+                        nic = nic_info.loc[nic_info['InstanceType'] == instance_type_name]['MaximumNetworkInterfaces'].values[0]
+                        spot_prices.append({
+                            'AvailabilityZone': item['location'],
+                            'InstanceType': item['skuName'],
+                            'MaximumNetworkInterfaces': nic,
+                            'SpotPrice': item['retailPrice'],
+                            'PricePerInterface': item['retailPrice'] / nic + nic * 0.005,
+                            'Timestamp': item['effectiveStartDate']  
+                        })
+                    else:
+                        spot_prices.append({
+                            'AvailabilityZone': item['location'],
+                            'InstanceType': item['skuName'],
+                            'MaximumNetworkInterfaces': 1,
+                            'SpotPrice': item['retailPrice'],
+                            'PricePerInterface': item['retailPrice'],
+                            'Timestamp': item['effectiveStartDate']  
+                        })
             next_page_link = data['NextPageLink']
     df = pd.DataFrame(spot_prices)
     #write to csv
     df.to_csv('azure_spot_prices.csv')
     return df
+
+def merge_spot_prices():
+    aws_spot_prices = pd.read_csv('spot_prices.csv')
+    azure_spot_prices = pd.read_csv('azure_spot_prices.csv')
+    aws_spot_prices['Provider'] = 'AWS'
+    azure_spot_prices['Provider'] = 'Azure'
+    spot_prices = pd.concat([aws_spot_prices, azure_spot_prices])
+    spot_prices['Timestamp'] = pd.to_datetime(spot_prices['Timestamp'])
+    spot_prices = spot_prices.sort_values(by=['Timestamp'])
+    spot_prices.to_csv('total_spot_prices.csv')
+    return spot_prices
 
 def get_spot_prices():
     df = pd.read_csv('spot_prices.csv')
@@ -115,6 +180,14 @@ def terminate_instances(instance_ids):
     return response
 
 def create_fleet(instance_type, region, launch_template, num):
+    instance_info = get_instance_type([instance_type])
+    arch = instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures'][0]
+    #x86: lt-04d9c8ac5d00a2078
+    #arm: lt-0abc44b6c12879596
+    if arch == 'arm64':
+        launch_template = 'lt-0abc44b6c12879596'
+    else:
+        launch_template = 'lt-04d9c8ac5d00a2078'
     response = ec2.create_fleet(
         SpotOptions={
             'AllocationStrategy': 'lowestPrice',
@@ -190,31 +263,29 @@ def disassociate_address(association_id):
     )
     return response
 
-update_azure_prices()
+class RequestHandler(BaseHTTPRequestHandler):
+    def _set_response(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
 
-#spot_prices = get_spot_prices()
+    def do_GET(self):
+        path = self.path.split('/')
+        match path:
+            case 'create':
+                create_fleet(path[2], path[3], path[4], path[5])
+                self._set_response()
 
-#sort by price
-#spot_prices = spot_prices.sort_values(by=['PricePerInterface'])
+def run():
+    server_address = ('', 8000)
+    httpd = HTTPServer(server_address, RequestHandler)
+    print('Starting server...')
+    httpd.serve_forever()
 
-# create the cheapest fleet
-#cheapest = spot_prices.iloc[0]
-#print(cheapest)
+if __name__ == '__main__':
+    merge_spot_prices()
 
-#cost = get_cost('2023-01-02', '2023-01-03')
-#print(cost)
-#print(get_instance_types(cheapest['InstanceType'])['InstanceTypes'][0]['NetworkInfo']['MaximumNetworkInterfaces'])
 
-#print(cheapest['InstanceType'])
-#print(x86_instance_types)
-#print(cheapest)
-
-#x86: lt-04d9c8ac5d00a2078
-#arm: lt-0abc44b6c12879596
-#response = create_fleet("t3a.medium", "us-east-1c", 'lt-04d9c8ac5d00a2078')
-#response = create_fleet("m6gd.medium", "us-east-1f", 'lt-0abc44b6c12879596')
-#print(response)
-#print('instances created')
 
 
 
