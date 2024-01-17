@@ -11,8 +11,6 @@ from typing import List, Dict
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
 
-ec2, ce = choose_session(is_UM_AWS=True) # Set this to false if you're not using UM AWS
-
 def choose_session(is_UM_AWS):
     if is_UM_AWS:
         my_session = boto3.session.Session(profile_name='spotproxy-pat-umich-role')
@@ -22,6 +20,8 @@ def choose_session(is_UM_AWS):
         ec2 = boto3.client('ec2')
         ce = boto3.client('ce')
     return ec2, ce
+
+ec2, ce = choose_session(is_UM_AWS=True) # Set this to false if you're not using UM AWS
 
 def get_azure_token():
     tenant = "baf0d65c-c774-4040-a1a6-0ff03fd61dd6"

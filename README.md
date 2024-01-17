@@ -24,6 +24,12 @@ sudo ./aws/install
 aws configure # use access key and secret access key provided by Patrick, which will be used as the default profile which is the pk37-admin IAM user
 ```
 
+### 2b. Install other required instance-manager dependencies
+```
+pip install pandas
+pip install adal
+```
+
 ### 3. Using AWS CLI, Access our UM AWS account, through your own AWS account:
 Add assume role credentials (Execute the following whenever you need to refresh your credentials, since these will timeout quite often)
 ```
@@ -40,7 +46,7 @@ cd instance-manager
 python3 api.py 
 ```
 Some points to note:
-- No matter how the API is used, the "choose_session" function must have been run (line 14 currently)
+- No matter how the API is used, the "choose_session" function must have been run (line 24 currently)
 
 <!-- 1. Login as your IAM user. Create an AWS role with the following instructions: 
 2. ```bash
