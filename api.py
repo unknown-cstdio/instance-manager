@@ -502,6 +502,7 @@ def run():
     httpd.serve_forever()
 
 # example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1a 2
+# explanation of above example: this creates 2 instances in the us-east-1a az, in the UM AWS account
 if __name__ == '__main__':
     account_type = sys.argv[1]
     region = sys.argv[2][:-1]
