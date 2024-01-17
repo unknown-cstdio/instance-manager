@@ -8,6 +8,7 @@ import requests
 import adal
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import List, Dict
+import sys
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
 
@@ -469,11 +470,12 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = self.path.split('/')
-        match path:
-            case 'create':
-                launch_template = use_jinyu_launch_templates(path[2])
-                create_fleet(path[2], path[3], launch_template, path[5])
+        match path[0]:
+            case 'getNum':
+                instances = get_all_instances()
+                num = len(instances)
                 self._set_response()
+                self.wfile.write(str(num).encode('utf-8'))
 
 def run():
     server_address = ('', 8000)
@@ -481,8 +483,25 @@ def run():
     print('Starting server...')
     httpd.serve_forever()
 
+#example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1 2
 if __name__ == '__main__':
-    merge_spot_prices()
+    account_type = sys.argv[1]
+    region = sys.argv[2]
+    num = int(sys.argv[3])
+    if account_type == 'UM':
+        ec2, ce = choose_session(is_UM_AWS=True, region=region)
+    else:
+        ec2, ce = choose_session(is_UM_AWS=False, region=region)
+    instances = get_all_instances()
+    #clean up instances
+    for instance in instances:
+        response = terminate_instances([instance])
+    prices = update_spot_prices()
+    prices.sort_values(by=['SpotPrice'])
+    instance_type = prices.iloc[0]['InstanceType']
+    launch_template = use_jinyu_launch_templates(instance_type)
+    create_fleet(instance_type, region, launch_template, num)
+    run()
 
     # Some example usage from Patrick:
     """
