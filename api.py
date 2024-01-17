@@ -8,7 +8,8 @@ from typing import List, Dict
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
 
-ec2 = boto3.client('ec2')
+my_session = boto3.session.Session(profile_name='spotproxy-pat-umich-role')
+ec2 = my_session.client('ec2')
 ce = boto3.client('ce')
 
 def get_instance_type(types):
@@ -82,13 +83,32 @@ def get_spot_prices():
 
 def get_all_instances():
     response = ec2.describe_instances()
-    return response
+    # response['Reservations'][0]['Instances'][0]['InstanceId']
+    instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
+    return instance_ids
 
 def get_specific_instances(instance_ids):
     response = ec2.describe_instances(
         InstanceIds=instance_ids
     )
     return response
+
+def get_specific_instances_with_fleet_id_tag(fleet_id):
+    """
+        tag:<key> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key Owner and the value TeamA, specify tag:Owner for the filter name and TeamA for the filter value.
+    """
+    response = ec2.describe_instances(
+        Filters=[
+            {
+                'Name': 'tag:aws:ec2:fleet-id',
+                'Values': [
+                    fleet_id
+                ]
+            }
+        ]
+    )
+    instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
+    return instance_ids
 
 def start_instances(instance_ids):
     response = ec2.start_instances(
@@ -114,7 +134,164 @@ def terminate_instances(instance_ids):
     )
     return response
 
-def create_fleet(instance_type, region, launch_template, num):
+def create_fleet2(instance_type, region, launch_template, num):
+
+    response = ec2.create_fleet(
+        # DryRun=True|False,
+        # ClientToken='string',
+        SpotOptions={
+            'AllocationStrategy': 'lowest-price',
+            # 'MaintenanceStrategies': {
+            #     'CapacityRebalance': {
+            #         'ReplacementStrategy': 'launch'|'launch-before-terminate',
+            #         'TerminationDelay': 123
+            #     }
+            # },
+            # 'InstanceInterruptionBehavior': 'stop',
+            # 'InstancePoolsToUseCount': 123,
+            # 'SingleInstanceType': True|False,
+            # 'SingleAvailabilityZone': True|False,
+            # 'MinTargetCapacity': 123,
+            # 'MaxTotalPrice': 'string'
+        },
+        # OnDemandOptions={
+        #     'AllocationStrategy': 'lowest-price',
+        #     # 'CapacityReservationOptions': {
+        #     #     'UsageStrategy': 'use-capacity-reservations-first'
+        #     # },
+        #     # 'SingleInstanceType': True|False,
+        #     # 'SingleAvailabilityZone': True|False,
+        #     # 'MinTargetCapacity': 123,
+        #     # 'MaxTotalPrice': 'string'
+        # },
+        # ExcessCapacityTerminationPolicy='no-termination'|'termination',
+        LaunchTemplateConfigs=[
+            {
+                'LaunchTemplateSpecification': {
+                    'LaunchTemplateId': 'lt-07c37429821503fca',
+                    # 'LaunchTemplateName': 'string',
+                    'Version': '1'
+                },
+                'Overrides': [
+                    {
+                        # 'InstanceType': 'a1.medium',
+                        # 'MaxPrice': 'string',
+                        # 'SubnetId': 'subnet-0925791c09f3d6792',
+                        # 'AvailabilityZone': 'us-east-1e',
+                        # 'WeightedCapacity': 123.0,
+                        # 'Priority': 123.0,
+                        # 'Placement': {
+                        #     'AvailabilityZone': 'string',
+                        #     'Affinity': 'string',
+                        #     'GroupName': 'string',
+                        #     'PartitionNumber': 123,
+                        #     'HostId': 'string',
+                        #     'Tenancy': 'default'|'dedicated'|'host',
+                        #     'SpreadDomain': 'string',
+                        #     'HostResourceGroupArn': 'string',
+                        #     'GroupId': 'string'
+                        # },
+                        'InstanceRequirements': {
+                            'VCpuCount': {
+                                'Min': 1,
+                                'Max': 10
+                            },
+                            'MemoryMiB': {
+                                'Min': 2,
+                                'Max': 10
+                            },
+                            # 'CpuManufacturers': [
+                            #     'intel'|'amd'|'amazon-web-services',
+                            # ],
+                            # 'MemoryGiBPerVCpu': {
+                            #     'Min': 123.0,
+                            #     'Max': 123.0
+                            # },
+                            # 'ExcludedInstanceTypes': [
+                            #     'string',
+                            # ],
+                            # 'InstanceGenerations': [
+                            #     'current'|'previous',
+                            # ],
+                            # 'SpotMaxPricePercentageOverLowestPrice': 123,
+                            # 'OnDemandMaxPricePercentageOverLowestPrice': 123,
+                            # 'BareMetal': 'included'|'required'|'excluded',
+                            # 'BurstablePerformance': 'included'|'required'|'excluded',
+                            # 'RequireHibernateSupport': True|False,
+                            # 'NetworkInterfaceCount': {
+                            #     'Min': 123,
+                            #     'Max': 123
+                            # },
+                            # 'LocalStorage': 'included'|'required'|'excluded',
+                            # 'LocalStorageTypes': [
+                            #     'hdd'|'ssd',
+                            # # ],
+                            # 'TotalLocalStorageGB': {
+                            #     'Min': 123.0,
+                            #     'Max': 123.0
+                            # },
+                            # 'BaselineEbsBandwidthMbps': {
+                            #     'Min': 123,
+                            #     'Max': 123
+                            # },
+                            # 'AcceleratorTypes': [
+                            #     'gpu'|'fpga'|'inference',
+                            # ],
+                            # 'AcceleratorCount': {
+                            #     'Min': 123,
+                            #     'Max': 123
+                            # },
+                            # 'AcceleratorManufacturers': [
+                            #     'amazon-web-services'|'amd'|'nvidia'|'xilinx'|'habana',
+                            # ],
+                            # 'AcceleratorNames': [
+                            #     'a100'|'inferentia'|'k520'|'k80'|'m60'|'radeon-pro-v520'|'t4'|'vu9p'|'v100'|'a10g'|'h100'|'t4g',
+                            # ],
+                            # 'AcceleratorTotalMemoryMiB': {
+                            #     'Min': 123,
+                            #     'Max': 123
+                            # },
+                            # 'NetworkBandwidthGbps': {
+                            #     'Min': 123.0,
+                            #     'Max': 123.0
+                            # },
+                            # 'AllowedInstanceTypes': [
+                            #     'string',
+                            # ]
+                        },
+                        # 'ImageId': 'string'
+                    },
+                ]
+            },
+        ],
+        TargetCapacitySpecification={
+            'TotalTargetCapacity': 2,
+            'OnDemandTargetCapacity': 0,
+            'SpotTargetCapacity': 2,
+            'DefaultTargetCapacityType': 'spot',
+            # 'TargetCapacityUnitType': 'vcpu'|'memory-mib'|'units'
+        },
+        # TerminateInstancesWithExpiration=True|False,
+        Type='request',
+        # ValidFrom=datetime(2015, 1, 1),
+        # ValidUntil=datetime(2015, 1, 1),
+        # ReplaceUnhealthyInstances=True|False,
+        # TagSpecifications=[
+        #     {
+        #         'ResourceType': 'capacity-reservation'|'client-vpn-endpoint'|'customer-gateway'|'carrier-gateway'|'coip-pool'|'dedicated-host'|'dhcp-options'|'egress-only-internet-gateway'|'elastic-ip'|'elastic-gpu'|'export-image-task'|'export-instance-task'|'fleet'|'fpga-image'|'host-reservation'|'image'|'import-image-task'|'import-snapshot-task'|'instance'|'instance-event-window'|'internet-gateway'|'ipam'|'ipam-pool'|'ipam-scope'|'ipv4pool-ec2'|'ipv6pool-ec2'|'key-pair'|'launch-template'|'local-gateway'|'local-gateway-route-table'|'local-gateway-virtual-interface'|'local-gateway-virtual-interface-group'|'local-gateway-route-table-vpc-association'|'local-gateway-route-table-virtual-interface-group-association'|'natgateway'|'network-acl'|'network-interface'|'network-insights-analysis'|'network-insights-path'|'network-insights-access-scope'|'network-insights-access-scope-analysis'|'placement-group'|'prefix-list'|'replace-root-volume-task'|'reserved-instances'|'route-table'|'security-group'|'security-group-rule'|'snapshot'|'spot-fleet-request'|'spot-instances-request'|'subnet'|'subnet-cidr-reservation'|'traffic-mirror-filter'|'traffic-mirror-session'|'traffic-mirror-target'|'transit-gateway'|'transit-gateway-attachment'|'transit-gateway-connect-peer'|'transit-gateway-multicast-domain'|'transit-gateway-policy-table'|'transit-gateway-route-table'|'transit-gateway-route-table-announcement'|'volume'|'vpc'|'vpc-endpoint'|'vpc-endpoint-connection'|'vpc-endpoint-service'|'vpc-endpoint-service-permission'|'vpc-peering-connection'|'vpn-connection'|'vpn-gateway'|'vpc-flow-log'|'capacity-reservation-fleet'|'traffic-mirror-filter-rule'|'vpc-endpoint-connection-device-type'|'verified-access-instance'|'verified-access-group'|'verified-access-endpoint'|'verified-access-policy'|'verified-access-trust-provider'|'vpn-connection-device-type'|'vpc-block-public-access-exclusion'|'ipam-resource-discovery'|'ipam-resource-discovery-association'|'instance-connect-endpoint',
+        #         'Tags': [
+        #             {
+        #                 'Key': 'string',
+        #                 'Value': 'string'
+        #             },
+        #         ]
+        #     },
+        # ],
+        # Context='string'
+    )
+    return response
+
+def create_fleet3(instance_type, region, launch_template, num):
     response = ec2.create_fleet(
         SpotOptions={
             'AllocationStrategy': 'lowestPrice',
@@ -140,6 +317,16 @@ def create_fleet(instance_type, region, launch_template, num):
             'DefaultTargetCapacityType': 'spot'
         },
         Type='request',
+        # TagSpecifications=[
+        #     {
+        #         'Tags': [
+        #             {
+        #                 'Key': 'fleet-id',
+        #                 'Value': fleet_id_tag # this is a string
+        #             },
+        #         ]
+        #     },
+        # ],
     )
     return response
 
@@ -211,11 +398,14 @@ update_azure_prices()
 
 #x86: lt-04d9c8ac5d00a2078
 #arm: lt-0abc44b6c12879596
-#response = create_fleet("t3a.medium", "us-east-1c", 'lt-04d9c8ac5d00a2078')
-#response = create_fleet("m6gd.medium", "us-east-1f", 'lt-0abc44b6c12879596')
-#print(response)
+# response = create_fleet("t3a.medium", "us-east-1c", 'lt-04d9c8ac5d00a2078', 2)
+# response = create_fleet("m6gd.medium", "us-east-1f", 'lt-0abc44b6c12879596', 2)
+# response = get_all_instances()
+response = create_fleet("t2.micro", "us-east-1c", 'lt-07c37429821503fca', 2) # verified working
+# response = create_fleet2("t2.micro", "us-east-1c", 'lt-07c37429821503fca', 2) # not working yet
+instance_ids = get_specific_instances_with_fleet_id_tag('fleet-4da19c85-1000-4883-a480-c0b7a34b444b')
+print(instance_ids)
+# for i in instance_ids:
+#     response = terminate_instances([i])
+#     print(response)
 #print('instances created')
-
-
-
-
