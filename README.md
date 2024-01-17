@@ -1,4 +1,6 @@
 ## Setup procedures:
+NOTE: steps 1 to 2b are for first-time instance-manager setups. 
+NOTE: steps 3 and 4 are for regular usage. 
 
 ### 1. Create an AWS IAM user through your own AWS account:
 1. Create an IAM user through AWS IAM (while you are logged in as your root account). See image below details of an example IAM user (pk37-admin) configuration:  

@@ -11,17 +11,17 @@ from typing import List, Dict
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
 
-def choose_session(is_UM_AWS):
+def choose_session(is_UM_AWS, region):
     if is_UM_AWS:
         my_session = boto3.session.Session(profile_name='spotproxy-pat-umich-role')
-        ec2 = my_session.client('ec2')
+        ec2 = my_session.client('ec2', region)
         ce = my_session.client('ce')
     else:
-        ec2 = boto3.client('ec2')
+        ec2 = boto3.client('ec2', region)
         ce = boto3.client('ce')
     return ec2, ce
 
-ec2, ce = choose_session(is_UM_AWS=True) # Set this to false if you're not using UM AWS
+ec2, ce = choose_session(is_UM_AWS=True, region=US_REGIONS[0]) # Set this to false if you're not using UM AWS
 
 def get_azure_token():
     tenant = "baf0d65c-c774-4040-a1a6-0ff03fd61dd6"
@@ -484,24 +484,23 @@ def run():
 if __name__ == '__main__':
     merge_spot_prices()
 
+    # Some example usage from Patrick:
+    """
+    response = get_all_instances()
 
-# Some example usage:
-"""
-response = get_all_instances()
+    # Create two instances: 
+    UM_launch_template_id = "lt-07c37429821503fca"
+    response = create_fleet("t2.micro", "us-east-1c", UM_launch_template_id, 2) # verified working (USE THIS)
 
-# Create two instances: 
-UM_launch_template_id = "lt-07c37429821503fca"
-response = create_fleet("t2.micro", "us-east-1c", UM_launch_template_id, 2) # verified working (USE THIS)
+    response = create_fleet2("t2.micro", "us-east-1c", UM_launch_template_id, 2) # not working yet
 
-response = create_fleet2("t2.micro", "us-east-1c", UM_launch_template_id, 2) # not working yet
-
-print(response)
-
-# Delete instances using the fleet-id key returned from the response above:
-
-instance_ids = get_specific_instances_with_fleet_id_tag('fleet-4da19c85-1000-4883-a480-c0b7a34b444b')
-print(instance_ids)
-for i in instance_ids:
-    response = terminate_instances([i])
     print(response)
-"""
+
+    # Delete instances using the fleet-id key returned from the response above:
+
+    instance_ids = get_specific_instances_with_fleet_id_tag('fleet-4da19c85-1000-4883-a480-c0b7a34b444b')
+    print(instance_ids)
+    for i in instance_ids:
+        response = terminate_instances([i])
+        print(response)
+    """
