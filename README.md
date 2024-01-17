@@ -11,8 +11,8 @@ role: <to-be-provided-by-patrick>
 ```
 
 ### 2. Install and configure boto3 and AWS CLI with your own AWS account:
-Follow the "Installation" and "Configuration" instructions in: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#installation 
 ```
+git clone https://github.com/unknown-cstdio/instance-manager.git
 (Specific instructions assuming the following AMI: ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20231207)
 sudo apt-get update
 sudo apt install python3-pip
@@ -21,7 +21,10 @@ sudo apt install unzip
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
-aws configure
+aws configure # use access key and secret access key provided by Patrick, which will be used as the default profile which is the pk37-admin IAM user
+# Add assume role credentials (Execute the following whenever you need to refresh your credentials)
+cd instance-manager
+python3 misc/refresh-credentials.py
 ```
 
 
