@@ -1,0 +1,34 @@
+## Setup procedures:
+
+### 1. Create an AWS IAM user through your own AWS account:
+1. Create an IAM user through AWS IAM (while you are logged in as your root account). See image below details of an example IAM user (pk37-admin) configuration:  
+![Example IAM user configuration](misc/example_iam_user.png "Example IAM user configuration")
+2. Send Patrick your AWS account ID (top right hand corner) so that he can create an AWS role on the UM AWS account for you. 
+2. Test out assume role (switching to our UM AWS account): login to that IAM user, and you should be able to “switch roles” from that account (to switch roles, press the top right button and you will see switch roles button in the menu). Once on the switch roles menu, enter these details:
+```
+accountID: <UM-AWS-account-ID-to-be-provided-by-patrick>
+role: <to-be-provided-by-patrick>
+```
+
+### 2. Install and configure boto3 and AWS CLI with your own AWS account:
+Follow the "Installation" and "Configuration" instructions in: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#installation 
+```
+(Specific instructions assuming the following AMI: ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20231207)
+sudo apt-get update
+sudo apt install python3-pip
+pip install boto3
+sudo apt install unzip
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws configure
+```
+
+
+### 3. Setting up AWS CLI to access our UM AWS account, through your own AWS account:
+1. Login as your IAM user. Create an AWS role with the following instructions: 
+2. ```bash
+aws sts assume-role --role-arn arn:aws:iam::590184057477:role/spotproxy-pat-umich --role-session-name "SpotProxyPatRoleSession1" --profile "default" > assume-role-output.txt
+```
+
+3. Copy the output of assume-role-output.txt into ~/.aws/credentials
