@@ -12,6 +12,7 @@ import sys
 from collections import defaultdict 
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
+INSTANCE_MANAGER_INSTANCE_ID = "i-035f88ca820e399e7"
 
 def choose_session(is_UM_AWS, region):
     if is_UM_AWS:
@@ -168,7 +169,8 @@ def get_all_instances_init_details():
     # response['Reservations'][0]['Instances'][0]['InstanceId']
     instances_details = defaultdict(dict)
     for instance in response['Reservations'][0]['Instances']:
-        instances_details[instance['InstanceId']] = {"PublicIpAddress": instance['PublicIpAddress']}
+        if instance['InstanceId'] != INSTANCE_MANAGER_INSTANCE_ID: # no need to include instance manager since we will not assign clients to it anyway..
+            instances_details[instance['InstanceId']] = {"PublicIpAddress": instance['PublicIpAddress']}
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instances_details
 
@@ -499,7 +501,7 @@ def run():
     print('Starting server...')
     httpd.serve_forever()
 
-#example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1a 2
+# example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1a 2
 if __name__ == '__main__':
     account_type = sys.argv[1]
     region = sys.argv[2][:-1]
@@ -519,7 +521,7 @@ if __name__ == '__main__':
         instances = get_all_instances()
         #clean up existing instances. (This is dangerous for UM, because our instance-manager or controllers will be deleted too!)
         for instance in instances:
-            if instance != "i-035f88ca820e399e7": # do not delete our UM instance-manager/controller
+            if instance != "INSTANCE_MANAGER_INSTANCE_ID": # do not delete our UM instance-manager/controller
                 response = terminate_instances([instance])
         launch_template = use_jinyu_launch_templates(instance_type)
     
