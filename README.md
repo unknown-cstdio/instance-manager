@@ -22,16 +22,29 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 sudo ./aws/install
 aws configure # use access key and secret access key provided by Patrick, which will be used as the default profile which is the pk37-admin IAM user
-# Add assume role credentials (Execute the following whenever you need to refresh your credentials)
+```
+
+### 3. Using AWS CLI, Access our UM AWS account, through your own AWS account:
+Add assume role credentials (Execute the following whenever you need to refresh your credentials, since these will timeout quite often)
+```
 cd instance-manager
 python3 misc/refresh-credentials.py
 ```
 
+### 4. Start using the instance-manager API:
+Still a work in progress.
+```
+cd instance-manager
 
-### 3. Setting up AWS CLI to access our UM AWS account, through your own AWS account:
-1. Login as your IAM user. Create an AWS role with the following instructions: 
+# Refer to example usage at the bottom of api.py 
+python3 api.py 
+```
+Some points to note:
+- No matter how the API is used, the "choose_session" function must have been run (line 14 currently)
+
+<!-- 1. Login as your IAM user. Create an AWS role with the following instructions: 
 2. ```bash
 aws sts assume-role --role-arn arn:aws:iam::590184057477:role/spotproxy-pat-umich --role-session-name "SpotProxyPatRoleSession1" --profile "default" > assume-role-output.txt
 ```
 
-3. Copy the output of assume-role-output.txt into ~/.aws/credentials
+3. Copy the output of assume-role-output.txt into ~/.aws/credentials -->
