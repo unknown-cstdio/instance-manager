@@ -9,6 +9,7 @@ import adal
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import List, Dict
 import sys
+from collections import defaultdict 
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
 
@@ -158,8 +159,18 @@ def get_spot_prices():
 def get_all_instances():
     response = ec2.describe_instances()
     # response['Reservations'][0]['Instances'][0]['InstanceId']
+    # print(response)
     instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instance_ids
+
+def get_all_instances_init_details():
+    response = ec2.describe_instances()
+    # response['Reservations'][0]['Instances'][0]['InstanceId']
+    instances_details = defaultdict(dict)
+    for instance in response['Reservations'][0]['Instances']:
+        instances_details[instance['InstanceId']] = {"PublicIpAddress": instance['PublicIpAddress']}
+    # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
+    return instances_details
 
 def get_specific_instances(instance_ids):
     response = ec2.describe_instances(
@@ -469,13 +480,18 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        path = self.path.split('/')
+        path = self.path.split('/')[1:]
+        print(path)
         match path[0]:
             case 'getNum':
                 instances = get_all_instances()
                 num = len(instances)
                 self._set_response()
                 self.wfile.write(str(num).encode('utf-8'))
+            case "getInitDetails":
+                instances_details = get_all_instances_init_details()
+                self._set_response()
+                self.wfile.write(str(instances_details).encode('utf-8'))
 
 def run():
     server_address = ('', 8000)
@@ -483,24 +499,32 @@ def run():
     print('Starting server...')
     httpd.serve_forever()
 
-#example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1 2
+#example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1a 2
 if __name__ == '__main__':
     account_type = sys.argv[1]
-    region = sys.argv[2]
+    region = sys.argv[2][:-1]
     num = int(sys.argv[3])
-    if account_type == 'UM':
-        ec2, ce = choose_session(is_UM_AWS=True, region=region)
-    else:
-        ec2, ce = choose_session(is_UM_AWS=False, region=region)
-    instances = get_all_instances()
-    #clean up instances
-    for instance in instances:
-        response = terminate_instances([instance])
     prices = update_spot_prices()
     prices.sort_values(by=['SpotPrice'])
     instance_type = prices.iloc[0]['InstanceType']
-    launch_template = use_jinyu_launch_templates(instance_type)
-    create_fleet(instance_type, region, launch_template, num)
+    availability_zone = prices.iloc[0]['AvailabilityZone']
+    availability_zone = sys.argv[2] # not doing cheapest allocation yet, since we are overriding this with a user provided az (e.g., us-east-1a) instead
+    if account_type == 'UM':
+        ec2, ce = choose_session(is_UM_AWS=True, region=region)
+        launch_template_wireguard = "lt-077e7f82c173dd30a" # not working yet
+        launch_template_baseline_working = "lt-07c37429821503fca"
+        launch_template = launch_template_wireguard 
+    else: # Basically, Jinyu account for now:
+        ec2, ce = choose_session(is_UM_AWS=False, region=region)
+        instances = get_all_instances()
+        #clean up existing instances. (This is dangerous for UM, because our instance-manager or controllers will be deleted too!)
+        for instance in instances:
+            if instance != "i-035f88ca820e399e7": # do not delete our UM instance-manager/controller
+                response = terminate_instances([instance])
+        launch_template = use_jinyu_launch_templates(instance_type)
+    
+    response = create_fleet(instance_type, availability_zone, launch_template, num)
+    print(response)
     run()
 
     # Some example usage from Patrick:
