@@ -9,15 +9,20 @@
             - Live IP will choose the cheapest instance according to multi-NIC cost row
             - Instance will choose the cheapest instance according to single-NIC cost row (normal row)
         - Creating the instances: 
-            - Live IP instances will be tagged with name "liveip-expX-instanceY" where Y is the number ID
+            - Live IP instances will be tagged with name "liveip-expX-instanceY" where Y is the number ID, create a network interface and allocate/associate a new elastic IP to it, and assign the NIC to the instances. Do this for ALL NICs, even the ephemeral IP one. 
             - Instance rejuvenation instances will be tagged with name "instance-expX-instanceY" where Y is the number ID
             - Optimal instances will be tagged with name "optimal-expX-instanceY" where Y is the number ID
         - Rejuvenation algorithm (i.e., replacing the instances)
-            - Live IP: 
-        - Helper functions in api.py:
+            - Live IP: when rejuvenation period is reached, deallocate all elastic IPs on the NICs, and allocate/associate new elastic IPs to them. 
+            - Instance: when rejuvenation period is reached, create a new instance, once the instance is successfully instantiated (i.e., can ssh into it), we terminate the previous instance. If the time it takes to instantiate exceeds the rejuvenation period, we consider this an unsuccessful rejuvenation, and we repeat the experiment with a higher rejuvenation period
+        - Helper functions in api.py (that Pat doesn't think we have now):
             - be able to retrieve existing instances and change their name
+            - be able to create new NICs, and associate/disassociate elastic IPs to them
+            - be able to associate NICs to instances
+            - be able to check if instances have been successfully instantiated (i.e., passed all checks?), and be able to ssh into them (as a secondary test)
         - Functionalities required by AWS:
             - Cost explorer should be able to retrieve tag values that no longer exist currently (e.g., instances that have been removed..)
+            - elastic IP cost associated with only the specific instances should be filter-able/viewable.. s
 """
 
 if __name__ == '__main__':
