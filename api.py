@@ -10,12 +10,14 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import List, Dict
 import threading
 import sys
+from collections import defaultdict 
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
 clients = {}
 region = US_REGIONS[0]
 current_type = 't2.micro'
 capacity = 2
+INSTANCE_MANAGER_INSTANCE_ID = "i-035f88ca820e399e7"
 
 def choose_session(is_UM_AWS, region):
     if is_UM_AWS:
@@ -163,8 +165,19 @@ def get_spot_prices():
 def get_all_instances():
     response = ec2.describe_instances()
     # response['Reservations'][0]['Instances'][0]['InstanceId']
+    # print(response)
     instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instance_ids
+
+def get_all_instances_init_details():
+    response = ec2.describe_instances()
+    # response['Reservations'][0]['Instances'][0]['InstanceId']
+    instances_details = defaultdict(dict)
+    for instance in response['Reservations'][0]['Instances']:
+        if instance['InstanceId'] != INSTANCE_MANAGER_INSTANCE_ID: # no need to include instance manager since we will not assign clients to it anyway..
+            instances_details[instance['InstanceId']] = {"PublicIpAddress": instance['PublicIpAddress']}
+    # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
+    return instances_details
 
 def get_specific_instances(instance_ids):
     response = ec2.describe_instances(
@@ -494,7 +507,8 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        path = self.path.split('/')
+        path = self.path.split('/')[1:]
+        print(path)
         match path[0]:
             case 'getNum':
                 instances = get_all_instances()
@@ -508,7 +522,11 @@ class RequestHandler(BaseHTTPRequestHandler):
                 create_fleet(current_type, region, launch_template, 1)
                 self._set_response()
                 self.wfile.write(response.encode('utf-8'))
-                #notices controller to interrupt instance
+                #notices controller to interrupt instance, WIREGUARD ONLY
+            case "getInitDetails":
+                instances_details = get_all_instances_init_details()
+                self._set_response()
+                self.wfile.write(str(instances_details).encode('utf-8'))
 
 def run():
     server_address = ('', 8000)
@@ -518,26 +536,33 @@ def run():
     x.start()
     httpd.serve_forever()
 
-#example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1 2
+# example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1a 2
+# explanation of above example: this creates 2 instances in the us-east-1a az, in the UM AWS account
 if __name__ == '__main__':
     account_type = sys.argv[1]
     region = sys.argv[2]
     capacity = int(sys.argv[3])
-    is_UM = account_type == 'UM'
-    ec2, ce = choose_session(is_UM_AWS=is_UM, region=region)
-    instances = get_all_instances()
     #clean up instances
     #for instance in instances:
     #    response = terminate_instances([instance])
+    is_UM = account_type == 'UM'
+    ec2, ce = choose_session(is_UM_AWS=is_UM, region=region)
     prices = update_spot_prices()
     prices = prices.sort_values(by=['SpotPrice'], ascending=True)
     print(prices.iloc[0])
     instance_type = prices.iloc[0]['InstanceType']
     zone = prices.iloc[0]['AvailabilityZone']
     current_type = instance_type
-    launch_template = use_jinyu_launch_templates(instance_type)
-    print('Creating fleet with instance type: ' + instance_type)
-    create_fleet(instance_type, zone, launch_template, capacity)
+    launch_template = None
+    if account_type == 'UM':
+        launch_template_wireguard = "lt-077e7f82c173dd30a" # not working yet
+        launch_template_baseline_working = "lt-07c37429821503fca"
+        launch_template = launch_template_wireguard 
+    else: # Basically, Jinyu account for now:
+        launch_template = use_jinyu_launch_templates(instance_type)
+    
+    response = create_fleet(instance_type, zone, launch_template, capacity)
+    print(response)
     run()
 
     # Some example usage from Patrick:

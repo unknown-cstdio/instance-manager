@@ -38,6 +38,7 @@ Add assume role credentials (Execute the following whenever you need to refresh 
 cd instance-manager
 python3 misc/refresh-credentials.py
 ```
+If you don't do this, you will encounter the error: "Request has expired."
 
 ### 4. Start using the instance-manager API:
 Still a work in progress.
