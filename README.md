@@ -45,8 +45,13 @@ Still a work in progress.
 cd instance-manager
 
 # Refer to example usage at the bottom of api.py 
-python3 api.py 
+python3 api.py
+
+UPDATE: 
+python3 api.py [UM] [region] [num of instances]
+example: python3 api.py UM us-east-1 2
 ```
+
 Some points to note:
 - No matter how the API is used, the "choose_session" function must have been run (line 24 currently)
 

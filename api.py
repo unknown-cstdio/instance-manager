@@ -8,9 +8,14 @@ import requests
 import adal
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import List, Dict
+import threading
 import sys
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
+clients = {}
+region = US_REGIONS[0]
+current_type = 't2.micro'
+capacity = 2
 
 def choose_session(is_UM_AWS, region):
     if is_UM_AWS:
@@ -22,8 +27,8 @@ def choose_session(is_UM_AWS, region):
         ce = boto3.client('ce')
     return ec2, ce
 
-ec2, ce = choose_session(is_UM_AWS=True, region=US_REGIONS[0]) # Set this to false if you're not using UM AWS
-
+#ec2, ce = choose_session(is_UM_AWS=True, region=US_REGIONS[0]) # Set this to false if you're not using UM AWS
+ec2, ce = None, None
 def get_azure_token():
     tenant = "baf0d65c-c774-4040-a1a6-0ff03fd61dd6"
     client_id = "b1ccd7c7-3a4f-442b-a7cd-a32d230c9027"
@@ -366,6 +371,7 @@ def create_fleet_archive(instance_type, region, launch_template, num):
     return response
 
 def create_fleet(instance_type, region, launch_template, num):
+    print("create " + instance_type + " fleet with " + str(num) + " instances")
     response = ec2.create_fleet(
         SpotOptions={
             'AllocationStrategy': 'lowestPrice',
@@ -462,6 +468,25 @@ def use_jinyu_launch_templates(instance_type):
         launch_template = 'lt-04d9c8ac5d00a2078'
     return launch_template
 
+def replace_instance_loop():
+    while True:
+        sleep(5*60)
+        instances = get_all_instances()
+        prices = update_spot_prices()
+        prices = prices.sort_values(by=['SpotPrice'], ascending=True)
+        new_instance_type = prices.iloc[0]['InstanceType']
+        zone = prices.iloc[0]['AvailabilityZone']
+        if new_instance_type != current_type:
+            response = terminate_instances(instances)
+            launch_template = use_jinyu_launch_templates(new_instance_type)
+            create_fleet(new_instance_type, zone, launch_template, capacity)
+            current_type = new_instance_type
+        elif len(instances) < capacity:
+            launch_template = use_jinyu_launch_templates(new_instance_type)
+            create_fleet(new_instance_type, zone, launch_template, capacity - len(instances))
+            #send update to controller
+        
+
 class RequestHandler(BaseHTTPRequestHandler):
     def _set_response(self):
         self.send_response(200)
@@ -476,31 +501,43 @@ class RequestHandler(BaseHTTPRequestHandler):
                 num = len(instances)
                 self._set_response()
                 self.wfile.write(str(num).encode('utf-8'))
+            case 'interrupt':
+                id = path[1]
+                response = terminate_instances([id])
+                launch_template = use_jinyu_launch_templates(current_type)
+                create_fleet(current_type, region, launch_template, 1)
+                self._set_response()
+                self.wfile.write(response.encode('utf-8'))
+                #notices controller to interrupt instance
 
 def run():
     server_address = ('', 8000)
     httpd = HTTPServer(server_address, RequestHandler)
     print('Starting server...')
+    x = threading.Thread(target=replace_instance_loop, daemon=True)
+    x.start()
     httpd.serve_forever()
 
 #example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1 2
 if __name__ == '__main__':
     account_type = sys.argv[1]
     region = sys.argv[2]
-    num = int(sys.argv[3])
-    if account_type == 'UM':
-        ec2, ce = choose_session(is_UM_AWS=True, region=region)
-    else:
-        ec2, ce = choose_session(is_UM_AWS=False, region=region)
+    capacity = int(sys.argv[3])
+    is_UM = account_type == 'UM'
+    ec2, ce = choose_session(is_UM_AWS=is_UM, region=region)
     instances = get_all_instances()
     #clean up instances
-    for instance in instances:
-        response = terminate_instances([instance])
+    #for instance in instances:
+    #    response = terminate_instances([instance])
     prices = update_spot_prices()
-    prices.sort_values(by=['SpotPrice'])
+    prices = prices.sort_values(by=['SpotPrice'], ascending=True)
+    print(prices.iloc[0])
     instance_type = prices.iloc[0]['InstanceType']
+    zone = prices.iloc[0]['AvailabilityZone']
+    current_type = instance_type
     launch_template = use_jinyu_launch_templates(instance_type)
-    create_fleet(instance_type, region, launch_template, num)
+    print('Creating fleet with instance type: ' + instance_type)
+    create_fleet(instance_type, zone, launch_template, capacity)
     run()
 
     # Some example usage from Patrick:
