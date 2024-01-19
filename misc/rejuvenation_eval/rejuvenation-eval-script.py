@@ -17,6 +17,7 @@
             - Instance: when rejuvenation period is reached, create a new instance, once the instance is successfully instantiated (i.e., can ssh into it), we terminate the previous instance. If the time it takes to instantiate exceeds the rejuvenation period, we consider this an unsuccessful rejuvenation, and we repeat the experiment with a higher rejuvenation period
         - Helper functions in api.py (that Pat doesn't think we have now):
             - be able to retrieve existing instances and change their name
+            - be able to do cost allocation name tags
             - be able to create new NICs, and associate/disassociate elastic IPs to them
             - be able to associate NICs to instances
             - be able to check if instances have been successfully instantiated (i.e., passed all checks?), and be able to ssh into them (as a secondary test)
