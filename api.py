@@ -262,7 +262,7 @@ def create_fleet_archive(instance_type, region, launch_template, num):
                 'LaunchTemplateSpecification': {
                     'LaunchTemplateId': 'lt-07c37429821503fca',
                     # 'LaunchTemplateName': 'string',
-                    'Version': '1'
+                    'Version': '$Default'
                 },
                 'Overrides': [
                     {
@@ -393,7 +393,7 @@ def create_fleet(instance_type, region, launch_template, num):
             {
                 'LaunchTemplateSpecification': {
                     'LaunchTemplateId': launch_template,
-                    'Version': '1'
+                    'Version': '$Default'
                 },
                 'Overrides': [
                     {
@@ -481,20 +481,27 @@ def use_jinyu_launch_templates(instance_type):
         launch_template = 'lt-04d9c8ac5d00a2078'
     return launch_template
 
-def replace_instance_loop():
+def replace_instance_loop(type):
+    cheapest_type = type
     while True:
         sleep(5*60)
+        print("updating spot prices")
         instances = get_all_instances()
         prices = update_spot_prices()
         prices = prices.sort_values(by=['SpotPrice'], ascending=True)
         new_instance_type = prices.iloc[0]['InstanceType']
+        print("new instance type: " + new_instance_type)
         zone = prices.iloc[0]['AvailabilityZone']
-        if new_instance_type != current_type:
+        if new_instance_type != cheapest_type:
+            print("terminating instances")
             response = terminate_instances(instances)
+            print(response)
             launch_template = use_jinyu_launch_templates(new_instance_type)
+            print("creating new instances")
             create_fleet(new_instance_type, zone, launch_template, capacity)
-            current_type = new_instance_type
+            cheapest_type = new_instance_type
         elif len(instances) < capacity:
+            print("creating new instances")
             launch_template = use_jinyu_launch_templates(new_instance_type)
             create_fleet(new_instance_type, zone, launch_template, capacity - len(instances))
             #send update to controller
@@ -532,7 +539,7 @@ def run():
     server_address = ('', 8000)
     httpd = HTTPServer(server_address, RequestHandler)
     print('Starting server...')
-    x = threading.Thread(target=replace_instance_loop, daemon=True)
+    x = threading.Thread(target=replace_instance_loop, daemon=True, args=(current_type,))
     x.start()
     httpd.serve_forever()
 
@@ -560,6 +567,14 @@ if __name__ == '__main__':
         launch_template = launch_template_wireguard 
     else: # Basically, Jinyu account for now:
         launch_template = use_jinyu_launch_templates(instance_type)
+        #use x86 launch template for now because proxy hasn't been compiled for arm yet, delete this in the future
+        count = 0
+        while launch_template != 'lt-04d9c8ac5d00a2078':
+            count += 1
+            instance_type = prices.iloc[count]['InstanceType']
+            launch_template = use_jinyu_launch_templates(instance_type)
+            zone = prices.iloc[count]['AvailabilityZone']
+    print("using launch template: " + launch_template)
     
     response = create_fleet(instance_type, zone, launch_template, capacity)
     print(response)
