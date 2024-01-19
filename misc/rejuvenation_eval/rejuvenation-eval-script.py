@@ -26,6 +26,18 @@
             - elastic IP cost associated with only the specific instances should be filter-able/viewable.. s
 """
 
+def get_cheapest_instance_types_df():
+
+def live_ip_rejuvenation(rej_period, proxy_count, exp_duration):
+    """
+        Runs in a loop. 
+    """
+    # Create the initial fleet
+
+    #
+
+
+
 if __name__ == '__main__':
     REJUVENATION_PERIOD = sys.argv[1]
     EXPERIMENT_DURATION = sys.argv[2]
