@@ -26,21 +26,104 @@
             - elastic IP cost associated with only the specific instances should be filter-able/viewable.. s
 """
 
-def get_cheapest_instance_types_df():
+import time 
 
-def live_ip_rejuvenation(rej_period, proxy_count, exp_duration):
+def get_cheapest_instance_types_df(multi_NIC=False):
+    """
+        multi_NIC == True, used for liveIP and optimal 
+    """
+    # Look into cost catalogue and sort based on multi_NIC or not:
+
+    # Get first row:
+
+    return 
+
+def live_ip_rejuvenation(rej_period, proxy_count, exp_duration, tag_prefix="liveip-expX-instance"):
     """
         Runs in a loop. 
+
+        Parameters:
+            rej_period: in seconds
+            exp_duration: in minutes 
+
+        Returns: cost of this experiment
     """
-    # Create the initial fleet
+    t_end = time.time() + 60 * exp_duration
 
-    #
+    tag_suffix = 1
+    tag = tag_prefix + str(tag_suffix)
 
+    # Get the cheapest instance now:
+    instance_type, instance_type_cost = get_cheapest_instance_types_df(multi_NIC=True)
+    
+    # Create the initial fleet with multiple NICs (with tag values as indicated above)
+    
+    # Allocate and associate elastic IPs to all of the NICs (including original one) (with tag values as indicated above):
+
+    # Make sure instance can be sshed/pinged (fail rejuvenation if not):
+
+    # Sleep for rej_period:
+    time.sleep(rej_period)
+
+    # Continue with rejuvenation:
+    while time.time() < t_end:
+        tag = tag_prefix + str(tag_suffix)
+
+        # Deassociate and deallocate NICs from instances (including original one) (with tag values as indicated above):
+        
+        # Allocate and associate elastic IPs to all of the NICs (including original one) (with tag values as indicated above):
+
+        # Sleep for rej_period:
+        time.sleep(rej_period)
+    
+    return calculate_cost(instance_type, instance_type_cost, exp_duration, multi_NIC=True)
+
+def instance_rejuvenation(rej_period, proxy_count, exp_duration, tag_prefix="instance-expX-instance"):
+    """
+        Runs in a loop. 
+
+        Parameters:
+            rej_period: in seconds
+            exp_duration: in minutes 
+
+        Returns: cost of this experiment
+    """
+    
+
+    return 
+
+def calculate_cost(instance_type, instance_type_cost, exp_duration, multi_NIC=True):
+    """
+        Explanation:
+            - Done in the style of skypilot.
+                - Here's how they do it (in order of increasing detail):
+                    - "SPENT($)" is what they use in their benchmark tool: https://github.com/skypilot-org/skypilot/blob/c1f28bcb630b60f9a22d2303119f7ce62e700de3/docs/source/reference/benchmark/cli.rst#id1
+                    - which internally is populated by the resource.get_cost(duration) function: https://github.com/skypilot-org/skypilot/blob/c1f28bcb630b60f9a22d2303119f7ce62e700de3/sky/cli.py#L5087
+                    - which in turn is calculated using their catalogue cost model of the instance hourly pricing: https://github.com/skypilot-org/skypilot/blob/c1f28bcb630b60f9a22d2303119f7ce62e700de3/sky/resources.py#L875
+                    - as shown here: https://github.com/skypilot-org/skypilot/blob/c1f28bcb630b60f9a22d2303119f7ce62e700de3/sky/clouds/aws.py#L286
+                - Some extra info: we actually go a little further than skypilot, because: "SkyPilot Benchmark does not consider the time/cost of provisioning and setup." https://github.com/skypilot-org/skypilot/blob/c1f28bcb630b60f9a22d2303119f7ce62e700de3/docs/source/reference/benchmark/cli.rst#id1
+            - This is the only way since real time cost output is not provided by cloud providers (e.g., take 24 hours to be reflected).
+            - With that said however, we've done due diligence, by checking that our cost results here match that observed in cost explorers reflected after a day or so. 
+                - In other word, we actually ran the experiments, not just building them off of simulated cost models. 
+            - Why am I going through this trouble? Because even after 24 hours, the cost explorer did not populate the instance costs for instances that were only run for a few mins... but it did for the instance that ran for ~1 hours (with tag "test-delete-cost-explorer-show-up") in the same period.. Verified this using tags.. 
+                - Also there are inconsistencies in AWS cost explorer output: when not applying the tag "test-delete-cost-explorer-show-up" the cost was $0.05 (for the m7a.medium instance only), but when applying the tag it was $0.06.....
+    """
+
+    if multi_NIC:
+        # Get the number of NICs of this instance_type:
+
+        # Calculate the cost of NICs + elastic IPs attached to this instance (assuming prior to Feb 1, where the ephemeral one is free..):
+        cost = 0 
+
+    # Calculate total cost of NICs + elastic IPs + instance_type 
+
+
+    return cost 
 
 
 if __name__ == '__main__':
-    REJUVENATION_PERIOD = sys.argv[1]
-    EXPERIMENT_DURATION = sys.argv[2]
+    REJUVENATION_PERIOD = sys.argv[1] # in seconds
+    EXPERIMENT_DURATION = sys.argv[2] # in minutes
     PROXY_COUNT = sys.argv[3] # aka fleet size 
     MIN_VCPU = sys.argv[4]
     MAX_VCPU = sys.argv[5]

@@ -170,6 +170,9 @@ def get_all_instances():
     return instance_ids
 
 def get_all_instances_init_details():
+    """
+        Used only for wireguard integration only for now: GET endpoint
+    """
     response = ec2.describe_instances()
     # response['Reservations'][0]['Instances'][0]['InstanceId']
     instances_details = defaultdict(dict)
@@ -178,6 +181,18 @@ def get_all_instances_init_details():
             instances_details[instance['InstanceId']] = {"PublicIpAddress": instance['PublicIpAddress']}
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instances_details
+
+def get_specific_instances_attached_components(instance_id):
+    """
+        Get an instance's attached NIC, and EBS volume details. 
+    """
+    
+    volumes = ec2.describe_instance_attribute(InstanceId=instance_id,
+        Attribute='blockDeviceMapping')
+    # Get ec2 instance attached NIC IDs:
+    nics = ec2.describe_instance_attribute(InstanceId=instance_id,
+        Attribute='networkInterfaceSet')
+    return volumes, nics 
 
 def get_specific_instances(instance_ids):
     response = ec2.describe_instances(
@@ -469,6 +484,32 @@ def disassociate_address(association_id):
         AssociationId=association_id
     )
     return response
+
+def assign_name_tags(instance_id, name):
+    response = ec2.create_tags(
+        Resources=[
+            instance_id
+        ],
+        Tags=[
+            {
+                'Key': 'Name',
+                'Value': name
+            }
+        ]
+    )
+    return response
+
+def get_specific_instances_attached_components(instance_id):
+    """
+        Get an instance's attached NIC, and EBS volume details. 
+    """
+    
+    volumes = ec2.describe_instance_attribute(InstanceId=instance_id,
+        Attribute='blockDeviceMapping')
+    # Get ec2 instance attached NIC IDs:
+    nics = ec2.describe_instance_attribute(InstanceId=instance_id,
+        Attribute='networkInterfaceSet')
+    return volumes, nics 
  
 def use_jinyu_launch_templates(instance_type):
     instance_info = get_instance_type([instance_type])
@@ -543,7 +584,7 @@ def run():
     x.start()
     httpd.serve_forever()
 
-# example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1a 2
+# example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1 2
 # explanation of above example: this creates 2 instances in the us-east-1a az, in the UM AWS account
 if __name__ == '__main__':
     account_type = sys.argv[1]
