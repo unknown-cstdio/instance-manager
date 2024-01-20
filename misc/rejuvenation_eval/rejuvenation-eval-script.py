@@ -27,14 +27,32 @@
 """
 
 import time 
+import os
+os.chdir("../..")
+import api
+os.chdir("misc/rejuvenation_eval")
 
 def get_cheapest_instance_types_df(multi_NIC=False):
     """
         multi_NIC == True, used for liveIP and optimal 
+
+        df format:
+        spot_prices.append({
+            'AvailabilityZone': response['AvailabilityZone'],
+            'InstanceType': response['InstanceType'],
+            'MaximumNetworkInterfaces': type_to_NIC[response['InstanceType']],
+            'SpotPrice': response['SpotPrice'],
+            'PricePerInterface': (float(response['SpotPrice']) + 0.005 * (type_to_NIC[response['InstanceType']] - 1)) / type_to_NIC[response['InstanceType']],
+            'Timestamp': response['Timestamp']  
+        })
+
+        returns the entire df sorted accordingly
     """
     # Look into cost catalogue and sort based on multi_NIC or not:
-
+    prices = api.update_spot_prices() # AWS prices
+    
     # Get first row:
+    if 
 
     return 
 

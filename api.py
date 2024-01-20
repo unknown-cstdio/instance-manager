@@ -7,6 +7,7 @@ import urllib.request, json
 import requests
 import adal
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from functools import partial 
 from typing import List, Dict
 import threading
 import sys
@@ -44,13 +45,13 @@ def get_azure_token():
     )
     return token['accessToken']
 
-def get_instance_type(types):
+def get_instance_type(ec2, types):
     response = ec2.describe_instance_types(
         InstanceTypes=types
     )
     return response
 
-def update_spot_prices():
+def update_spot_prices(ec2):
     responses = ec2.describe_spot_price_history(
         ProductDescriptions=['Linux/UNIX'],
         StartTime=datetime.datetime.utcnow(),
@@ -162,14 +163,14 @@ def get_spot_prices():
     df = pd.read_csv('spot_prices.csv')
     return df
 
-def get_all_instances():
+def get_all_instances(ec2):
     response = ec2.describe_instances()
     # response['Reservations'][0]['Instances'][0]['InstanceId']
     # print(response)
     instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instance_ids
 
-def get_all_instances_init_details():
+def get_all_instances_init_details(ec2):
     """
         Used only for wireguard integration only for now: GET endpoint
     """
@@ -182,7 +183,7 @@ def get_all_instances_init_details():
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instances_details
 
-def get_specific_instances_attached_components(instance_id):
+def get_specific_instances_attached_components(ec2, instance_id):
     """
         Get an instance's attached NIC, and EBS volume details. 
     """
@@ -194,13 +195,13 @@ def get_specific_instances_attached_components(instance_id):
         Attribute='networkInterfaceSet')
     return volumes, nics 
 
-def get_specific_instances(instance_ids):
+def get_specific_instances(ec2, instance_ids):
     response = ec2.describe_instances(
         InstanceIds=instance_ids
     )
     return response
 
-def get_specific_instances_with_fleet_id_tag(fleet_id):
+def get_specific_instances_with_fleet_id_tag(ec2, fleet_id):
     """
         tag:<key> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key Owner and the value TeamA, specify tag:Owner for the filter name and TeamA for the filter value.
     """
@@ -217,25 +218,25 @@ def get_specific_instances_with_fleet_id_tag(fleet_id):
     instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instance_ids
 
-def start_instances(instance_ids):
+def start_instances(ec2, instance_ids):
     response = ec2.start_instances(
         InstanceIds=instance_ids
     )
     return response
 
-def stop_instances(instance_ids):
+def stop_instances(ec2, instance_ids):
     response = ec2.stop_instances(
         InstanceIds=instance_ids
     )
     return response
 
-def reboot_instances(instance_ids):
+def reboot_instances(ec2, instance_ids):
     response = ec2.reboot_instances(
         InstanceIds=instance_ids
     )
     return response
 
-def terminate_instances(instance_ids):
+def terminate_instances(ec2, instance_ids):
     response = ec2.terminate_instances(
         InstanceIds=instance_ids
     )
@@ -398,7 +399,7 @@ def create_fleet_archive(instance_type, region, launch_template, num):
     )
     return response
 
-def create_fleet(instance_type, region, launch_template, num):
+def create_fleet(ec2, instance_type, region, launch_template, num):
     print("create " + instance_type + " fleet with " + str(num) + " instances")
     response = ec2.create_fleet(
         SpotOptions={
@@ -438,7 +439,7 @@ def create_fleet(instance_type, region, launch_template, num):
     )
     return response
 
-def get_cost(StartTime, EndTime):
+def get_cost(ce, StartTime, EndTime):
     response = ce.get_cost_and_usage(
         TimePeriod={
             'Start': StartTime,
@@ -455,23 +456,23 @@ def get_cost(StartTime, EndTime):
     )
     return response
 
-def get_addresses():
+def get_addresses(ec2):
     response = ec2.describe_addresses()
     return response
 
-def allocate_address():
+def allocate_address(ec2):
     response = ec2.allocate_address(
         Domain='vpc'
     )
     return response
 
-def release_address(allocation_id):
+def release_address(ec2, allocation_id):
     response = ec2.release_address(
         AllocationId=allocation_id
     )
     return response
 
-def associate_address(instance_id, allocation_id, network_interface_id):
+def associate_address(ec2, instance_id, allocation_id, network_interface_id):
     response = ec2.associate_address(
         InstanceId=instance_id,
         AllocationId=allocation_id,
@@ -479,13 +480,13 @@ def associate_address(instance_id, allocation_id, network_interface_id):
     )
     return response
 
-def disassociate_address(association_id):
+def disassociate_address(ec2, association_id):
     response = ec2.disassociate_address(
         AssociationId=association_id
     )
     return response
 
-def assign_name_tags(instance_id, name):
+def assign_name_tags(ec2, instance_id, name):
     response = ec2.create_tags(
         Resources=[
             instance_id
@@ -498,21 +499,9 @@ def assign_name_tags(instance_id, name):
         ]
     )
     return response
-
-def get_specific_instances_attached_components(instance_id):
-    """
-        Get an instance's attached NIC, and EBS volume details. 
-    """
-    
-    volumes = ec2.describe_instance_attribute(InstanceId=instance_id,
-        Attribute='blockDeviceMapping')
-    # Get ec2 instance attached NIC IDs:
-    nics = ec2.describe_instance_attribute(InstanceId=instance_id,
-        Attribute='networkInterfaceSet')
-    return volumes, nics 
  
-def use_jinyu_launch_templates(instance_type):
-    instance_info = get_instance_type([instance_type])
+def use_jinyu_launch_templates(ec2, instance_type):
+    instance_info = get_instance_type(ec2, [instance_type])
     arch = instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures'][0]
     #x86: lt-04d9c8ac5d00a2078
     #arm: lt-0abc44b6c12879596
@@ -522,33 +511,37 @@ def use_jinyu_launch_templates(instance_type):
         launch_template = 'lt-04d9c8ac5d00a2078'
     return launch_template
 
-def replace_instance_loop(type):
+def replace_instance_loop(ec2, type):
     cheapest_type = type
     while True:
         sleep(5*60)
         print("updating spot prices")
-        instances = get_all_instances()
-        prices = update_spot_prices()
+        instances = get_all_instances(ec2)
+        prices = update_spot_prices(ec2)
         prices = prices.sort_values(by=['SpotPrice'], ascending=True)
         new_instance_type = prices.iloc[0]['InstanceType']
         print("new instance type: " + new_instance_type)
         zone = prices.iloc[0]['AvailabilityZone']
         if new_instance_type != cheapest_type:
             print("terminating instances")
-            response = terminate_instances(instances)
+            response = terminate_instances(ec2, instances)
             print(response)
-            launch_template = use_jinyu_launch_templates(new_instance_type)
+            launch_template = use_jinyu_launch_templates(ec2, new_instance_type)
             print("creating new instances")
-            create_fleet(new_instance_type, zone, launch_template, capacity)
+            create_fleet(ec2, new_instance_type, zone, launch_template, capacity)
             cheapest_type = new_instance_type
         elif len(instances) < capacity:
             print("creating new instances")
-            launch_template = use_jinyu_launch_templates(new_instance_type)
-            create_fleet(new_instance_type, zone, launch_template, capacity - len(instances))
+            launch_template = use_jinyu_launch_templates(ec2, new_instance_type)
+            create_fleet(ec2, new_instance_type, zone, launch_template, capacity - len(instances))
             #send update to controller
         
 
 class RequestHandler(BaseHTTPRequestHandler):
+    def __init__(self, ec2, *args, **kwargs):
+        self.ec2 = ec2
+        super().__init__(*args, **kwargs)
+
     def _set_response(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
@@ -559,28 +552,30 @@ class RequestHandler(BaseHTTPRequestHandler):
         print(path)
         match path[0]:
             case 'getNum':
-                instances = get_all_instances()
+                instances = get_all_instances(self.ec2)
                 num = len(instances)
                 self._set_response()
                 self.wfile.write(str(num).encode('utf-8'))
             case 'interrupt':
                 id = path[1]
-                response = terminate_instances([id])
-                launch_template = use_jinyu_launch_templates(current_type)
-                create_fleet(current_type, region, launch_template, 1)
+                response = terminate_instances(self.ec2, [id])
+                launch_template = use_jinyu_launch_templates(self.ec2, current_type)
+                create_fleet(self.ec2, current_type, region, launch_template, 1)
                 self._set_response()
                 self.wfile.write(response.encode('utf-8'))
                 #notices controller to interrupt instance, WIREGUARD ONLY
             case "getInitDetails":
-                instances_details = get_all_instances_init_details()
+                instances_details = get_all_instances_init_details(self.ec2)
                 self._set_response()
                 self.wfile.write(str(instances_details).encode('utf-8'))
 
-def run():
+def run(ec2):
     server_address = ('', 8000)
-    httpd = HTTPServer(server_address, RequestHandler)
+    # https://stackoverflow.com/questions/21631799/how-can-i-pass-parameters-to-a-requesthandler
+    handler = partial(RequestHandler, ec2)
+    httpd = HTTPServer(server_address, handler)
     print('Starting server...')
-    x = threading.Thread(target=replace_instance_loop, daemon=True, args=(current_type,))
+    x = threading.Thread(target=replace_instance_loop, daemon=True, args=(ec2, current_type,))
     x.start()
     httpd.serve_forever()
 
@@ -595,7 +590,7 @@ if __name__ == '__main__':
     #    response = terminate_instances([instance])
     is_UM = account_type == 'UM'
     ec2, ce = choose_session(is_UM_AWS=is_UM, region=region)
-    prices = update_spot_prices()
+    prices = update_spot_prices(ec2)
     prices = prices.sort_values(by=['SpotPrice'], ascending=True)
     print(prices.iloc[0])
     instance_type = prices.iloc[0]['InstanceType']
@@ -607,19 +602,19 @@ if __name__ == '__main__':
         launch_template_baseline_working = "lt-07c37429821503fca"
         launch_template = launch_template_wireguard 
     else: # Basically, Jinyu account for now:
-        launch_template = use_jinyu_launch_templates(instance_type)
+        launch_template = use_jinyu_launch_templates(ec2, instance_type)
         #use x86 launch template for now because proxy hasn't been compiled for arm yet, delete this in the future
         count = 0
         while launch_template != 'lt-04d9c8ac5d00a2078':
             count += 1
             instance_type = prices.iloc[count]['InstanceType']
-            launch_template = use_jinyu_launch_templates(instance_type)
+            launch_template = use_jinyu_launch_templates(ec2, instance_type)
             zone = prices.iloc[count]['AvailabilityZone']
     print("using launch template: " + launch_template)
     
-    response = create_fleet(instance_type, zone, launch_template, capacity)
+    response = create_fleet(ec2, instance_type, zone, launch_template, capacity)
     print(response)
-    run()
+    run(ec2)
 
     # Some example usage from Patrick:
     """
