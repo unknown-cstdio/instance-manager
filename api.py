@@ -456,6 +456,19 @@ def create_fleet(ec2, instance_type, region, launch_template, num):
     )
     return response
 
+def create_nics(ec2, instanceID, nic_count, tag_prefix):
+    """
+        Creates the specified number of NICs for a given instance (based on its type) and attaches the NICs to this instance. 
+
+        Parameters:
+            nic_count: NICs to create for this instance
+            tag_prefix: e.g., ".."
+    """
+
+    for i in nic_count:
+        ec2.create_network_interface()
+    return
+
 def get_cost(ce, StartTime, EndTime):
     response = ce.get_cost_and_usage(
         TimePeriod={
@@ -526,6 +539,25 @@ def use_jinyu_launch_templates(ec2, instance_type):
         launch_template = 'lt-0abc44b6c12879596'
     else:
         launch_template = 'lt-04d9c8ac5d00a2078'
+    return launch_template
+
+def use_UM_launch_templates(ec2, region, proxy_impl):
+    """
+        Note: unlike use_jinyu_launch_templates, we currently only support x86_64 for the UM account
+        Note: we only use hard-coded values for now since there are only a few for now..
+
+        Parameters:
+            - proxy_impl: the only difference for now is the initialization script within the launch template
+    """
+    if region == "us-east-1":
+        if proxy_impl == "wireguard":
+            launch_template_wireguard = "lt-077e7f82c173dd30a" # not working yet
+            launch_template = launch_template_wireguard 
+        elif proxy_impl == "baseline": # not an actual proxy impl
+            launch_template_baseline_working = "lt-07c37429821503fca"
+            launch_template = launch_template_baseline_working
+    elif region == "us-east-2": # Once supported, make similar to the us-east-1 case..
+        launch_template = 'NOT-SUPPORTED-YET'
     return launch_template
 
 def replace_instance_loop(ec2, type):
@@ -615,9 +647,7 @@ if __name__ == '__main__':
     current_type = instance_type
     launch_template = None
     if account_type == 'UM':
-        launch_template_wireguard = "lt-077e7f82c173dd30a" # not working yet
-        launch_template_baseline_working = "lt-07c37429821503fca"
-        launch_template = launch_template_wireguard 
+        launch_template = use_UM_launch_templates(ec2, 'us-east-1', 'wireguard') # hardcode everything for now 
     else: # Basically, Jinyu account for now:
         launch_template = use_jinyu_launch_templates(ec2, instance_type)
         #use x86 launch template for now because proxy hasn't been compiled for arm yet, delete this in the future

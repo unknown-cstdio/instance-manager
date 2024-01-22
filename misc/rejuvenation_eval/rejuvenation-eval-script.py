@@ -29,6 +29,7 @@
 import time 
 import os
 import math
+import json
 from collections import defaultdict
 os.chdir("../..")
 import api
@@ -52,9 +53,16 @@ def ping_instances(nic_list):
 
     return failed_ips
 
-def get_cheapest_instance_types_df(ec2, multi_NIC=False):
+def get_cheapest_instance_types_df(ec2, filter=None, multi_NIC=False):
     """
-        multi_NIC == True, used for liveIP and optimal 
+        Parameters:
+            multi_NIC == True, used for liveIP and optimal 
+            filter: price filter and region filter for now
+                Format: {
+                    "min_cost": float,
+                    "max_cost": float,
+                    "regions": ["us-east-1", ...], # list of regions to include in the creation process. Note: make sure a suitable launch template exists for each region listed
+                    }
 
         df format:
         spot_prices.append({
@@ -68,20 +76,43 @@ def get_cheapest_instance_types_df(ec2, multi_NIC=False):
 
         returns the entire df sorted accordingly
     """
+
     # Look into cost catalogue and sort based on multi_NIC or not:
     prices = api.update_spot_prices(ec2) # AWS prices
     
-    # Get first row:
+    # Get sorted prices:
     if multi_NIC:
         prices = prices.sort_values(by=['PricePerInterface'], ascending=True)
     else:
         prices = prices.sort_values(by=['SpotPrice'], ascending=True)
 
+    # Filter based on min_cost and max_cost, if filter exists:
+    if isinstance(filter, dict):
+        min_cost = filter['min_cost']
+        max_cost = filter['max_cost']
+        regions = filter['region']
+        if regions:
+            # Only keep rows where AvailabilityZone contains one of the values in the regions list:
+            prices = prices[prices['AvailabilityZone'].str.startswith(tuple(regions))] # https://stackoverflow.com/a/20461857/13336187
+        if min_cost:
+            if multi_NIC:
+                prices = prices[prices['PricePerInterface'] >= min_cost]
+            else:
+                prices = prices[prices['SpotPrice'] >= min_cost]
+        if max_cost:
+            if multi_NIC:
+                prices = prices[prices['PricePerInterface'] <= max_cost]
+            else:
+                prices = prices[prices['SpotPrice'] <= max_cost]
+
     return prices
 
-def create_fleet_live_ip_rejuvenation(ec2, prices, proxy_count, tag, launch_template):
+def create_fleet_live_ip_rejuvenation(ec2, prices, proxy_count, proxy_impl, tag):
     """
         Creates fleet combinations. 
+
+        Parameters:
+            - proxy_impl: "snowflake" | "wireguard" | "baseline"
     """
     # Get the cheapest instance now:
     instance_type_cost = prices.iloc[0]['PricePerInterface']
@@ -93,6 +124,10 @@ def create_fleet_live_ip_rejuvenation(ec2, prices, proxy_count, tag, launch_temp
     # Get number of instances needed:
     instances_to_create = math.ceil(proxy_count/max_nics)
 
+    # Get suitable launch template based on the region associated with the zone:
+    region = zone[:-1] # e.g., us-east-1a -> us-east-1
+    launch_template = api.use_UM_launch_templates(ec2, region, proxy_impl)
+
     # Create the initial fleet with multiple NICs (with tag values as indicated above)
     response = api.create_fleet(ec2, instance_type, zone, launch_template, instances_to_create)
     # make sure that the required instances have been acquired: 
@@ -100,12 +135,14 @@ def create_fleet_live_ip_rejuvenation(ec2, prices, proxy_count, tag, launch_temp
     if len(instances) != instances_to_create:
         raise Exception("Not enough instances were created: only created " + str(len(instances)) + " instances, but " + str(instances_to_create) + " were required.")
 
+    print("Created {} instances of type {} with {} NICs each, and hourly cost {}".format(instances_to_create, instance_type, max_nics, instance_type_cost))
+
     instance_list = []
 
     for instance in instances:
-        instance_details = {'InstanceID': instance, 'NICs': []}
+        instance_details = {'InstanceID': instance, 'InstanceType': instance_type, 'NICs': []}
         # Create the NICs and associate them with the instances:
-        nics = api.create_max_nics(ec2, instance, tag)
+        nics = api.create_nics(ec2, instance, max_nics-1, tag)
         # Create the elastic IPs and associate them with the NICs:
         for nic in nics:
             eip = api.create_eip(ec2, nic, tag)
@@ -114,11 +151,11 @@ def create_fleet_live_ip_rejuvenation(ec2, prices, proxy_count, tag, launch_temp
 
     return instance_list
         
-def create_fleet(ec2, proxy_count, filter, tag, launch_template, multi_NIC=False):
+def create_fleet(ec2, proxy_count, proxy_impl, tag, filter=None, multi_NIC=False):
     """
         Creates the required fleet: 
         Parameters:
-            filter: price filter and region filter (e.g., only us-east-1, or us. Note: make sure a suitable launch template exists for the zone to create instances) #TODO
+            filter: refer to get_cheapest_instance_types_df for definition 
             tag: will be used to tag all resources associated with this instance 
             multi_NIC == True, used for liveIP and optimal
 
@@ -134,13 +171,15 @@ def create_fleet(ec2, proxy_count, filter, tag, launch_template, multi_NIC=False
     """
     if multi_NIC:
         prices = get_cheapest_instance_types_df(ec2, filter, multi_NIC=True)
-        instance_list = create_fleet_live_ip_rejuvenation(ec2, prices, proxy_count, tag, launch_template) 
+        instance_list = create_fleet_live_ip_rejuvenation(ec2, prices, proxy_count, proxy_impl, tag) 
     else:
         prices = get_cheapest_instance_types_df(ec2, filter, multi_NIC=False)
-        instance_list = create_fleet_instance_rejuvenation(ec2, prices, proxy_count, tag, launch_template)
+        instance_list = create_fleet_instance_rejuvenation(ec2, prices, proxy_count, proxy_impl, tag)
+
+    print("Create fleet success with details: ", json.dumps(instance_list, sort_keys=True, indent=4))
     return instance_list
 
-def live_ip_rejuvenation(ec2, rej_period, proxy_count, exp_duration, tag_prefix="liveip-expX-instance"):
+def live_ip_rejuvenation(ec2, rej_period, proxy_count, exp_duration, filter=None, tag_prefix="liveip-expX-instance"):
     """
         Runs in a loop. 
 
