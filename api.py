@@ -51,6 +51,23 @@ def get_instance_type(ec2, types):
     )
     return response
 
+def get_max_nics(ec2, instance_type):
+    response = ec2.describe_instance_types(
+        InstanceTypes=[
+            instance_type,
+        ],
+        # Filters=[
+        #     {
+        #         'Name': 'network-info.maximum-network-interfaces',
+        #         'Values': [
+        #             'string',
+        #         ]
+        #     },
+        # ],
+    )
+
+    return response['InstanceTypes']['NetworkInfo']['MaximumNetworkInterfaces'] 
+
 def update_spot_prices(ec2):
     responses = ec2.describe_spot_price_history(
         ProductDescriptions=['Linux/UNIX'],

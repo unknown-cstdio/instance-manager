@@ -28,11 +28,31 @@
 
 import time 
 import os
+import math
+from collections import defaultdict
 os.chdir("../..")
 import api
 os.chdir("misc/rejuvenation_eval")
 
-def get_cheapest_instance_types_df(multi_NIC=False):
+def ping_instances(nic_list):
+    """
+        Checks if instances are pingable.
+
+        Parameters:
+            nic_list: list of NIC IDs
+    """
+    failed_ips = []
+    for nic_details in nic_list:
+        # ip = api.get_public_ip_address(ec2, nic_id)
+        ip = nic_details[1]
+        # ping the instance's ip:   
+        # TODO: implement this
+        # if ping fails, add to failed_ips
+        failed_ips.append(ip)
+
+    return failed_ips
+
+def get_cheapest_instance_types_df(ec2, multi_NIC=False):
     """
         multi_NIC == True, used for liveIP and optimal 
 
@@ -49,14 +69,78 @@ def get_cheapest_instance_types_df(multi_NIC=False):
         returns the entire df sorted accordingly
     """
     # Look into cost catalogue and sort based on multi_NIC or not:
-    prices = api.update_spot_prices() # AWS prices
+    prices = api.update_spot_prices(ec2) # AWS prices
     
     # Get first row:
-    if 
+    if multi_NIC:
+        prices = prices.sort_values(by=['PricePerInterface'], ascending=True)
+    else:
+        prices = prices.sort_values(by=['SpotPrice'], ascending=True)
 
-    return 
+    return prices
 
-def live_ip_rejuvenation(rej_period, proxy_count, exp_duration, tag_prefix="liveip-expX-instance"):
+def create_fleet_live_ip_rejuvenation(ec2, prices, proxy_count, tag, launch_template):
+    """
+        Creates fleet combinations. 
+    """
+    # Get the cheapest instance now:
+    instance_type_cost = prices.iloc[0]['PricePerInterface']
+    instance_type = prices.iloc[0]['InstanceType']
+    zone = prices.iloc[0]['AvailabilityZone']
+
+    # Get the number of NICs in this instance type:
+    max_nics = api.get_max_nics(ec2, instance_type)
+    # Get number of instances needed:
+    instances_to_create = math.ceil(proxy_count/max_nics)
+
+    # Create the initial fleet with multiple NICs (with tag values as indicated above)
+    response = api.create_fleet(ec2, instance_type, zone, launch_template, instances_to_create)
+    # make sure that the required instances have been acquired: 
+    instances = api.get_specific_instances_with_fleet_id_tag(response['fleet']) 
+    if len(instances) != instances_to_create:
+        raise Exception("Not enough instances were created: only created " + str(len(instances)) + " instances, but " + str(instances_to_create) + " were required.")
+
+    instance_list = []
+
+    for instance in instances:
+        instance_details = {'InstanceID': instance, 'NICs': []}
+        # Create the NICs and associate them with the instances:
+        nics = api.create_max_nics(ec2, instance, tag)
+        # Create the elastic IPs and associate them with the NICs:
+        for nic in nics:
+            eip = api.create_eip(ec2, nic, tag)
+            instance_details['NICs'].append((nic, eip))
+        instance_list.append(instance_details) 
+
+    return instance_list
+        
+def create_fleet(ec2, proxy_count, filter, tag, launch_template, multi_NIC=False):
+    """
+        Creates the required fleet: 
+        Parameters:
+            filter: price filter and region filter (e.g., only us-east-1, or us. Note: make sure a suitable launch template exists for the zone to create instances) #TODO
+            tag: will be used to tag all resources associated with this instance 
+            multi_NIC == True, used for liveIP and optimal
+
+        Returns:
+            List of created instances (count guaranteed to be proxy_count)
+                [
+                    {
+                        'InstanceID': instance_id,
+                        'NICs': [(NIC ID, EIP ID), ...]
+                    },
+                    ...
+                ]
+    """
+    if multi_NIC:
+        prices = get_cheapest_instance_types_df(ec2, filter, multi_NIC=True)
+        instance_list = create_fleet_live_ip_rejuvenation(ec2, prices, proxy_count, tag, launch_template) 
+    else:
+        prices = get_cheapest_instance_types_df(ec2, filter, multi_NIC=False)
+        instance_list = create_fleet_instance_rejuvenation(ec2, prices, proxy_count, tag, launch_template)
+    return instance_list
+
+def live_ip_rejuvenation(ec2, rej_period, proxy_count, exp_duration, tag_prefix="liveip-expX-instance"):
     """
         Runs in a loop. 
 
@@ -71,14 +155,13 @@ def live_ip_rejuvenation(rej_period, proxy_count, exp_duration, tag_prefix="live
     tag_suffix = 1
     tag = tag_prefix + str(tag_suffix)
 
-    # Get the cheapest instance now:
-    instance_type, instance_type_cost = get_cheapest_instance_types_df(multi_NIC=True)
-    
-    # Create the initial fleet with multiple NICs (with tag values as indicated above)
-    
-    # Allocate and associate elastic IPs to all of the NICs (including original one) (with tag values as indicated above):
+    # Create initial fleet (with tag values as indicated above):
+    instance_list = create_fleet(ec2, proxy_count, filter, tag, launch_template, multi_NIC=True)
 
     # Make sure instance can be sshed/pinged (fail rejuvenation if not):
+    for instance_details in instance_list:
+        failed_ips = ping_instances(instance_details['NICs'])
+        assert len(failed_ips) == 0, "Failed to ssh/ping into instances: " + str(failed_ips)
 
     # Sleep for rej_period:
     time.sleep(rej_period)
@@ -145,31 +228,35 @@ if __name__ == '__main__':
     PROXY_COUNT = sys.argv[3] # aka fleet size 
     MIN_VCPU = sys.argv[4]
     MAX_VCPU = sys.argv[5]
+    account_type = sys.argv[6]
 
-    region = sys.argv[2][:-1]
-    num = int(sys.argv[3])
-    prices = update_spot_prices()
-    prices.sort_values(by=['SpotPrice'])
+    is_UM = account_type == 'UM'
+    ec2, ce = choose_session(is_UM_AWS=is_UM, region=region)
+    prices = update_spot_prices(ec2)
+    prices = prices.sort_values(by=['SpotPrice'], ascending=True)
+    print(prices.iloc[0])
     instance_type = prices.iloc[0]['InstanceType']
-    availability_zone = prices.iloc[0]['AvailabilityZone']
-    availability_zone = sys.argv[2] # not doing cheapest allocation yet, since we are overriding this with a user provided az (e.g., us-east-1a) instead
+    zone = prices.iloc[0]['AvailabilityZone']
+    current_type = instance_type
+    launch_template = None
     if account_type == 'UM':
-        ec2, ce = choose_session(is_UM_AWS=True, region=region)
         launch_template_wireguard = "lt-077e7f82c173dd30a" # not working yet
         launch_template_baseline_working = "lt-07c37429821503fca"
         launch_template = launch_template_wireguard 
     else: # Basically, Jinyu account for now:
-        ec2, ce = choose_session(is_UM_AWS=False, region=region)
-        instances = get_all_instances()
-        #clean up existing instances. (This is dangerous for UM, because our instance-manager or controllers will be deleted too!)
-        for instance in instances:
-            if instance != INSTANCE_MANAGER_INSTANCE_ID: # do not delete our UM instance-manager/controller
-                response = terminate_instances([instance])
-        launch_template = use_jinyu_launch_templates(instance_type)
+        launch_template = use_jinyu_launch_templates(ec2, instance_type)
+        #use x86 launch template for now because proxy hasn't been compiled for arm yet, delete this in the future
+        count = 0
+        while launch_template != 'lt-04d9c8ac5d00a2078':
+            count += 1
+            instance_type = prices.iloc[count]['InstanceType']
+            launch_template = use_jinyu_launch_templates(ec2, instance_type)
+            zone = prices.iloc[count]['AvailabilityZone']
+    print("using launch template: " + launch_template)
     
-    response = create_fleet(instance_type, availability_zone, launch_template, num)
+    response = create_fleet(ec2, instance_type, zone, launch_template, capacity)
     print(response)
-    run()
+    run(ec2)
 
     # Some example usage from Patrick:
     """
