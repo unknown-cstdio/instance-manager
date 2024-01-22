@@ -20,6 +20,9 @@ current_type = 't2.micro'
 capacity = 2
 INSTANCE_MANAGER_INSTANCE_ID = "i-035f88ca820e399e7"
 
+def pretty_json(obj):
+    return json.dumps(obj, sort_keys=True, indent=4, default=str)
+
 def choose_session(is_UM_AWS, region):
     if is_UM_AWS:
         my_session = boto3.session.Session(profile_name='spotproxy-pat-umich-role')
@@ -66,7 +69,9 @@ def get_max_nics(ec2, instance_type):
         # ],
     )
 
-    return response['InstanceTypes']['NetworkInfo']['MaximumNetworkInterfaces'] 
+    # print(pretty_json(response))
+
+    return int(response['InstanceTypes'][0]['NetworkInfo']['MaximumNetworkInterfaces'])
 
 def update_spot_prices(ec2):
     responses = ec2.describe_spot_price_history(
@@ -200,17 +205,17 @@ def get_all_instances_init_details(ec2):
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instances_details
 
-def get_specific_instances_attached_components(ec2, instance_id):
+def get_specific_instances_attached_ebs(ec2, instance_id):
     """
-        Get an instance's attached NIC, and EBS volume details. 
+        Get an instance's attached NIC EBS volume details. 
     """
     
     volumes = ec2.describe_instance_attribute(InstanceId=instance_id,
         Attribute='blockDeviceMapping')
     # Get ec2 instance attached NIC IDs:
-    nics = ec2.describe_instance_attribute(InstanceId=instance_id,
-        Attribute='networkInterfaceSet')
-    return volumes, nics 
+    # nics = ec2.describe_instance_attribute(InstanceId=instance_id,
+    #     Attribute='networkInterfaceSet')
+    return volumes 
 
 def get_specific_instances(ec2, instance_ids):
     response = ec2.describe_instances(
@@ -221,6 +226,15 @@ def get_specific_instances(ec2, instance_ids):
 def get_specific_instances_with_fleet_id_tag(ec2, fleet_id):
     """
         tag:<key> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key Owner and the value TeamA, specify tag:Owner for the filter name and TeamA for the filter value.
+
+        Returns: List of instances and their useful attributes
+                [
+                    {
+                        'InstanceID': instance_id,
+                        'NICs': [(NIC ID, EIP ID), ...]
+                    },
+                    ...
+                ]
     """
     response = ec2.describe_instances(
         Filters=[
@@ -232,8 +246,12 @@ def get_specific_instances_with_fleet_id_tag(ec2, fleet_id):
             }
         ]
     )
-    instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
-    return instance_ids
+    # print(pretty_json(response))
+    # instance_details = {}
+    # for instance in response['Reservations'][0]['Instances']:
+    #     instance_details[instance['InstanceId']] = {}
+    # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
+    return response['Reservations'][0]['Instances'] # quite a complex dict, may need to prune out useless information later
 
 def start_instances(ec2, instance_ids):
     response = ec2.start_instances(
@@ -456,18 +474,41 @@ def create_fleet(ec2, instance_type, region, launch_template, num):
     )
     return response
 
-def create_nics(ec2, instanceID, nic_count, tag_prefix):
+def create_nics(ec2, instanceID, nic_count, az):
     """
         Creates the specified number of NICs for a given instance (based on its type) and attaches the NICs to this instance. 
 
         Parameters:
             nic_count: NICs to create for this instance
-            tag_prefix: e.g., ".."
+        Returns: 
+            - list of nic_ids that were created and attached to this instance
     """
+    # Get subnet associated with this availability zone:
+    response = ec2.describe_subnets(
+        Filters=[
+            {
+                'Name': 'availabilityZone',
+                'Values': [
+                    az,
+                ]
+            },
+        ],
+    )
+    subnet_id = response['Subnets'][0]['SubnetId']
 
-    for i in nic_count:
-        ec2.create_network_interface()
-    return
+    nic_ids = []
+
+    for i in range(nic_count):
+        response = ec2.create_network_interface(SubnetId=subnet_id)
+        nic_ids.append(response['NetworkInterface']['NetworkInterfaceId'])
+
+    for nic_id in nic_ids:
+        response = ec2.attach_network_interface(
+            NetworkInterfaceId=nic_id,
+            InstanceId=instanceID,
+            DeviceIndex=1
+        )
+    return nic_ids 
 
 def get_cost(ce, StartTime, EndTime):
     response = ce.get_cost_and_usage(
@@ -496,6 +537,12 @@ def allocate_address(ec2):
     )
     return response
 
+def get_eip_id_from_allocation_response(response):
+    """
+        Returns the EIP ID from the response of allocate_address
+    """
+    return response['AllocationId']
+
 def release_address(ec2, allocation_id):
     response = ec2.release_address(
         AllocationId=allocation_id
@@ -504,7 +551,7 @@ def release_address(ec2, allocation_id):
 
 def associate_address(ec2, instance_id, allocation_id, network_interface_id):
     response = ec2.associate_address(
-        InstanceId=instance_id,
+        # InstanceId=instance_id,
         AllocationId=allocation_id,
         NetworkInterfaceId=network_interface_id
     )
@@ -516,10 +563,10 @@ def disassociate_address(ec2, association_id):
     )
     return response
 
-def assign_name_tags(ec2, instance_id, name):
+def assign_name_tags(ec2, resource_id, name):
     response = ec2.create_tags(
         Resources=[
-            instance_id
+            resource_id # resource could be an instance, network interface, eip, etc.
         ],
         Tags=[
             {
