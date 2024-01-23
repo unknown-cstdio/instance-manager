@@ -189,8 +189,17 @@ def get_all_instances(ec2):
     response = ec2.describe_instances()
     # response['Reservations'][0]['Instances'][0]['InstanceId']
     # print(response)
-    instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
+    instance_ids = [instance['InstanceId'] for instance in extract_instance_details_from_describe_instances_response(response)]
     return instance_ids
+
+def extract_instance_details_from_describe_instances_response(response):
+    """
+        Purpose: each element of the response['Reservations'] list only holds 25 instances. 
+    """
+    instance_list = []
+    for i in response['Reservations']:
+        instance_list.extend(i['Instances'])
+    return instance_list
 
 def get_all_instances_init_details(ec2):
     """
@@ -199,7 +208,7 @@ def get_all_instances_init_details(ec2):
     response = ec2.describe_instances()
     # response['Reservations'][0]['Instances'][0]['InstanceId']
     instances_details = defaultdict(dict)
-    for instance in response['Reservations'][0]['Instances']:
+    for instance in extract_instance_details_from_describe_instances_response(response):
         if instance['InstanceId'] != INSTANCE_MANAGER_INSTANCE_ID: # no need to include instance manager since we will not assign clients to it anyway..
             instances_details[instance['InstanceId']] = {"PublicIpAddress": instance['PublicIpAddress']}
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
@@ -252,7 +261,7 @@ def get_specific_instances_with_fleet_id_tag(ec2, fleet_id):
     # for instance in response['Reservations'][0]['Instances']:
     #     instance_details[instance['InstanceId']] = {}
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
-    return response['Reservations'][0]['Instances'] # quite a complex dict, may need to prune out useless information later
+    return extract_instance_details_from_describe_instances_response(response) # quite a complex dict, may need to prune out useless information later
 
 def start_instances(ec2, instance_ids):
     response = ec2.start_instances(
