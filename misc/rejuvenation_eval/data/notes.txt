@@ -1,0 +1,298 @@
+
+44.218.28.6 is down!
+PING 3.209.244.86 (3.209.244.86) 56(84) bytes of data.
+64 bytes from 3.209.244.86: icmp_seq=1 ttl=63 time=0.974 ms
+
+--- 3.209.244.86 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.974/0.974/0.974/0.000 ms
+3.209.244.86 is up!
+Begin Rejuvenation count:  2
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 389, in <module>
+    live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 266, in live_ip_rejuvenation
+    api.disassociate_address(ec2, nic[1])
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/../../api.py", line 572, in disassociate_address
+    response = ec2.disassociate_address(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 553, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 1009, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (InvalidAssociationID.NotFound) when calling the DisassociateAddress operation: The association ID 'eipalloc-00b65922a0e92ce83' does not exist
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 5 2 1 2 1 2 wireguard UM
+create t3.nano fleet with 1 instances
+fleet-0438b1f8-fc8a-4f1f-a55a-59464e48b9ca
+Created 1 instances of type t3.nano with 2 NICs each, and hourly cost 0.00355
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.00355,
+        "InstanceID": "i-0b63164acd7a76109",
+        "InstanceType": "t3.nano",
+        "NICs": [
+            [
+                "eni-0534caba42907ae12",
+                "eipalloc-05aaac427d1178c8b",
+                "eipassoc-006cbd9784fe8aac5"
+            ],
+            [
+                "eni-02936b11023ba91a5",
+                "eipalloc-0c845840e0c7c0b91",
+                "eipassoc-04d997214caa0f378"
+            ]
+        ]
+    }
+]
+PING 3.234.75.179 (3.234.75.179) 56(84) bytes of data.
+
+--- 3.234.75.179 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+3.234.75.179 is down!
+PING 52.22.146.165 (52.22.146.165) 56(84) bytes of data.
+64 bytes from 52.22.146.165: icmp_seq=1 ttl=63 time=1.39 ms
+
+--- 52.22.146.165 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 1.393/1.393/1.393/0.000 ms
+52.22.146.165 is up!
+Begin Rejuvenation count:  2
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 390, in <module>
+    live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 266, in live_ip_rejuvenation
+    api.disassociate_address(ec2, nic[1])
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/../../api.py", line 572, in disassociate_address
+    response = ec2.disassociate_address(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 553, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 1009, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (InvalidAssociationID.NotFound) when calling the DisassociateAddress operation: The association ID 'eipalloc-05aaac427d1178c8b' does not exist
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 5 2 1 2 1 2 wireguard UM
+create t3.nano fleet with 1 instances
+fleet-579be1b5-ddaa-4ea6-873f-c84c25b5ed47
+Created 1 instances of type t3.nano with 2 NICs each, and hourly cost 0.00355
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.00355,
+        "InstanceID": "i-00fd42d53079d3193",
+        "InstanceType": "t3.nano",
+        "NICs": [
+            [
+                "eni-03318ed1ac43bf0d7",
+                "eipalloc-05eba53eded337675",
+                "eipassoc-0d03cf748604a477e"
+            ],
+            [
+                "eni-041c6ac54967033f7",
+                "eipalloc-02b7a8e002d1be0de",
+                "eipassoc-04e6ab8ebb132197c"
+            ]
+        ]
+    }
+]
+PING 34.237.197.62 (34.237.197.62) 56(84) bytes of data.
+
+--- 34.237.197.62 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+34.237.197.62 is down!
+PING 44.208.207.175 (44.208.207.175) 56(84) bytes of data.
+64 bytes from 44.208.207.175: icmp_seq=1 ttl=63 time=0.985 ms
+
+--- 44.208.207.175 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.985/0.985/0.985/0.000 ms
+44.208.207.175 is up!
+Begin Rejuvenation count:  2
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 390, in <module>
+    live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 273, in live_ip_rejuvenation
+    assoc_id = api.get_association_id_from_association_response(api.associate_address(ec2, instance, eip, nic))
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/../../api.py", line 561, in associate_address
+    response = ec2.associate_address(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 553, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 962, in _make_api_call
+    request_dict = self._convert_to_request_dict(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 1036, in _convert_to_request_dict
+    request_dict = self._serializer.serialize_to_request(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/validate.py", line 381, in serialize_to_request
+    raise ParamValidationError(report=report.generate_report())
+botocore.exceptions.ParamValidationError: Parameter validation failed:
+Invalid type for parameter NetworkInterfaceId, value: ('eni-03318ed1ac43bf0d7', 'eipalloc-05eba53eded337675', 'eipassoc-0d03cf748604a477e'), type: <class 'tuple'>, valid types: <class 'str'>
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 5 2 1 2 1 2 wireguard UM
+create t3.nano fleet with 1 instances
+fleet-65e9acdd-efb8-4a41-9771-593b51a9bcd2
+Created 1 instances of type t3.nano with 2 NICs each, and hourly cost 0.00355
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.00355,
+        "InstanceID": "i-0a8840f63450dba1d",
+        "InstanceType": "t3.nano",
+        "NICs": [
+            [
+                "eni-01ac369f9e3a62cde",
+                "eipalloc-0e9a691a7750f8705",
+                "eipassoc-08d9ba245612f7706"
+            ],
+            [
+                "eni-0474cc58037ee3926",
+                "eipalloc-0cc40c4000fea2aa2",
+                "eipassoc-0fd3c7a946d3e11f3"
+            ]
+        ]
+    }
+]
+PING 35.153.89.135 (35.153.89.135) 56(84) bytes of data.
+
+--- 35.153.89.135 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+35.153.89.135 is down!
+PING 34.226.22.233 (34.226.22.233) 56(84) bytes of data.
+64 bytes from 34.226.22.233: icmp_seq=1 ttl=63 time=0.517 ms
+
+--- 34.226.22.233 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.517/0.517/0.517/0.000 ms
+34.226.22.233 is up!
+Begin Rejuvenation count:  2
+PING 107.22.36.194 (107.22.36.194) 56(84) bytes of data.
+
+--- 107.22.36.194 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+107.22.36.194 is down!
+PING 54.197.99.7 (54.197.99.7) 56(84) bytes of data.
+64 bytes from 54.197.99.7: icmp_seq=1 ttl=63 time=0.488 ms
+
+--- 54.197.99.7 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.488/0.488/0.488/0.000 ms
+54.197.99.7 is up!
+Concluded Rejuvenation count:  2
+New instance details:  [
+    {
+        "InstanceCost": 0.00355,
+        "InstanceID": "i-0a8840f63450dba1d",
+        "InstanceType": "t3.nano",
+        "NICs": [
+            [
+                "eni-01ac369f9e3a62cde",
+                "eipalloc-06e58cedcaba4149c",
+                "eipassoc-0a73f3b6d9f18c899"
+            ],
+            [
+                "eni-0474cc58037ee3926",
+                "eipalloc-001ae277cc90ce054",
+                "eipassoc-0decd0aeb382356de"
+            ]
+        ]
+    }
+]
+Begin Rejuvenation count:  3
+PING 35.153.89.135 (35.153.89.135) 56(84) bytes of data.
+
+--- 35.153.89.135 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+35.153.89.135 is down!
+PING 34.226.22.233 (34.226.22.233) 56(84) bytes of data.
+64 bytes from 34.226.22.233: icmp_seq=1 ttl=63 time=0.482 ms
+
+--- 34.226.22.233 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.482/0.482/0.482/0.000 ms
+34.226.22.233 is up!
+Concluded Rejuvenation count:  3
+New instance details:  [
+    {
+        "InstanceCost": 0.00355,
+        "InstanceID": "i-0a8840f63450dba1d",
+        "InstanceType": "t3.nano",
+        "NICs": [
+            [
+                "eni-01ac369f9e3a62cde",
+                "eipalloc-0fe962ccc65b5819a",
+                "eipassoc-05fe1eaf5af494acc"
+            ],
+            [
+                "eni-0474cc58037ee3926",
+                "eipalloc-086d440bcedeb2542",
+                "eipassoc-06ab9dcb407abe5f5"
+            ]
+        ]
+    }
+]
+Begin Rejuvenation count:  4
+PING 107.22.36.194 (107.22.36.194) 56(84) bytes of data.
+
+--- 107.22.36.194 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+107.22.36.194 is down!
+PING 54.197.99.7 (54.197.99.7) 56(84) bytes of data.
+64 bytes from 54.197.99.7: icmp_seq=1 ttl=63 time=0.448 ms
+
+--- 54.197.99.7 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.448/0.448/0.448/0.000 ms
+54.197.99.7 is up!
+Concluded Rejuvenation count:  4
+New instance details:  [
+    {
+        "InstanceCost": 0.00355,
+        "InstanceID": "i-0a8840f63450dba1d",
+        "InstanceType": "t3.nano",
+        "NICs": [
+            [
+                "eni-01ac369f9e3a62cde",
+                "eipalloc-00b71e67224e5d6e7",
+                "eipassoc-07d1c40ab44717083"
+            ],
+            [
+                "eni-0474cc58037ee3926",
+                "eipalloc-0cfe49a1973537acd",
+                "eipassoc-0067b6fc3d2e4c1d4"
+            ]
+        ]
+    }
+]
+Begin Rejuvenation count:  5
+PING 35.153.89.135 (35.153.89.135) 56(84) bytes of data.
+
+--- 35.153.89.135 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+35.153.89.135 is down!
+PING 34.226.22.233 (34.226.22.233) 56(84) bytes of data.
+64 bytes from 34.226.22.233: icmp_seq=1 ttl=63 time=0.506 ms
+
+--- 34.226.22.233 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.506/0.506/0.506/0.000 ms
+34.226.22.233 is up!
+Concluded Rejuvenation count:  5
+New instance details:  [
+    {
+        "InstanceCost": 0.00355,
+        "InstanceID": "i-0a8840f63450dba1d",
+        "InstanceType": "t3.nano",
+        "NICs": [
+            [
+                "eni-01ac369f9e3a62cde",
+                "eipalloc-0977de461e239f61e",
+                "eipassoc-0ada3d032489df633"
+            ],
+            [
+                "eni-0474cc58037ee3926",
+                "eipalloc-050c06b66fe8ee96d",
+                "eipassoc-051c2dcdd034e45f2"
+            ]
+        ]
+    }
+]
+Total cost of this live IP rejuvenation experiment: 9.840118333333335

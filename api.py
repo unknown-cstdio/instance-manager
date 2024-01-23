@@ -531,6 +531,14 @@ def get_addresses(ec2):
     response = ec2.describe_addresses()
     return response
 
+def get_public_ip_address(ec2, eip_id):
+    response = ec2.describe_addresses(
+        AllocationIds=[
+            eip_id,
+        ]
+    )
+    return response['Addresses'][0]['PublicIp']
+
 def allocate_address(ec2):
     response = ec2.allocate_address(
         Domain='vpc'
@@ -556,6 +564,9 @@ def associate_address(ec2, instance_id, allocation_id, network_interface_id):
         NetworkInterfaceId=network_interface_id
     )
     return response
+
+def get_association_id_from_association_response(response):
+    return response['AssociationId']
 
 def disassociate_address(ec2, association_id):
     response = ec2.disassociate_address(
