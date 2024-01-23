@@ -101,7 +101,7 @@ def update_spot_prices(ec2):
             'AvailabilityZone': response['AvailabilityZone'],
             'InstanceType': response['InstanceType'],
             'MaximumNetworkInterfaces': type_to_NIC[response['InstanceType']],
-            'SpotPrice': response['SpotPrice'],
+            'SpotPrice': float(response['SpotPrice']),
             'PricePerInterface': (float(response['SpotPrice']) + 0.005 * (type_to_NIC[response['InstanceType']] - 1)) / type_to_NIC[response['InstanceType']],
             'Timestamp': response['Timestamp']  
         })
@@ -246,7 +246,8 @@ def get_specific_instances_with_fleet_id_tag(ec2, fleet_id):
             }
         ]
     )
-    # print(pretty_json(response))
+    with open("response.json", "w") as f:
+        print(pretty_json(response), file=f)
     # instance_details = {}
     # for instance in response['Reservations'][0]['Instances']:
     #     instance_details[instance['InstanceId']] = {}

@@ -1,0 +1,1029 @@
+rtt min/avg/max/mdev = 0.760/0.760/0.760/0.000 ms
+3.227.24.250 is up!
+PING 3.237.49.28 (3.237.49.28) 56(84) bytes of data.
+64 bytes from 3.237.49.28: icmp_seq=1 ttl=63 time=0.471 ms
+
+--- 3.237.49.28 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.471/0.471/0.471/0.000 ms
+3.237.49.28 is up!
+PING 44.204.217.105 (44.204.217.105) 56(84) bytes of data.
+64 bytes from 44.204.217.105: icmp_seq=1 ttl=63 time=0.435 ms
+
+--- 44.204.217.105 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.435/0.435/0.435/0.000 ms
+44.204.217.105 is up!
+PING 44.215.72.214 (44.215.72.214) 56(84) bytes of data.
+64 bytes from 44.215.72.214: icmp_seq=1 ttl=63 time=0.457 ms
+
+--- 44.215.72.214 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.457/0.457/0.457/0.000 ms
+44.215.72.214 is up!
+PING 44.214.138.96 (44.214.138.96) 56(84) bytes of data.
+64 bytes from 44.214.138.96: icmp_seq=1 ttl=63 time=1.80 ms
+
+--- 44.214.138.96 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 1.803/1.803/1.803/0.000 ms
+44.214.138.96 is up!
+PING 3.235.168.250 (3.235.168.250) 56(84) bytes of data.
+64 bytes from 3.235.168.250: icmp_seq=1 ttl=63 time=0.436 ms
+
+--- 3.235.168.250 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.436/0.436/0.436/0.000 ms
+3.235.168.250 is up!
+PING 18.205.6.53 (18.205.6.53) 56(84) bytes of data.
+64 bytes from 18.205.6.53: icmp_seq=1 ttl=63 time=0.427 ms
+
+--- 18.205.6.53 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.427/0.427/0.427/0.000 ms
+18.205.6.53 is up!
+PING 44.203.7.206 (44.203.7.206) 56(84) bytes of data.
+64 bytes from 44.203.7.206: icmp_seq=1 ttl=63 time=0.434 ms
+
+--- 44.203.7.206 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.434/0.434/0.434/0.000 ms
+44.203.7.206 is up!
+PING 35.170.57.106 (35.170.57.106) 56(84) bytes of data.
+64 bytes from 35.170.57.106: icmp_seq=1 ttl=63 time=0.413 ms
+
+--- 35.170.57.106 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.413/0.413/0.413/0.000 ms
+35.170.57.106 is up!
+PING 44.195.49.38 (44.195.49.38) 56(84) bytes of data.
+64 bytes from 44.195.49.38: icmp_seq=1 ttl=63 time=0.456 ms
+
+--- 44.195.49.38 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.456/0.456/0.456/0.000 ms
+44.195.49.38 is up!
+Begin Rejuvenation count:  2
+create t3a.micro fleet with 10 instances
+fleet-ad052885-f7ac-4f2a-a7d8-9f126d2bf260
+Created 10 instances of type t3a.micro, and hourly cost 0.0041
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-04610ba67ab9fbaf7",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0281b91454a7ea539",
+                "3.237.189.72"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-084cb5b35ae39eabf",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-00335c5ffc431d1c7",
+                "34.200.214.214"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-024517d829cb73e09",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0cd4616c40d569382",
+                "34.205.133.207"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-07a507cbd637acfdc",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0494c99edcc227fcd",
+                "44.204.250.84"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0438fe84c3d498d88",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-05edaa4a431729f92",
+                "44.200.55.123"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0cff7d73386a1ec72",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0f5c066199aefde6d",
+                "3.233.241.105"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-01721b32c82997a38",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-099b9b46028eba9d6",
+                "34.237.137.13"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0e3efaa2459bd9586",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0f94ea2e319465089",
+                "18.235.2.224"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0749a4c4c9aedf917",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0e0a9671fee6db00d",
+                "3.237.197.36"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0a2c7eab47dcd901a",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-09037714d838eef33",
+                "35.170.196.158"
+            ]
+        ]
+    }
+]
+PING 3.237.189.72 (3.237.189.72) 56(84) bytes of data.
+64 bytes from 3.237.189.72: icmp_seq=1 ttl=63 time=0.531 ms
+
+--- 3.237.189.72 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.531/0.531/0.531/0.000 ms
+3.237.189.72 is up!
+PING 34.200.214.214 (34.200.214.214) 56(84) bytes of data.
+64 bytes from 34.200.214.214: icmp_seq=1 ttl=63 time=0.468 ms
+
+--- 34.200.214.214 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.468/0.468/0.468/0.000 ms
+34.200.214.214 is up!
+PING 34.205.133.207 (34.205.133.207) 56(84) bytes of data.
+64 bytes from 34.205.133.207: icmp_seq=1 ttl=63 time=0.467 ms
+
+--- 34.205.133.207 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.467/0.467/0.467/0.000 ms
+34.205.133.207 is up!
+PING 44.204.250.84 (44.204.250.84) 56(84) bytes of data.
+64 bytes from 44.204.250.84: icmp_seq=1 ttl=63 time=0.450 ms
+
+--- 44.204.250.84 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.450/0.450/0.450/0.000 ms
+44.204.250.84 is up!
+PING 44.200.55.123 (44.200.55.123) 56(84) bytes of data.
+64 bytes from 44.200.55.123: icmp_seq=1 ttl=63 time=0.469 ms
+
+--- 44.200.55.123 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.469/0.469/0.469/0.000 ms
+44.200.55.123 is up!
+PING 3.233.241.105 (3.233.241.105) 56(84) bytes of data.
+64 bytes from 3.233.241.105: icmp_seq=1 ttl=63 time=0.439 ms
+
+--- 3.233.241.105 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.439/0.439/0.439/0.000 ms
+3.233.241.105 is up!
+PING 34.237.137.13 (34.237.137.13) 56(84) bytes of data.
+64 bytes from 34.237.137.13: icmp_seq=1 ttl=63 time=0.480 ms
+
+--- 34.237.137.13 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.480/0.480/0.480/0.000 ms
+34.237.137.13 is up!
+PING 18.235.2.224 (18.235.2.224) 56(84) bytes of data.
+64 bytes from 18.235.2.224: icmp_seq=1 ttl=63 time=0.452 ms
+
+--- 18.235.2.224 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.452/0.452/0.452/0.000 ms
+18.235.2.224 is up!
+PING 3.237.197.36 (3.237.197.36) 56(84) bytes of data.
+64 bytes from 3.237.197.36: icmp_seq=1 ttl=63 time=0.503 ms
+
+--- 3.237.197.36 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.503/0.503/0.503/0.000 ms
+3.237.197.36 is up!
+PING 35.170.196.158 (35.170.196.158) 56(84) bytes of data.
+64 bytes from 35.170.196.158: icmp_seq=1 ttl=63 time=0.441 ms
+
+--- 35.170.196.158 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.441/0.441/0.441/0.000 ms
+35.170.196.158 is up!
+Concluded Rejuvenation count:  2
+New instance details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-04610ba67ab9fbaf7",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0281b91454a7ea539",
+                "3.237.189.72"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-084cb5b35ae39eabf",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-00335c5ffc431d1c7",
+                "34.200.214.214"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-024517d829cb73e09",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0cd4616c40d569382",
+                "34.205.133.207"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-07a507cbd637acfdc",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0494c99edcc227fcd",
+                "44.204.250.84"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0438fe84c3d498d88",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-05edaa4a431729f92",
+                "44.200.55.123"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0cff7d73386a1ec72",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0f5c066199aefde6d",
+                "3.233.241.105"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-01721b32c82997a38",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-099b9b46028eba9d6",
+                "34.237.137.13"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0e3efaa2459bd9586",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0f94ea2e319465089",
+                "18.235.2.224"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0749a4c4c9aedf917",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0e0a9671fee6db00d",
+                "3.237.197.36"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0a2c7eab47dcd901a",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-09037714d838eef33",
+                "35.170.196.158"
+            ]
+        ]
+    }
+]
+Total cost of this instance rejuvenation experiment: 0.0027333333333333346
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 50 1 2 wireguard UM liveip
+create t3a.micro fleet with 25 instances
+fleet-fa6ae255-a77f-4737-a509-acf5f9eb9769
+{
+    "FleetId": "fleet-fa6ae255-a77f-4737-a509-acf5f9eb9769",
+    "ResponseMetadata": {
+        "HTTPHeaders": {
+            "cache-control": "no-cache, no-store",
+            "content-type": "text/xml;charset=UTF-8",
+            "date": "Tue, 23 Jan 2024 17:01:52 GMT",
+            "server": "AmazonEC2",
+            "strict-transport-security": "max-age=31536000; includeSubDomains",
+            "transfer-encoding": "chunked",
+            "vary": "accept-encoding",
+            "x-amzn-requestid": "5dad0134-5ad7-4980-9ebb-7ab02ca47338"
+        },
+        "HTTPStatusCode": 200,
+        "RequestId": "5dad0134-5ad7-4980-9ebb-7ab02ca47338",
+        "RetryAttempts": 0
+    }
+}
+Created 25 instances of type t3a.micro with 2 NICs each, and hourly cost 0.0041
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 567, in <module>
+    live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 340, in live_ip_rejuvenation
+    instance_list, ec2, ce = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=True, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 305, in create_fleet
+    instance_list = create_fleet_live_ip_rejuvenation(ec2, cheapest_instance, proxy_count, proxy_impl, tag_prefix, wait_time_after_create) # expected tag_prefix: "liveip-expX" where X is the user-provided experiment number
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 202, in create_fleet_live_ip_rejuvenation
+    nics = api.create_nics(ec2, instance, max_nics-1, zone)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/../../api.py", line 506, in create_nics
+    response = ec2.attach_network_interface(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 553, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 1009, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (IncorrectState) when calling the AttachNetworkInterface operation: Instance 'i-014dc8e744c86843b' is not 'running' or 'stopped'.
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 50 1 2 wireguard UM liveip
+create t3a.micro fleet with 25 instances
+fleet-ac3844f5-3047-4ad4-a37d-666581da03d1
+{
+    "FleetId": "fleet-ac3844f5-3047-4ad4-a37d-666581da03d1",
+    "ResponseMetadata": {
+        "HTTPHeaders": {
+            "cache-control": "no-cache, no-store",
+            "content-type": "text/xml;charset=UTF-8",
+            "date": "Tue, 23 Jan 2024 17:02:26 GMT",
+            "server": "AmazonEC2",
+            "strict-transport-security": "max-age=31536000; includeSubDomains",
+            "transfer-encoding": "chunked",
+            "vary": "accept-encoding",
+            "x-amzn-requestid": "637e0074-cf88-4c85-a0d6-aae80a672856"
+        },
+        "HTTPStatusCode": 200,
+        "RequestId": "637e0074-cf88-4c85-a0d6-aae80a672856",
+        "RetryAttempts": 0
+    }
+}
+Created 25 instances of type t3a.micro with 2 NICs each, and hourly cost 0.0041
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-06553a0a82ba15b48",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0130545f71d524720",
+                "eipalloc-06f34944765656610",
+                "eipassoc-0d13bb4ffe0fa86f4"
+            ],
+            [
+                "eni-08425f18a0d71cafb",
+                "eipalloc-06ae9344418dc7807",
+                "eipassoc-0d252f6bf2ac0554b"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-05a6eb20db618b023",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-008dde25d0f2b3622",
+                "eipalloc-0d0330f962e0bcaf6",
+                "eipassoc-08c7a57fb406c1ede"
+            ],
+            [
+                "eni-0a7273d46f3ebd588",
+                "eipalloc-0704141810ee85d38",
+                "eipassoc-0ed44283a6ef3a80a"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0e0c89a869e54dcd7",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-00a58140801dbbb6a",
+                "eipalloc-0f4e9f4e7170b989d",
+                "eipassoc-0ab19f155dda605a7"
+            ],
+            [
+                "eni-056dd80d4c0788ea3",
+                "eipalloc-0a088d44bcc3cce06",
+                "eipassoc-0b859aeb86875ce50"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0b06bf8eb842e02ae",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-02c0a6c70ff8b8e47",
+                "eipalloc-04771b870c160b7fc",
+                "eipassoc-09de64ee8c130e775"
+            ],
+            [
+                "eni-0f819f2c1d68e7300",
+                "eipalloc-0ec0b2b68e499220e",
+                "eipassoc-052b41ebdcda7ec96"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-081aa40db092dd08b",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0f59106f50bb8557e",
+                "eipalloc-0a476ceb39f89a1dd",
+                "eipassoc-01460c7a44ab3e1ce"
+            ],
+            [
+                "eni-0eca8141ac66a3b44",
+                "eipalloc-0280ebf8afc80fef5",
+                "eipassoc-0b2d366239b78f0cc"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0f19c432d97be25c6",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-00105cb7315a69627",
+                "eipalloc-0da1ecf9d53ff057a",
+                "eipassoc-021970d3e40cb2f5e"
+            ],
+            [
+                "eni-0778406bd055fdac4",
+                "eipalloc-0cc303a305e1de5ec",
+                "eipassoc-05c8da1c8c909a93e"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0564fb81409d67e2b",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-08f3a2f7cb0903399",
+                "eipalloc-018153f89f8b82d83",
+                "eipassoc-0621e15f75de6cca0"
+            ],
+            [
+                "eni-00e7d11cdfa5c1fe4",
+                "eipalloc-0b7d1053732ead8f0",
+                "eipassoc-05ff809ea7325ac1c"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0b599a1d9ba24b6b1",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0349f157694bf5b6a",
+                "eipalloc-04d8e6166c4e4b017",
+                "eipassoc-0b18665706b12e49b"
+            ],
+            [
+                "eni-0161a916d76206b79",
+                "eipalloc-030eefff1a79ae5b3",
+                "eipassoc-0a393a558a7a95eb7"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-07aecbc156a07be83",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0ec08657988479c7f",
+                "eipalloc-00c3eabda3a496efe",
+                "eipassoc-0c43eb2d23605f588"
+            ],
+            [
+                "eni-01a42370ced6e786c",
+                "eipalloc-09478232f371e1565",
+                "eipassoc-0ea5d098139125cf9"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0be5ecae3acec39bc",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0cec11cd9bbd9915a",
+                "eipalloc-08e340d4d75aec72f",
+                "eipassoc-0716418cec3a8515c"
+            ],
+            [
+                "eni-05fbc1d79373eb57b",
+                "eipalloc-078a3b99afa11ef7b",
+                "eipassoc-0bbf6f971fa513dd3"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0a022ea477801577c",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0dd7ad32a03a78304",
+                "eipalloc-0f23953cfd54d69cd",
+                "eipassoc-0bac642b972369e7d"
+            ],
+            [
+                "eni-0a638a33b1221d3b4",
+                "eipalloc-02f4c775e4abe9b45",
+                "eipassoc-0602106c7ad325514"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-015b91891eaa048f0",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-017121ca9b4776f30",
+                "eipalloc-03022efb43be1972d",
+                "eipassoc-02816cf619f2ed46a"
+            ],
+            [
+                "eni-0d27e5bb23c10c192",
+                "eipalloc-042fc519f6b94437c",
+                "eipassoc-049f8cfeaf3c1c10b"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0bf59aa9d5366078a",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-047d6d540846b2fdc",
+                "eipalloc-0d2e6d9459bf14a0e",
+                "eipassoc-05a06d8d9032ea3a3"
+            ],
+            [
+                "eni-0fcd27135f83ef6fb",
+                "eipalloc-0ac36f9527c7c28b4",
+                "eipassoc-05ebc78553cbdae44"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-02f0dd8ce10aa4cd1",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0fa16a0bdb2299d72",
+                "eipalloc-090e8c09742b7d7e9",
+                "eipassoc-0fab72448bbf59237"
+            ],
+            [
+                "eni-02371df790262c866",
+                "eipalloc-0671f497f56751a0f",
+                "eipassoc-0f7d745eb6df826ed"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-029b174bc8655b6da",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0c75c14b8353795c8",
+                "eipalloc-0392e545291e19373",
+                "eipassoc-0e0d7e952b932a657"
+            ],
+            [
+                "eni-07515ab8e040fcc0a",
+                "eipalloc-00b82a178e3921b50",
+                "eipassoc-07c6c883315bd204f"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-01dc520826d53dfb8",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-07728f2054fc34d60",
+                "eipalloc-0a4d1eaf8cbf9610d",
+                "eipassoc-0ff4e5225ac1f6e79"
+            ],
+            [
+                "eni-0cbd251665f093e38",
+                "eipalloc-00ed10927bc0a425a",
+                "eipassoc-0624dde94f20010e7"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-06279b12030e6e7e8",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0242b4dbba58cc2d8",
+                "eipalloc-060218628ea7cb615",
+                "eipassoc-0f9cfbb2e355f730f"
+            ],
+            [
+                "eni-0ea959489d9875075",
+                "eipalloc-086e0099070c90c26",
+                "eipassoc-0f0784164b6ca3f01"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0f112e72c87bfc2cd",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0a058f48c03b20e0b",
+                "eipalloc-059140fe9df5f91b3",
+                "eipassoc-0f2e95d5ce57bc456"
+            ],
+            [
+                "eni-006df78ef73d52788",
+                "eipalloc-0db42b8985996589f",
+                "eipassoc-041f3ce31b416f716"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-08ef7fc261d8ab3d0",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-076f3e2506b7a4f97",
+                "eipalloc-09764a33fc6f69a95",
+                "eipassoc-0d2fad61fb01bbe83"
+            ],
+            [
+                "eni-0eb37ca32f8f825a8",
+                "eipalloc-01b981f3a7dcea9ac",
+                "eipassoc-0e65350c4f5abacf0"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0231e45ef8e07d4b2",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0572613b8cbf1112d",
+                "eipalloc-01fe094585df02ba3",
+                "eipassoc-03fbf3c79b7fd42f8"
+            ],
+            [
+                "eni-0f7b7e12b6041d549",
+                "eipalloc-07fbd196ef3cff12f",
+                "eipassoc-051866a628e597c77"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-07b0a582d70217541",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0af313fef2795e9b5",
+                "eipalloc-050c7099e6911e41b",
+                "eipassoc-0a66c9a686b78c986"
+            ],
+            [
+                "eni-0366daefb0ab6fe23",
+                "eipalloc-077ff50967a7fe2ea",
+                "eipassoc-02f7a944590a1001f"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-015b25224fd2c25ce",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-054bd7289714be188",
+                "eipalloc-0e3cbb909bc7d3e66",
+                "eipassoc-00e8c24df438e7bae"
+            ],
+            [
+                "eni-0894fdf50ef6807f9",
+                "eipalloc-045dcc7fb5bbae00d",
+                "eipassoc-0cb1f19e863cf169c"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-089f21f8c7d5384d3",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-01333299ddd86298b",
+                "eipalloc-0ff3987837b803ea0",
+                "eipassoc-06c265bea7df56b85"
+            ],
+            [
+                "eni-0871580178c8300f1",
+                "eipalloc-011ad59624bb6d66e",
+                "eipassoc-08eed3b0a797d969a"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0af587dbf4ac0ca40",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-05943f58cf070ec7d",
+                "eipalloc-0f15371a8368e1c9b",
+                "eipassoc-0829b903af1d907cd"
+            ],
+            [
+                "eni-0005e23e3555bfab1",
+                "eipalloc-0b97c5f07c8fe2bb9",
+                "eipassoc-08cb3d5abde61cb09"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-031b8f8182631e7c1",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-08a635d26d34a00c5",
+                "eipalloc-0780d1314e7d00aa1",
+                "eipassoc-0b82ea1ae49a2fd42"
+            ],
+            [
+                "eni-02ca9c831a122d83c",
+                "eipalloc-04cfb47397e5e3a35",
+                "eipassoc-083467fca154d1463"
+            ]
+        ]
+    }
+]
+PING 3.213.13.155 (3.213.13.155) 56(84) bytes of data.
+64 bytes from 3.213.13.155: icmp_seq=1 ttl=63 time=0.637 ms
+
+--- 3.213.13.155 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.637/0.637/0.637/0.000 ms
+3.213.13.155 is up!
+PING 3.225.244.187 (3.225.244.187) 56(84) bytes of data.
+64 bytes from 3.225.244.187: icmp_seq=1 ttl=63 time=0.484 ms
+
+--- 3.225.244.187 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.484/0.484/0.484/0.000 ms
+3.225.244.187 is up!
+PING 3.235.61.118 (3.235.61.118) 56(84) bytes of data.
+64 bytes from 3.235.61.118: icmp_seq=1 ttl=63 time=0.474 ms
+
+--- 3.235.61.118 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.474/0.474/0.474/0.000 ms
+3.235.61.118 is up!
+PING 3.218.96.151 (3.218.96.151) 56(84) bytes of data.
+64 bytes from 3.218.96.151: icmp_seq=1 ttl=63 time=0.501 ms
+
+--- 3.218.96.151 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.501/0.501/0.501/0.000 ms
+3.218.96.151 is up!
+PING 54.87.51.235 (54.87.51.235) 56(84) bytes of data.
+64 bytes from 54.87.51.235: icmp_seq=1 ttl=63 time=0.459 ms
+
+--- 54.87.51.235 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.459/0.459/0.459/0.000 ms
+54.87.51.235 is up!
+PING 44.195.225.105 (44.195.225.105) 56(84) bytes of data.
+64 bytes from 44.195.225.105: icmp_seq=1 ttl=63 time=0.497 ms
+
+--- 44.195.225.105 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.497/0.497/0.497/0.000 ms
+44.195.225.105 is up!
+PING 3.232.45.108 (3.232.45.108) 56(84) bytes of data.
+64 bytes from 3.232.45.108: icmp_seq=1 ttl=63 time=0.523 ms
+
+--- 3.232.45.108 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.523/0.523/0.523/0.000 ms
+3.232.45.108 is up!
+PING 3.224.43.1 (3.224.43.1) 56(84) bytes of data.
+64 bytes from 3.224.43.1: icmp_seq=1 ttl=63 time=0.613 ms
+
+--- 3.224.43.1 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.613/0.613/0.613/0.000 ms
+3.224.43.1 is up!
+PING 18.204.80.27 (18.204.80.27) 56(84) bytes of data.
+64 bytes from 18.204.80.27: icmp_seq=1 ttl=63 time=0.491 ms
+
+--- 18.204.80.27 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.491/0.491/0.491/0.000 ms
+18.204.80.27 is up!
+PING 3.216.177.22 (3.216.177.22) 56(84) bytes of data.
+64 bytes from 3.216.177.22: icmp_seq=1 ttl=63 time=0.489 ms
+
+--- 3.216.177.22 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.489/0.489/0.489/0.000 ms
+3.216.177.22 is up!
+PING 34.226.156.155 (34.226.156.155) 56(84) bytes of data.
+64 bytes from 34.226.156.155: icmp_seq=1 ttl=63 time=0.511 ms
+
+--- 34.226.156.155 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.511/0.511/0.511/0.000 ms
+34.226.156.155 is up!
+PING 18.209.122.240 (18.209.122.240) 56(84) bytes of data.
+64 bytes from 18.209.122.240: icmp_seq=1 ttl=63 time=0.491 ms
+
+--- 18.209.122.240 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.491/0.491/0.491/0.000 ms
+18.209.122.240 is up!
+PING 54.156.78.4 (54.156.78.4) 56(84) bytes of data.
+64 bytes from 54.156.78.4: icmp_seq=1 ttl=63 time=0.555 ms
+
+--- 54.156.78.4 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.555/0.555/0.555/0.000 ms
+54.156.78.4 is up!
+PING 3.220.117.88 (3.220.117.88) 56(84) bytes of data.
+64 bytes from 3.220.117.88: icmp_seq=1 ttl=63 time=0.491 ms
+
+--- 3.220.117.88 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.491/0.491/0.491/0.000 ms
+3.220.117.88 is up!
+PING 52.72.147.244 (52.72.147.244) 56(84) bytes of data.
+64 bytes from 52.72.147.244: icmp_seq=1 ttl=63 time=0.470 ms
+
+--- 52.72.147.244 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.470/0.470/0.470/0.000 ms
+52.72.147.244 is up!
+PING 34.234.35.105 (34.234.35.105) 56(84) bytes of data.
+64 bytes from 34.234.35.105: icmp_seq=1 ttl=63 time=0.551 ms
+
+--- 34.234.35.105 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.551/0.551/0.551/0.000 ms
+34.234.35.105 is up!
+PING 34.193.50.141 (34.193.50.141) 56(84) bytes of data.
+64 bytes from 34.193.50.141: icmp_seq=1 ttl=63 time=0.491 ms
+
+--- 34.193.50.141 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.491/0.491/0.491/0.000 ms
+34.193.50.141 is up!
+PING 44.208.185.193 (44.208.185.193) 56(84) bytes of data.
+64 bytes from 44.208.185.193: icmp_seq=1 ttl=63 time=0.523 ms
+
+--- 44.208.185.193 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.523/0.523/0.523/0.000 ms
+44.208.185.193 is up!
+PING 52.5.203.13 (52.5.203.13) 56(84) bytes of data.
+64 bytes from 52.5.203.13: icmp_seq=1 ttl=63 time=0.502 ms
+
+--- 52.5.203.13 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.502/0.502/0.502/0.000 ms
+52.5.203.13 is up!
+PING 54.225.174.35 (54.225.174.35) 56(84) bytes of data.
+64 bytes from 54.225.174.35: icmp_seq=1 ttl=63 time=0.471 ms
+
+--- 54.225.174.35 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.471/0.471/0.471/0.000 ms
+54.225.174.35 is up!
+PING 34.197.13.225 (34.197.13.225) 56(84) bytes of data.
+64 bytes from 34.197.13.225: icmp_seq=1 ttl=63 time=0.461 ms
+
+--- 34.197.13.225 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.461/0.461/0.461/0.000 ms
+34.197.13.225 is up!
+PING 44.214.99.2 (44.214.99.2) 56(84) bytes of data.
+64 bytes from 44.214.99.2: icmp_seq=1 ttl=63 time=0.485 ms
+
+--- 44.214.99.2 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.485/0.485/0.485/0.000 ms
+44.214.99.2 is up!
+PING 44.217.134.186 (44.217.134.186) 56(84) bytes of data.
+64 bytes from 44.217.134.186: icmp_seq=1 ttl=63 time=0.468 ms
+
+--- 44.217.134.186 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.468/0.468/0.468/0.000 ms
+44.217.134.186 is up!
+PING 34.239.3.81 (34.239.3.81) 56(84) bytes of data.
+64 bytes from 34.239.3.81: icmp_seq=1 ttl=63 time=0.527 ms
+
+--- 34.239.3.81 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.527/0.527/0.527/0.000 ms
+34.239.3.81 is up!
+PING 54.156.12.242 (54.156.12.242) 56(84) bytes of data.
+64 bytes from 54.156.12.242: icmp_seq=1 ttl=63 time=0.466 ms
+
+--- 54.156.12.242 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.466/0.466/0.466/0.000 ms
+54.156.12.242 is up!
+Total cost of this live IP rejuvenation experiment: 10.253416666666663
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ 
