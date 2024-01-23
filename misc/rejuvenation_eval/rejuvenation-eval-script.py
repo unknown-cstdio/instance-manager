@@ -488,7 +488,7 @@ def instance_rejuvenation(initial_ec2, is_UM, rej_period, proxy_count, exp_durat
         print("Begin Rejuvenation count: ", rejuvenation_index)
 
         # Create fleet (with tag values as indicated above):
-        instance_list, ec2_list, ce_list = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+        instance_list = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
 
         # Make sure instance can be sshed/pinged (fail rejuvenation if not):
         time.sleep(wait_time_after_nic)
