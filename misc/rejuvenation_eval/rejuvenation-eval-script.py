@@ -30,12 +30,28 @@ import time
 import sys, os
 import math
 import json
+import warnings
 from collections import defaultdict
 sys.path.append("../../")
 import api
 
 def pretty_json(obj):
     return json.dumps(obj, sort_keys=True, indent=4, default=str)
+
+def chunks(lst, n):
+    """
+        Breaks a list into equally sized chunks of size n.
+        Parameters:
+            lst: list
+            n: int
+
+        https://stackoverflow.com/a/312464/13336187
+
+        Usage example: list(chunks(range(10, 75), 10)
+    """
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
 def ping_instances(ec2, nic_list, multi_NIC=True, not_fixed=True):
     """
@@ -145,7 +161,7 @@ def get_instance_row_with_supported_architecture(ec2, prices, supported_architec
         instance_type = row['InstanceType']
         instance_info = api.get_instance_type(ec2, [instance_type])
         if instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures'][0] in supported_architecture:
-            return row
+            return index, row
     raise Exception("No instance type supports the architecture: " + str(supported_architecture))
 
 def create_fleet_live_ip_rejuvenation(ec2, cheapest_instance, proxy_count, proxy_impl, tag_prefix, wait_time_after_create=15):
@@ -230,6 +246,8 @@ def create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count, prox
             - tag_prefix: "instance-expX" 
             - wait_time_after_create: in seconds
     """
+    proxy_count_remaining = proxy_count
+
     # Get the cheapest instance now:
     instance_type_cost = cheapest_instance['SpotPrice']
     instance_type = cheapest_instance['InstanceType']
@@ -246,9 +264,10 @@ def create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count, prox
     print(response['FleetId'])
     all_instance_details = api.get_specific_instances_with_fleet_id_tag(ec2, response['FleetId']) 
     if len(all_instance_details) != proxy_count:
-        raise Exception("Not enough instances were created: only created " + str(len(all_instance_details)) + " instances, but " + str(proxy_count) + " were required.")
+        warnings.warn("Not enough instances were created: only created " + str(len(all_instance_details)) + " instances, but " + str(proxy_count) + " were required.")
+    proxy_count_remaining = proxy_count - len(all_instance_details)
 
-    print("Created {} instances of type {}, and hourly cost {}".format(proxy_count, instance_type, instance_type_cost))
+    print("Created {} instances of type {}, and hourly cost {}. Remaining instances to create: {}".format(len(all_instance_details), instance_type, instance_type_cost, proxy_count_remaining))
 
     instance_list = []
 
@@ -272,7 +291,7 @@ def create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count, prox
 
         instance_list.append(instance_details) 
 
-    return instance_list
+    return instance_list, proxy_count_remaining
         
 def create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=None, multi_NIC=False, wait_time_after_create=15):
     """
@@ -294,25 +313,57 @@ def create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter
                     },
                     ...
                 ]
+
+            Note, for instance rejuvenation, the list is slightly different:
+                [
+                        {
+                            'InstanceID': instance_id,
+                            'InstanceType': instance_type,
+                            'InstanceCost': float,
+                            'ec2_session': <ec2-session-object>,
+                            'ce_session': <ce-session-object>,
+                            'NICs': [(NIC ID, EIP ID, ASSOCIATION ID), ...]
+                        },
+                        ...
+                ]
     """
     if multi_NIC:
         prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=True)
-        cheapest_instance = get_instance_row_with_supported_architecture(initial_ec2, prices)
+        _ , cheapest_instance = get_instance_row_with_supported_architecture(initial_ec2, prices)
         # cheapest_instance = prices.iloc[0]
         cheapest_instance_region = cheapest_instance['AvailabilityZone'][:-1]
         # NOTE: by assigning a session here directly, we are assuming that the instance will be created successfully and completely with only this cheapest_instance that is in this region. We can expand this in future with little code modifications. 
         ec2, ce = api.choose_session(is_UM_AWS=is_UM, region=cheapest_instance_region)
         instance_list = create_fleet_live_ip_rejuvenation(ec2, cheapest_instance, proxy_count, proxy_impl, tag_prefix, wait_time_after_create) # expected tag_prefix: "liveip-expX" where X is the user-provided experiment number
+        print("Create fleet success with details: ", pretty_json(instance_list))
+        return instance_list, ec2, ce
     else:
         prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
-        cheapest_instance = get_instance_row_with_supported_architecture(initial_ec2, prices)
-        cheapest_instance_region = cheapest_instance['AvailabilityZone'][:-1]
-        # NOTE: by assigning a session here directly, we are assuming that the instance will be created successfully and completely with only this cheapest_instance that is in this region. We can expand this in future with little code modifications. 
-        ec2, ce = api.choose_session(is_UM_AWS=is_UM, region=cheapest_instance_region)
-        instance_list = create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count, proxy_impl, tag_prefix, wait_time_after_create)
+        instance_list = loop_create_fleet_instance_rejuvenation(initial_ec2, is_UM, prices, proxy_count, proxy_impl, tag_prefix, wait_time_after_create)
 
-    print("Create fleet success with details: ", pretty_json(instance_list))
-    return instance_list, ec2, ce
+        print("Create fleet success with details: ", pretty_json(instance_list))
+        return instance_list
+
+def loop_create_fleet_instance_rejuvenation(initial_ec2, is_UM, prices, proxy_count, proxy_impl, tag_prefix, wait_time_after_create=15):
+    proxy_count_remaining = proxy_count
+    instance_list = []
+    ec2_list = []
+    ce_list = []
+    while proxy_count_remaining > 0:
+        index, cheapest_instance = get_instance_row_with_supported_architecture(initial_ec2, prices)
+        prices = prices[index+1:] # if we repeat this loop, it means that we were not able to create enough instances of this type (i.e., index), so we should search from there onwards. 
+        cheapest_instance_region = cheapest_instance['AvailabilityZone'][:-1]
+        ec2, ce = api.choose_session(is_UM_AWS=is_UM, region=cheapest_instance_region)
+        instance_list_now, proxy_count_remaining = create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count_remaining, proxy_impl, tag_prefix, wait_time_after_create)
+        for ins in instance_list_now:
+            ins['ec2_session'] = ec2
+            ins['ce_session'] = ce
+        # ec2_list.extend([ec2 for i in range(len(instance_list_now))]) # each instance will have its own ec2 session (in case this is different across instances...)
+        # ce_list.extend([ce for i in range(len(instance_list_now))]) # each instance will have its own ce session (in case this is different across instances...)
+        instance_list.extend(instance_list_now)
+
+    return instance_list
+
 
 def live_ip_rejuvenation(initial_ec2, is_UM, rej_period, proxy_count, exp_duration, proxy_impl, filter=None, tag_prefix="liveip-expX", wait_time_after_create=15, wait_time_after_nic=30):
     """
@@ -423,12 +474,12 @@ def instance_rejuvenation(initial_ec2, is_UM, rej_period, proxy_count, exp_durat
     instance_lists = []
 
     # Create fleet (with tag values as indicated above):
-    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+    instance_list_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
     instance_lists.extend(instance_list_prev)
     # Make sure instance can be sshed/pinged (fail rejuvenation if not):
     time.sleep(wait_time_after_nic)
-    for instance_details in instance_list_prev:
-        failed_ips = ping_instances(ec2_prev, instance_details['NICs'], multi_NIC=False)
+    for index, instance_details in enumerate(instance_list_prev):
+        failed_ips = ping_instances(instance_details['ec2_session'], instance_details['NICs'], multi_NIC=False)
         assert len(failed_ips) == 0, "Failed to ssh/ping into instances: " + str(failed_ips)
 
     # Continue with rejuvenation:
@@ -437,23 +488,28 @@ def instance_rejuvenation(initial_ec2, is_UM, rej_period, proxy_count, exp_durat
         print("Begin Rejuvenation count: ", rejuvenation_index)
 
         # Create fleet (with tag values as indicated above):
-        instance_list, ec2, ce = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+        instance_list, ec2_list, ce_list = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
 
         # Make sure instance can be sshed/pinged (fail rejuvenation if not):
         time.sleep(wait_time_after_nic)
-        for instance_details in instance_list:
-            failed_ips = ping_instances(ec2, instance_details['NICs'], multi_NIC=False)
+        for index, instance_details in enumerate(instance_list):
+            failed_ips = ping_instances(instance_details['ec2_session'], instance_details['NICs'], multi_NIC=False)
             assert len(failed_ips) == 0, "Failed to ssh/ping into instances: " + str(failed_ips)
 
         # Terminate fleet:
-        for instance_details in instance_list_prev:
+        # Chunk list into groups of 100: Maybe work on this next time..
+        # chunk_terminate_instances(instance_list_prev, 100)
+        # def chunk_terminate_instances(instance_list, chunk_size):
+        #     for index, chunk in enumerate(list(chunks(instance_list, chunk_size))):
+        #         instance_ids = [instance_details['InstanceID'] for instance_details in chunk]
+        #         for ec2 in ec2_list:
+        #             api.terminate_instances(ec2, instance_ids)
+        for index, instance_details in enumerate(instance_list_prev):
             instance = instance_details['InstanceID']
-            api.terminate_instances(ec2_prev, [instance])
+            api.terminate_instances(instance_details['ec2_session'], [instance])
 
         # To be terminated in next rejuvenation:
         instance_list_prev = instance_list
-        ec2_prev = ec2
-        ce_prev = ce
         instance_lists.extend(instance_list_prev)
         
         # Sleep for rej_period:
@@ -465,9 +521,9 @@ def instance_rejuvenation(initial_ec2, is_UM, rej_period, proxy_count, exp_durat
         rejuvenation_index += 1
     
     # Terminate remaining instances:
-    for instance_details in instance_list_prev:
+    for index, instance_details in enumerate(instance_list_prev):
         instance = instance_details['InstanceID']
-        api.terminate_instances(ec2_prev, [instance])
+        api.terminate_instances(instance_details['ec2_session'], [instance])
     
     # Get total cost:
     print("Total cost of this instance rejuvenation experiment: {}".format(calculate_cost(instance_lists, rej_period, exp_duration, multi_NIC=False)))

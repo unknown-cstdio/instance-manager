@@ -445,7 +445,7 @@ def create_fleet_archive(instance_type, region, launch_template, num):
     return response
 
 def create_fleet(ec2, instance_type, region, launch_template, num):
-    print("create " + instance_type + " fleet with " + str(num) + " instances")
+    print("creating " + instance_type + " fleet with " + str(num) + " instances")
     response = ec2.create_fleet(
         SpotOptions={
             'AllocationStrategy': 'lowestPrice',
