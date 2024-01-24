@@ -1,0 +1,6 @@
+Not enough instances were created: only created 175 instances, but 350 were required.
+Created 175 instances of type m6id.large, and hourly cost 0.0502. Remaining instances to create: 175
+Not enough instances were created: only created 175 instances, but 350 were required.
+Created 175 instances of type c4.large, and hourly cost 0.0501. Remaining instances to create: 175
+Not enough instances were created: only created 142 instances, but 175 were required.
+Created 142 instances of type r5a.xlarge, and hourly cost 0.1242. Remaining instances to create: 33

@@ -33,6 +33,21 @@ def choose_session(is_UM_AWS, region):
         ce = boto3.client('ce')
     return ec2, ce
 
+def chunks(lst, n):
+    """
+        Breaks a list into equally sized chunks of size n.
+        Parameters:
+            lst: list
+            n: int
+
+        https://stackoverflow.com/a/312464/13336187
+
+        Usage example: list(chunks(range(10, 75), 10)
+    """
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
+
 #ec2, ce = choose_session(is_UM_AWS=True, region=US_REGIONS[0]) # Set this to false if you're not using UM AWS
 ec2, ce = None, None
 def get_azure_token():
@@ -188,7 +203,7 @@ def get_spot_prices():
 def get_all_instances(ec2):
     response = ec2.describe_instances()
     # response['Reservations'][0]['Instances'][0]['InstanceId']
-    # print(response)
+    # print(pretty_json(response))
     instance_ids = [instance['InstanceId'] for instance in extract_instance_details_from_describe_instances_response(response)]
     return instance_ids
 
@@ -263,6 +278,15 @@ def get_specific_instances_with_fleet_id_tag(ec2, fleet_id):
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return extract_instance_details_from_describe_instances_response(response) # quite a complex dict, may need to prune out useless information later
 
+# def get_all_active_spot_fleet_requests(ec2):
+#     response = ec2.describe_spot_fleet_requests()
+#     print(response)
+#     # Filter for active (running) spot fleet requests
+#     active_fleet_requests = [fleet['SpotFleetRequestId'] 
+#                             for fleet in response['SpotFleetRequestConfigs'] 
+#                             if fleet['SpotFleetRequestState'] in ['active', 'modifying']]
+#     return active_fleet_requests
+
 def start_instances(ec2, instance_ids):
     response = ec2.start_instances(
         InstanceIds=instance_ids
@@ -285,6 +309,31 @@ def terminate_instances(ec2, instance_ids):
     response = ec2.terminate_instances(
         InstanceIds=instance_ids
     )
+    return response
+
+def nuke_all_instances(ec2, excluded_instance_ids):
+    """
+        Terminates all instances, and spot requests except for the ones specified in excluded_instance_ids
+    """
+    instances = get_all_instances(ec2)
+    instances_to_terminate = []
+    for instance in instances:
+        if instance not in excluded_instance_ids:
+            instances_to_terminate.append(instance)
+    if len(instances_to_terminate) > 300:
+        # We can only terminate 300 instances at a time (I believe..)
+        for chunk in chunks(instances_to_terminate, 300):
+            response = terminate_instances(ec2, chunk)
+            print(response)
+    # response = terminate_instances(ec2, instances_to_terminate)
+    # print(response)
+
+    # print(get_all_active_spot_fleet_requests(ec2))
+    # response = ec2.cancel_spot_fleet_requests(
+    #     SpotFleetRequestIds=get_all_active_spot_fleet_requests(ec2),
+    #     TerminateInstances=True
+    # )
+
     return response
 
 def create_fleet_archive(instance_type, region, launch_template, num):
