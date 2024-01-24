@@ -663,21 +663,21 @@ if __name__ == '__main__':
     wait_time_after_create = 30
     # try: 
     if mode == "instance":
-        tag_prefix = "instance-exp" + str(INITIAL_EXPERIMENT_INDEX)
+        tag_prefix = "instance-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
         filename = "data/" + tag_prefix + ".txt"
         file = open(filename, 'w+')
         instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
     elif mode == "liveip":
-        tag_prefix = "liveip-exp" + str(INITIAL_EXPERIMENT_INDEX)
+        tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
         filename = "data/" + tag_prefix + ".txt"
         file = open(filename, 'w+')
         live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
     elif mode == "all":
-        tag_prefix = "instance-exp" + str(INITIAL_EXPERIMENT_INDEX)
+        tag_prefix = "instance-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
         filename = "data/" + tag_prefix + ".txt"
         file = open(filename, 'w+')
         instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
-        tag_prefix = "liveip-exp" + str(INITIAL_EXPERIMENT_INDEX)
+        tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
         filename = "data/" + tag_prefix + ".txt"
         file = open(filename, 'w+')
         live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
