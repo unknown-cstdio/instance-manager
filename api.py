@@ -220,10 +220,20 @@ def get_all_instances_init_details(ec2):
     """
         Used only for wireguard integration only for now: GET endpoint
     """
-    response = ec2.describe_instances()
+    response = ec2.describe_instances(
+        Filters=[
+            {
+                'Name': 'instance-state-name',
+                'Values': [
+                    'running',
+                ]
+            }
+        ]
+    )
     # response['Reservations'][0]['Instances'][0]['InstanceId']
     instances_details = defaultdict(dict)
     for instance in extract_instance_details_from_describe_instances_response(response):
+        # print(instance['InstanceId'])
         if instance['InstanceId'] != INSTANCE_MANAGER_INSTANCE_ID: # no need to include instance manager since we will not assign clients to it anyway..
             instances_details[instance['InstanceId']] = {"PublicIpAddress": instance['PublicIpAddress']}
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
@@ -731,6 +741,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(response.encode('utf-8'))
                 #notices controller to interrupt instance, WIREGUARD ONLY
             case "getInitDetails":
+                # print("Enter getInitDetails")
                 instances_details = get_all_instances_init_details(self.ec2)
                 self._set_response()
                 self.wfile.write(str(instances_details).encode('utf-8'))
