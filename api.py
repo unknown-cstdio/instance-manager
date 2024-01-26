@@ -1,4 +1,5 @@
 from time import sleep
+import time
 import boto3
 import pandas as pd
 import numpy as np
@@ -218,6 +219,16 @@ def extract_instance_details_from_describe_instances_response(response):
         instance_list.extend(i['Instances'])
     return instance_list
 
+def get_excluded_terminate_instances():
+    # Get excluded from termination instance list:
+    excluded_instances = []
+    with open("misc/exclude-from-termination-list.json", 'r') as j:
+        cred_json = json.loads(j.read())
+        # Convert to list of keys only:
+        excluded_instances = list(cred_json.values())
+        # print(excluded_instances)
+    return excluded_instances
+
 def get_all_instances_init_details(ec2):
     """
         Used only for wireguard integration only for now: GET endpoint
@@ -232,11 +243,16 @@ def get_all_instances_init_details(ec2):
             }
         ]
     )
+    # Get excluded from termination instance list:
+    excluded_instances = get_excluded_terminate_instances()
     # response['Reservations'][0]['Instances'][0]['InstanceId']
+    return extract_init_details_from_describe_instances_response(response, excluded_instances)
+
+def extract_init_details_from_describe_instances_response(response, excluded_instances):
     instances_details = defaultdict(dict)
     for instance in extract_instance_details_from_describe_instances_response(response):
         # print(instance['InstanceId'])
-        if instance['InstanceId'] != INSTANCE_MANAGER_INSTANCE_ID and instance['InstanceId'] != CLIENT_INSTANCE_ID and instance['InstanceId'] != SERVICE_INSTANCE_ID: # no need to include instance manager since we will not assign clients to it anyway..
+        if instance['InstanceId'] not in excluded_instances: # no need to include instance manager since we will not assign clients to it anyway..
             instances_details[instance['InstanceId']] = {"PublicIpAddress": instance['PublicIpAddress']}
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instances_details
@@ -259,18 +275,12 @@ def get_specific_instances(ec2, instance_ids):
     )
     return response
 
-def get_specific_instances_with_fleet_id_tag(ec2, fleet_id):
+def get_specific_instances_with_fleet_id_tag(ec2, fleet_id, return_type="init-details"):
     """
         tag:<key> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key Owner and the value TeamA, specify tag:Owner for the filter name and TeamA for the filter value.
 
-        Returns: List of instances and their useful attributes
-                [
-                    {
-                        'InstanceID': instance_id,
-                        'NICs': [(NIC ID, EIP ID), ...]
-                    },
-                    ...
-                ]
+        Parameters:
+            - return_type: "raw" | "init-details"
     """
     response = ec2.describe_instances(
         Filters=[
@@ -288,7 +298,13 @@ def get_specific_instances_with_fleet_id_tag(ec2, fleet_id):
     # for instance in response['Reservations'][0]['Instances']:
     #     instance_details[instance['InstanceId']] = {}
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
-    return extract_instance_details_from_describe_instances_response(response) # quite a complex dict, may need to prune out useless information later
+
+    if return_type == "raw":
+        return extract_instance_details_from_describe_instances_response(response) # quite a complex dict, may need to prune out useless information later
+    else: 
+        excluded_instances = get_excluded_terminate_instances()
+        # response['Reservations'][0]['Instances'][0]['InstanceId']
+        return extract_init_details_from_describe_instances_response(response, excluded_instances)
 
 # def get_all_active_spot_fleet_requests(ec2):
 #     response = ec2.describe_spot_fleet_requests()
@@ -818,6 +834,11 @@ if __name__ == '__main__':
     
     response = create_fleet(ec2, instance_type, zone, launch_template, capacity)
     print(response)
+    # make sure that the required instances have been acquired: 
+    time.sleep(15) # wait awhile for fleet to be created
+    print(response['FleetId'])
+    all_instance_details = get_specific_instances_with_fleet_id_tag(ec2, response['FleetId']) 
+    print(all_instance_details)
     run(ec2)
 
     # Some example usage from Patrick:

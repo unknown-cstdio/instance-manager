@@ -199,7 +199,7 @@ def create_fleet_live_ip_rejuvenation(ec2, cheapest_instance, proxy_count, proxy
     # make sure that the required instances have been acquired: 
     print(response['FleetId'])
     print(pretty_json(response))
-    all_instance_details = api.get_specific_instances_with_fleet_id_tag(ec2, response['FleetId']) 
+    all_instance_details = api.get_specific_instances_with_fleet_id_tag(ec2, response['FleetId'], "raw") 
     if len(all_instance_details) != instances_to_create:
         raise Exception("Not enough instances were created: only created " + str(len(all_instance_details)) + " instances, but " + str(instances_to_create) + " were required.")
 
@@ -268,7 +268,7 @@ def create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count, prox
     time.sleep(wait_time_after_create) # wait awhile for fleet to be created
     # make sure that the required instances have been acquired: 
     print(response['FleetId'])
-    all_instance_details = api.get_specific_instances_with_fleet_id_tag(ec2, response['FleetId']) 
+    all_instance_details = api.get_specific_instances_with_fleet_id_tag(ec2, response['FleetId'], "raw") 
     if len(all_instance_details) != proxy_count:
         warnings.warn("Not enough instances were created: only created " + str(len(all_instance_details)) + " instances, but " + str(proxy_count) + " were required.")
         print_stdout_and_filename("Not enough instances were created: only created " + str(len(all_instance_details)) + " instances, but " + str(proxy_count) + " were required.", print_filename)

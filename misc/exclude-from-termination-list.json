@@ -1,0 +1,9 @@
+{
+    "snowflake_broker" : "i-000e0aa574309854c",
+    "snowflake_proxy" : "i-036fe9a028070f9ef",
+    "snowflake_proxy2" : "i-0417fc889dd4c103d",
+    "spotproxy_controller" : "i-035f88ca820e399e7",
+    "spotproxy_nat" : "i-0975320cbe3a681df",
+    "spotproxy_service" : "i-0dd2ca9d91838f3c8",
+    "spotproxy_client" : "i-0c7adc535b262d69e"
+}
