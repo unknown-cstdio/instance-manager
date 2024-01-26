@@ -19,6 +19,8 @@ region = US_REGIONS[0]
 current_type = 't2.micro'
 capacity = 2
 INSTANCE_MANAGER_INSTANCE_ID = "i-035f88ca820e399e7"
+CLIENT_INSTANCE_ID = "i-0c7adc535b262d69e"
+SERVICE_INSTANCE_ID = "i-0dd2ca9d91838f3c8"
 
 def pretty_json(obj):
     return json.dumps(obj, sort_keys=True, indent=4, default=str)
@@ -234,7 +236,7 @@ def get_all_instances_init_details(ec2):
     instances_details = defaultdict(dict)
     for instance in extract_instance_details_from_describe_instances_response(response):
         # print(instance['InstanceId'])
-        if instance['InstanceId'] != INSTANCE_MANAGER_INSTANCE_ID: # no need to include instance manager since we will not assign clients to it anyway..
+        if instance['InstanceId'] != INSTANCE_MANAGER_INSTANCE_ID and instance['InstanceId'] != CLIENT_INSTANCE_ID and instance['InstanceId'] != SERVICE_INSTANCE_ID: # no need to include instance manager since we will not assign clients to it anyway..
             instances_details[instance['InstanceId']] = {"PublicIpAddress": instance['PublicIpAddress']}
     # instance_ids = [instance['InstanceId'] for instance in response['Reservations'][0]['Instances']]
     return instances_details
@@ -329,12 +331,16 @@ def nuke_all_instances(ec2, excluded_instance_ids):
     instances_to_terminate = []
     for instance in instances:
         if instance not in excluded_instance_ids:
+            # print(instance)
             instances_to_terminate.append(instance)
     if len(instances_to_terminate) > 300:
         # We can only terminate 300 instances at a time (I believe..)
         for chunk in chunks(instances_to_terminate, 300):
             response = terminate_instances(ec2, chunk)
             print(response)
+    else:
+        response = terminate_instances(ec2, instances_to_terminate)
+        print(response)
     # response = terminate_instances(ec2, instances_to_terminate)
     # print(response)
 
@@ -344,7 +350,7 @@ def nuke_all_instances(ec2, excluded_instance_ids):
     #     TerminateInstances=True
     # )
 
-    return response
+    return
 
 def create_fleet_archive(instance_type, region, launch_template, num):
     # feel free to delete this in the future
@@ -668,7 +674,7 @@ def use_jinyu_launch_templates(ec2, instance_type):
         launch_template = 'lt-04d9c8ac5d00a2078'
     return launch_template
 
-def use_UM_launch_templates(ec2, region, proxy_impl):
+def use_UM_launch_templates(ec2, region, proxy_impl, type="main"):
     """
         Note: unlike use_jinyu_launch_templates, we currently only support x86_64 for the UM account
         Note: we only use hard-coded values for now since there are only a few for now..
@@ -678,7 +684,12 @@ def use_UM_launch_templates(ec2, region, proxy_impl):
     """
     if region == "us-east-1":
         if proxy_impl == "wireguard":
-            launch_template_wireguard = "lt-077e7f82c173dd30a" # not working yet
+            if type == "main": # Sina specific for migration efficacy test
+                launch_template_wireguard = "lt-0fc69e0cce8b5aedb" # not working yet
+            elif type == "side": # Sina specific for migration efficacy test
+                launch_template_wireguard = "lt-0e9b68603a74b345b"
+            else:
+                raise Exception("Invalid type: " + type)
             launch_template = launch_template_wireguard 
         elif proxy_impl == "baseline": # not an actual proxy impl
             launch_template_baseline_working = "lt-07c37429821503fca"
@@ -744,7 +755,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 # print("Enter getInitDetails")
                 instances_details = get_all_instances_init_details(self.ec2)
                 self._set_response()
-                self.wfile.write(str(instances_details).encode('utf-8'))
+                self.wfile.write(pretty_json(instances_details).encode('utf-8'))
 
 def run(ec2):
     server_address = ('', 8000)
@@ -756,12 +767,29 @@ def run(ec2):
     x.start()
     httpd.serve_forever()
 
-# example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1 2
+def get_instance_row_with_supported_architecture(ec2, prices, supported_architecture=['x86_64']):
+    """
+        Copied from rejuvenation-eval-script.py
+        Parameters:
+            supported_architecture: list of architectures to support. Default is x86_64 (i.e., Intel/AMD)
+            prices: df of prices (from get_cheapest_instance_types_df)
+        Returns:
+            row of the cheapest instance type that supports the architecture
+    """
+    for index, row in prices.iterrows():
+        instance_type = row['InstanceType']
+        instance_info = get_instance_type(ec2, [instance_type])
+        if instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures'][0] in supported_architecture:
+            return index, row
+    raise Exception("No instance type supports the architecture: " + str(supported_architecture))
+
+# example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1 2 main
 # explanation of above example: this creates 2 instances in the us-east-1a az, in the UM AWS account
 if __name__ == '__main__':
     account_type = sys.argv[1]
     region = sys.argv[2]
     capacity = int(sys.argv[3])
+    type = sys.argv[4] # Current supported: "main", "side"
     #clean up instances
     #for instance in instances:
     #    response = terminate_instances([instance])
@@ -770,12 +798,13 @@ if __name__ == '__main__':
     prices = update_spot_prices(ec2)
     prices = prices.sort_values(by=['SpotPrice'], ascending=True)
     print(prices.iloc[0])
-    instance_type = prices.iloc[0]['InstanceType']
-    zone = prices.iloc[0]['AvailabilityZone']
+    index, cheapest_instance = get_instance_row_with_supported_architecture(ec2, prices)
+    instance_type = cheapest_instance['InstanceType']
+    zone = cheapest_instance['AvailabilityZone']
     current_type = instance_type
     launch_template = None
     if account_type == 'UM':
-        launch_template = use_UM_launch_templates(ec2, 'us-east-1', 'wireguard') # hardcode everything for now 
+        launch_template = use_UM_launch_templates(ec2, 'us-east-1', 'wireguard', type=type) # hardcode everything for now 
     else: # Basically, Jinyu account for now:
         launch_template = use_jinyu_launch_templates(ec2, instance_type)
         #use x86 launch template for now because proxy hasn't been compiled for arm yet, delete this in the future

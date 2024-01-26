@@ -191,7 +191,7 @@ def create_fleet_live_ip_rejuvenation(ec2, cheapest_instance, proxy_count, proxy
     instances_to_create = math.ceil(proxy_count/max_nics)
 
     # Get suitable launch template based on the region associated with the zone:
-    launch_template = api.use_UM_launch_templates(ec2, region, proxy_impl)
+    launch_template = api.use_UM_launch_templates(ec2, region, proxy_impl, "main")
 
     # Create the initial fleet with multiple NICs (with tag values as indicated above)
     response = api.create_fleet(ec2, instance_type, zone, launch_template, instances_to_create)
@@ -261,7 +261,7 @@ def create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count, prox
     region = zone[:-1] # e.g., us-east-1a -> us-east-1
 
     # Get suitable launch template based on the region associated with the zone:
-    launch_template = api.use_UM_launch_templates(ec2, region, proxy_impl)
+    launch_template = api.use_UM_launch_templates(ec2, region, proxy_impl, "main")
 
     # Create the initial fleet with multiple NICs (with tag values as indicated above)
     response = api.create_fleet(ec2, instance_type, zone, launch_template, proxy_count)

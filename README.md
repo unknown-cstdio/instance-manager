@@ -50,7 +50,8 @@ python3 api.py
 
 UPDATE: 
 python3 api.py [UM] [region] [num of instances]
-example: python3 api.py UM us-east-1 2
+example: python3 api.py UM us-east-1 2 main
+example 2: python3 api.py UM us-east-1 2 side
 ```
 
 Some points to note:
