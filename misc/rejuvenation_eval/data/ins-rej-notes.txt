@@ -1,0 +1,1018 @@
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-05cfc54daaf3dbb5f",
+                "eipalloc-02b9acba8ec239610",
+                "eipassoc-078ccd687b663a10d"
+            ],
+            [
+                "eni-0c2062ade99d6f671",
+                "eipalloc-039ac38d915736183",
+                "eipassoc-03010c6b58355929e"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": "0.004100",
+        "InstanceID": "i-031e5220888d86701",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-087e58b3e85efa523",
+                "eipalloc-0d113b90ea140a706",
+                "eipassoc-0cae0d93a52ded420"
+            ],
+            [
+                "eni-01e4f06ec0cacc0f9",
+                "eipalloc-046d4e3526616f982",
+                "eipassoc-093b1f1155fa5ed7b"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": "0.004100",
+        "InstanceID": "i-05e67c65b087c8753",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0368fb82331b73559",
+                "eipalloc-0fa240406980df508",
+                "eipassoc-024a1d3b3454da9d4"
+            ],
+            [
+                "eni-083550c5eeec520fe",
+                "eipalloc-097ee812366465f62",
+                "eipassoc-064ecd24901786caa"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": "0.004100",
+        "InstanceID": "i-08a50fbaa4b023abb",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0d0f438a9101cce28",
+                "eipalloc-051731c027eb284d0",
+                "eipassoc-0c3684a1b4eeb1c51"
+            ],
+            [
+                "eni-086e69ee27c06596d",
+                "eipalloc-02062e4e3c973f2eb",
+                "eipassoc-02e25710c57584b25"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": "0.004100",
+        "InstanceID": "i-02f6778303726cc34",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-041739122ca979f75",
+                "eipalloc-09c442dd7b9848074",
+                "eipassoc-052c24e3a972ec864"
+            ],
+            [
+                "eni-0ef2dc6bfc9f9d68c",
+                "eipalloc-0d42859ada0f187bb",
+                "eipassoc-0002b644a58880ffd"
+            ]
+        ]
+    }
+]
+Total cost of this live IP rejuvenation experiment: 8.201366666666667
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 540, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 409, in instance_rejuvenation
+    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 298, in create_fleet
+    prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 118, in get_cheapest_instance_types_df
+    prices = prices[prices['SpotPrice'] >= min_cost]
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/common.py", line 76, in new_method
+    return method(self, other)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/arraylike.py", line 60, in __ge__
+    return self._cmp_method(other, operator.ge)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/series.py", line 5803, in _cmp_method
+    res_values = ops.comparison_op(lvalues, rvalues, op)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 346, in comparison_op
+    res_values = comp_method_OBJECT_ARRAY(op, lvalues, rvalues)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 131, in comp_method_OBJECT_ARRAY
+    result = libops.scalar_compare(x.ravel(), y, op)
+  File "ops.pyx", line 107, in pandas._libs.ops.scalar_compare
+TypeError: '>=' not supported between instances of 'str' and 'float'
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+False
+True
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 542, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 411, in instance_rejuvenation
+    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 300, in create_fleet
+    prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 120, in get_cheapest_instance_types_df
+    prices = prices[prices['SpotPrice'] >= min_cost]
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/common.py", line 76, in new_method
+    return method(self, other)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/arraylike.py", line 60, in __ge__
+    return self._cmp_method(other, operator.ge)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/series.py", line 5803, in _cmp_method
+    res_values = ops.comparison_op(lvalues, rvalues, op)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 346, in comparison_op
+    res_values = comp_method_OBJECT_ARRAY(op, lvalues, rvalues)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 131, in comp_method_OBJECT_ARRAY
+    result = libops.scalar_compare(x.ravel(), y, op)
+  File "ops.pyx", line 107, in pandas._libs.ops.scalar_compare
+TypeError: '>=' not supported between instances of 'str' and 'float'
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+False
+False
+True
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 543, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 412, in instance_rejuvenation
+    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 301, in create_fleet
+    prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 121, in get_cheapest_instance_types_df
+    prices = prices[prices['SpotPrice'] >= min_cost]
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/common.py", line 76, in new_method
+    return method(self, other)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/arraylike.py", line 60, in __ge__
+    return self._cmp_method(other, operator.ge)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/series.py", line 5803, in _cmp_method
+    res_values = ops.comparison_op(lvalues, rvalues, op)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 346, in comparison_op
+    res_values = comp_method_OBJECT_ARRAY(op, lvalues, rvalues)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 131, in comp_method_OBJECT_ARRAY
+    result = libops.scalar_compare(x.ravel(), y, op)
+  File "ops.pyx", line 107, in pandas._libs.ops.scalar_compare
+TypeError: '>=' not supported between instances of 'str' and 'float'
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+<class 'pandas.core.series.Series'>
+False
+True
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 543, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 412, in instance_rejuvenation
+    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 301, in create_fleet
+    prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 121, in get_cheapest_instance_types_df
+    prices = prices[prices['SpotPrice'] >= min_cost]
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/common.py", line 76, in new_method
+    return method(self, other)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/arraylike.py", line 60, in __ge__
+    return self._cmp_method(other, operator.ge)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/series.py", line 5803, in _cmp_method
+    res_values = ops.comparison_op(lvalues, rvalues, op)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 346, in comparison_op
+    res_values = comp_method_OBJECT_ARRAY(op, lvalues, rvalues)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 131, in comp_method_OBJECT_ARRAY
+    result = libops.scalar_compare(x.ravel(), y, op)
+  File "ops.pyx", line 107, in pandas._libs.ops.scalar_compare
+TypeError: '>=' not supported between instances of 'str' and 'float'
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+AvailabilityZone                               object
+InstanceType                                   object
+MaximumNetworkInterfaces                        int64
+SpotPrice                                      object
+PricePerInterface                             float64
+Timestamp                   datetime64[ns, tzlocal()]
+dtype: object
+False
+True
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 543, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 412, in instance_rejuvenation
+    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 301, in create_fleet
+    prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 121, in get_cheapest_instance_types_df
+    prices = prices[prices['SpotPrice'] >= min_cost]
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/common.py", line 76, in new_method
+    return method(self, other)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/arraylike.py", line 60, in __ge__
+    return self._cmp_method(other, operator.ge)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/series.py", line 5803, in _cmp_method
+    res_values = ops.comparison_op(lvalues, rvalues, op)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 346, in comparison_op
+    res_values = comp_method_OBJECT_ARRAY(op, lvalues, rvalues)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 131, in comp_method_OBJECT_ARRAY
+    result = libops.scalar_compare(x.ravel(), y, op)
+  File "ops.pyx", line 107, in pandas._libs.ops.scalar_compare
+TypeError: '>=' not supported between instances of 'str' and 'float'
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 543, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 412, in instance_rejuvenation
+    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 301, in create_fleet
+    prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 121, in get_cheapest_instance_types_df
+    prices = prices[float(prices['SpotPrice']) >= min_cost]
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/series.py", line 230, in wrapper
+    raise TypeError(f"cannot convert the series to {converter}")
+TypeError: cannot convert the series to <class 'float'>
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 546, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 415, in instance_rejuvenation
+    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 304, in create_fleet
+    prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 124, in get_cheapest_instance_types_df
+    prices = prices[prices['SpotPrice'] >= min_cost]
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/common.py", line 76, in new_method
+    return method(self, other)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/arraylike.py", line 60, in __ge__
+    return self._cmp_method(other, operator.ge)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/series.py", line 5803, in _cmp_method
+    res_values = ops.comparison_op(lvalues, rvalues, op)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 346, in comparison_op
+    res_values = comp_method_OBJECT_ARRAY(op, lvalues, rvalues)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pandas/core/ops/array_ops.py", line 131, in comp_method_OBJECT_ARRAY
+    result = libops.scalar_compare(x.ravel(), y, op)
+  File "ops.pyx", line 107, in pandas._libs.ops.scalar_compare
+TypeError: '>=' not supported between instances of 'str' and 'float'
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 546, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 415, in instance_rejuvenation
+    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 304, in create_fleet
+    prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 107, in get_cheapest_instance_types_df
+    prices = prices.sort_values(by=['SpotPrice'], ascending=True)
+TypeError: Series.sort_values() got an unexpected keyword argument 'by'
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+create t3a.micro fleet with 3 instances
+fleet-1a7fb8c5-d8f0-4c05-933e-1b05b85dfa74
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 543, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 412, in instance_rejuvenation
+    instance_list_prev, ec2_prev, ce_prev = create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter=filter, multi_NIC=False, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 306, in create_fleet
+    instance_list = create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count, proxy_impl, tag_prefix, wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 264, in create_fleet_instance_rejuvenation
+    nic_tag = instance_tag + "-nic{}".format(str(index2))
+NameError: name 'index2' is not defined. Did you mean: 'index'?
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+create t3a.micro fleet with 3 instances
+fleet-f9798ab3-1c02-4d23-a25c-7b616b22df97
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-07020992b1a4aec20",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0ca7918f0798ac9f7",
+                "44.214.15.222"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0167b3e3574f09ba8",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-01ecb71c793e14673",
+                "44.222.153.141"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-05240d513cae9fd03",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0cd51e062428db0fa",
+                "44.204.198.7"
+            ]
+        ]
+    }
+]
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 543, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 416, in instance_rejuvenation
+    failed_ips = ping_instances(ec2, instance_details['NICs'])
+UnboundLocalError: local variable 'ec2' referenced before assignment
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+create t3a.micro fleet with 3 instances
+fleet-666a6772-fb7b-4f54-96c2-3860a6134b5b
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-09afbc65cf717b50f",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-03fb1d58d86463b44",
+                "44.204.143.2"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0002cf83545717a02",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0dabfb808430d8fe5",
+                "44.222.150.206"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0be2e8024a2666f69",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-02f2dd586c99124b2",
+                "34.201.22.102"
+            ]
+        ]
+    }
+]
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 543, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 416, in instance_rejuvenation
+    failed_ips = ping_instances(ec2_prev, instance_details['NICs'])
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 53, in ping_instances
+    ip = api.get_public_ip_address(ec2, nic_details[1])
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/../../api.py", line 535, in get_public_ip_address
+    response = ec2.describe_addresses(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 553, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/botocore/client.py", line 1009, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (InvalidAllocationID.NotFound) when calling the DescribeAddresses operation: The allocation ID '44.204.143.2' does not exist
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+create t3a.micro fleet with 3 instances
+fleet-8664da87-0d9b-463b-901e-f0fa1a614745
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0416fe46fedf047c3",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0b03aa7fe34bcd3d8",
+                "44.213.147.137"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0f7c56a77f92aa993",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-068901973c663193a",
+                "3.91.198.69"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0e91cb2a193254eaa",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0d3c4a40f00d22e9a",
+                "18.215.125.167"
+            ]
+        ]
+    }
+]
+PING 44.213.147.137 (44.213.147.137) 56(84) bytes of data.
+
+--- 44.213.147.137 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+44.213.147.137 is down!
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 555, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 429, in instance_rejuvenation
+    assert len(failed_ips) == 0, "Failed to ssh/ping into instances: " + str(failed_ips)
+AssertionError: Failed to ssh/ping into instances: ['44.213.147.137']
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 3 1 2 wireguard UM instance
+create t3a.micro fleet with 3 instances
+fleet-7610297e-4d93-4f95-a08f-6b307f2595d2
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0d2d9f95f2d721bc7",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0cd2cf35b51c0fa36",
+                "44.213.131.182"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-04c02bbec4a5e9ad0",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0d15720abaaf41b72",
+                "44.199.247.180"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0abeeb821840d1504",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-04a59e59abfca9f76",
+                "44.199.254.105"
+            ]
+        ]
+    }
+]
+PING 44.213.131.182 (44.213.131.182) 56(84) bytes of data.
+64 bytes from 44.213.131.182: icmp_seq=1 ttl=63 time=0.414 ms
+
+--- 44.213.131.182 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.414/0.414/0.414/0.000 ms
+44.213.131.182 is up!
+PING 44.199.247.180 (44.199.247.180) 56(84) bytes of data.
+64 bytes from 44.199.247.180: icmp_seq=1 ttl=63 time=0.510 ms
+
+--- 44.199.247.180 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.510/0.510/0.510/0.000 ms
+44.199.247.180 is up!
+PING 44.199.254.105 (44.199.254.105) 56(84) bytes of data.
+64 bytes from 44.199.254.105: icmp_seq=1 ttl=63 time=0.485 ms
+
+--- 44.199.254.105 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.485/0.485/0.485/0.000 ms
+44.199.254.105 is up!
+Begin Rejuvenation count:  2
+create t3a.micro fleet with 3 instances
+fleet-90c6e378-fe99-491e-9320-0d3cb4097cae
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0af752278b4861241",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-043e2adf12820b396",
+                "44.197.173.38"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-019ba075bdf8d57af",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0b2e6d567ea14824a",
+                "44.204.135.123"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-06dbe06c62c5bac15",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0989caead7a95ee99",
+                "3.239.242.198"
+            ]
+        ]
+    }
+]
+PING 44.197.173.38 (44.197.173.38) 56(84) bytes of data.
+
+--- 44.197.173.38 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+44.197.173.38 is down!
+Traceback (most recent call last):
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 559, in <module>
+    instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create)
+  File "/home/ubuntu/instance-manager/misc/rejuvenation_eval/rejuvenation-eval-script.py", line 446, in instance_rejuvenation
+    assert len(failed_ips) == 0, "Failed to ssh/ping into instances: " + str(failed_ips)
+AssertionError: Failed to ssh/ping into instances: ['44.197.173.38']
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ python3 rejuvenation-eval-script.py 20 2 1 10 1 2 wireguard UM instance
+create t3a.micro fleet with 10 instances
+fleet-1b4d8908-3660-45ef-bf75-5bb473c20baf
+Created 10 instances of type t3a.micro, and hourly cost 0.0041
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0e04454685bf958e5",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-099b35a1406b1d7c6",
+                "3.227.24.250"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0176015bc2cadf9a3",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-059785c385ab06303",
+                "3.237.49.28"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-01c94c9bf63d899cf",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0701e2f3c04147732",
+                "44.204.217.105"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-06039a1adb8cb9b7e",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0976a9f1cd1320d47",
+                "44.215.72.214"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-00145968e1a91bf98",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-07bb216e8806bc233",
+                "44.214.138.96"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-019e15764f79bf524",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0e0dd5b5b20850370",
+                "3.235.168.250"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-07635316154003842",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-00806a5b4b1c8400e",
+                "18.205.6.53"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0acb3854866503f3f",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-05819836ef014f9ce",
+                "44.203.7.206"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0eea913a2c9c5c621",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-03d2c612aae0c9959",
+                "35.170.57.106"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0e2613e0314acc7b9",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0dfa4fce477235253",
+                "44.195.49.38"
+            ]
+        ]
+    }
+]
+PING 3.227.24.250 (3.227.24.250) 56(84) bytes of data.
+64 bytes from 3.227.24.250: icmp_seq=1 ttl=63 time=0.760 ms
+
+--- 3.227.24.250 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.760/0.760/0.760/0.000 ms
+3.227.24.250 is up!
+PING 3.237.49.28 (3.237.49.28) 56(84) bytes of data.
+64 bytes from 3.237.49.28: icmp_seq=1 ttl=63 time=0.471 ms
+
+--- 3.237.49.28 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.471/0.471/0.471/0.000 ms
+3.237.49.28 is up!
+PING 44.204.217.105 (44.204.217.105) 56(84) bytes of data.
+64 bytes from 44.204.217.105: icmp_seq=1 ttl=63 time=0.435 ms
+
+--- 44.204.217.105 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.435/0.435/0.435/0.000 ms
+44.204.217.105 is up!
+PING 44.215.72.214 (44.215.72.214) 56(84) bytes of data.
+64 bytes from 44.215.72.214: icmp_seq=1 ttl=63 time=0.457 ms
+
+--- 44.215.72.214 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.457/0.457/0.457/0.000 ms
+44.215.72.214 is up!
+PING 44.214.138.96 (44.214.138.96) 56(84) bytes of data.
+64 bytes from 44.214.138.96: icmp_seq=1 ttl=63 time=1.80 ms
+
+--- 44.214.138.96 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 1.803/1.803/1.803/0.000 ms
+44.214.138.96 is up!
+PING 3.235.168.250 (3.235.168.250) 56(84) bytes of data.
+64 bytes from 3.235.168.250: icmp_seq=1 ttl=63 time=0.436 ms
+
+--- 3.235.168.250 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.436/0.436/0.436/0.000 ms
+3.235.168.250 is up!
+PING 18.205.6.53 (18.205.6.53) 56(84) bytes of data.
+64 bytes from 18.205.6.53: icmp_seq=1 ttl=63 time=0.427 ms
+
+--- 18.205.6.53 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.427/0.427/0.427/0.000 ms
+18.205.6.53 is up!
+PING 44.203.7.206 (44.203.7.206) 56(84) bytes of data.
+64 bytes from 44.203.7.206: icmp_seq=1 ttl=63 time=0.434 ms
+
+--- 44.203.7.206 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.434/0.434/0.434/0.000 ms
+44.203.7.206 is up!
+PING 35.170.57.106 (35.170.57.106) 56(84) bytes of data.
+64 bytes from 35.170.57.106: icmp_seq=1 ttl=63 time=0.413 ms
+
+--- 35.170.57.106 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.413/0.413/0.413/0.000 ms
+35.170.57.106 is up!
+PING 44.195.49.38 (44.195.49.38) 56(84) bytes of data.
+64 bytes from 44.195.49.38: icmp_seq=1 ttl=63 time=0.456 ms
+
+--- 44.195.49.38 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.456/0.456/0.456/0.000 ms
+44.195.49.38 is up!
+Begin Rejuvenation count:  2
+create t3a.micro fleet with 10 instances
+fleet-ad052885-f7ac-4f2a-a7d8-9f126d2bf260
+Created 10 instances of type t3a.micro, and hourly cost 0.0041
+Create fleet success with details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-04610ba67ab9fbaf7",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0281b91454a7ea539",
+                "3.237.189.72"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-084cb5b35ae39eabf",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-00335c5ffc431d1c7",
+                "34.200.214.214"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-024517d829cb73e09",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0cd4616c40d569382",
+                "34.205.133.207"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-07a507cbd637acfdc",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0494c99edcc227fcd",
+                "44.204.250.84"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0438fe84c3d498d88",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-05edaa4a431729f92",
+                "44.200.55.123"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0cff7d73386a1ec72",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0f5c066199aefde6d",
+                "3.233.241.105"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-01721b32c82997a38",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-099b9b46028eba9d6",
+                "34.237.137.13"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0e3efaa2459bd9586",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0f94ea2e319465089",
+                "18.235.2.224"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0749a4c4c9aedf917",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0e0a9671fee6db00d",
+                "3.237.197.36"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0a2c7eab47dcd901a",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-09037714d838eef33",
+                "35.170.196.158"
+            ]
+        ]
+    }
+]
+PING 3.237.189.72 (3.237.189.72) 56(84) bytes of data.
+64 bytes from 3.237.189.72: icmp_seq=1 ttl=63 time=0.531 ms
+
+--- 3.237.189.72 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.531/0.531/0.531/0.000 ms
+3.237.189.72 is up!
+PING 34.200.214.214 (34.200.214.214) 56(84) bytes of data.
+64 bytes from 34.200.214.214: icmp_seq=1 ttl=63 time=0.468 ms
+
+--- 34.200.214.214 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.468/0.468/0.468/0.000 ms
+34.200.214.214 is up!
+PING 34.205.133.207 (34.205.133.207) 56(84) bytes of data.
+64 bytes from 34.205.133.207: icmp_seq=1 ttl=63 time=0.467 ms
+
+--- 34.205.133.207 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.467/0.467/0.467/0.000 ms
+34.205.133.207 is up!
+PING 44.204.250.84 (44.204.250.84) 56(84) bytes of data.
+64 bytes from 44.204.250.84: icmp_seq=1 ttl=63 time=0.450 ms
+
+--- 44.204.250.84 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.450/0.450/0.450/0.000 ms
+44.204.250.84 is up!
+PING 44.200.55.123 (44.200.55.123) 56(84) bytes of data.
+64 bytes from 44.200.55.123: icmp_seq=1 ttl=63 time=0.469 ms
+
+--- 44.200.55.123 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.469/0.469/0.469/0.000 ms
+44.200.55.123 is up!
+PING 3.233.241.105 (3.233.241.105) 56(84) bytes of data.
+64 bytes from 3.233.241.105: icmp_seq=1 ttl=63 time=0.439 ms
+
+--- 3.233.241.105 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.439/0.439/0.439/0.000 ms
+3.233.241.105 is up!
+PING 34.237.137.13 (34.237.137.13) 56(84) bytes of data.
+64 bytes from 34.237.137.13: icmp_seq=1 ttl=63 time=0.480 ms
+
+--- 34.237.137.13 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.480/0.480/0.480/0.000 ms
+34.237.137.13 is up!
+PING 18.235.2.224 (18.235.2.224) 56(84) bytes of data.
+64 bytes from 18.235.2.224: icmp_seq=1 ttl=63 time=0.452 ms
+
+--- 18.235.2.224 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.452/0.452/0.452/0.000 ms
+18.235.2.224 is up!
+PING 3.237.197.36 (3.237.197.36) 56(84) bytes of data.
+64 bytes from 3.237.197.36: icmp_seq=1 ttl=63 time=0.503 ms
+
+--- 3.237.197.36 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.503/0.503/0.503/0.000 ms
+3.237.197.36 is up!
+PING 35.170.196.158 (35.170.196.158) 56(84) bytes of data.
+64 bytes from 35.170.196.158: icmp_seq=1 ttl=63 time=0.441 ms
+
+--- 35.170.196.158 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.441/0.441/0.441/0.000 ms
+35.170.196.158 is up!
+Concluded Rejuvenation count:  2
+New instance details:  [
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-04610ba67ab9fbaf7",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0281b91454a7ea539",
+                "3.237.189.72"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-084cb5b35ae39eabf",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-00335c5ffc431d1c7",
+                "34.200.214.214"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-024517d829cb73e09",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0cd4616c40d569382",
+                "34.205.133.207"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-07a507cbd637acfdc",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0494c99edcc227fcd",
+                "44.204.250.84"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0438fe84c3d498d88",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-05edaa4a431729f92",
+                "44.200.55.123"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0cff7d73386a1ec72",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0f5c066199aefde6d",
+                "3.233.241.105"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-01721b32c82997a38",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-099b9b46028eba9d6",
+                "34.237.137.13"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0e3efaa2459bd9586",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0f94ea2e319465089",
+                "18.235.2.224"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0749a4c4c9aedf917",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-0e0a9671fee6db00d",
+                "3.237.197.36"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0041,
+        "InstanceID": "i-0a2c7eab47dcd901a",
+        "InstanceType": "t3a.micro",
+        "NICs": [
+            [
+                "eni-09037714d838eef33",
+                "35.170.196.158"
+            ]
+        ]
+    }
+]
+Total cost of this instance rejuvenation experiment: 0.0027333333333333346
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ 

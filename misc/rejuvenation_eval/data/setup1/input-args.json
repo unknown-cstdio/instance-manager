@@ -1,0 +1,15 @@
+{
+    "REJUVENATION_PERIOD" : 30,
+    "EXPERIMENT_DURATION" : 3,
+    "INITIAL_EXPERIMENT_INDEX" : 1,
+    "PROXY_COUNT": 30,
+    "MIN_VCPU" : 1,
+    "MAX_VCPU" : 2,
+    "MIN_COST" : 0.05,
+    "MAX_COST" : 0.3,
+    "PROXY_IMPL" : "wireguard",
+    "account_type" : "UM",
+    "mode": "instance",
+    "dir": "data/setup1/",
+    "regions": ["us-east-1"]
+}

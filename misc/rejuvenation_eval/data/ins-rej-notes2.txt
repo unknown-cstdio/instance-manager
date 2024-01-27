@@ -1,0 +1,1027 @@
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0016704181d83d7ab",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0c376d83cb9a3a7db",
+                "54.164.31.254"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0d8e0d932897ee6a1",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-04472fd2ba31386d7",
+                "54.197.131.43"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-070d1b5fbb3169ff6",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-03acad149b7b12db2",
+                "3.87.249.20"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0910a957797202164",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0e23f4043f4e68c3c",
+                "54.162.254.77"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-01e305fc50f1c24aa",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0dec04fadd33806b5",
+                "3.95.1.68"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0c190a6a2887a7cbe",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-011cf7f585f56f95e",
+                "35.153.204.44"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-04465f5c316836b40",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0a439adf8d0f6b40f",
+                "3.80.169.7"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0bb9ef70b9c88169e",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0c4d766d36d76ce2c",
+                "54.152.34.3"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-00f35a52d2396a51b",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-003bdc338757fa35d",
+                "34.226.219.152"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-01854ec23d991da5f",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0992db6be5a08d02c",
+                "54.152.97.0"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-09dfd0e068ee9e407",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0de50a04fee46885d",
+                "54.81.97.151"
+            ]
+        ]
+    }
+]
+PING 54.158.126.200 (54.158.126.200) 56(84) bytes of data.
+64 bytes from 54.158.126.200: icmp_seq=1 ttl=63 time=0.896 ms
+
+--- 54.158.126.200 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.896/0.896/0.896/0.000 ms
+54.158.126.200 is up!
+PING 54.167.88.89 (54.167.88.89) 56(84) bytes of data.
+64 bytes from 54.167.88.89: icmp_seq=1 ttl=63 time=0.877 ms
+
+--- 54.167.88.89 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.877/0.877/0.877/0.000 ms
+54.167.88.89 is up!
+PING 3.85.194.225 (3.85.194.225) 56(84) bytes of data.
+64 bytes from 3.85.194.225: icmp_seq=1 ttl=63 time=0.866 ms
+
+--- 3.85.194.225 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.866/0.866/0.866/0.000 ms
+3.85.194.225 is up!
+PING 52.207.226.212 (52.207.226.212) 56(84) bytes of data.
+64 bytes from 52.207.226.212: icmp_seq=1 ttl=63 time=0.789 ms
+
+--- 52.207.226.212 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.789/0.789/0.789/0.000 ms
+52.207.226.212 is up!
+PING 54.86.219.63 (54.86.219.63) 56(84) bytes of data.
+64 bytes from 54.86.219.63: icmp_seq=1 ttl=63 time=0.874 ms
+
+--- 54.86.219.63 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.874/0.874/0.874/0.000 ms
+54.86.219.63 is up!
+PING 34.203.196.248 (34.203.196.248) 56(84) bytes of data.
+64 bytes from 34.203.196.248: icmp_seq=1 ttl=63 time=0.832 ms
+
+--- 34.203.196.248 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.832/0.832/0.832/0.000 ms
+34.203.196.248 is up!
+PING 54.208.46.203 (54.208.46.203) 56(84) bytes of data.
+64 bytes from 54.208.46.203: icmp_seq=1 ttl=63 time=0.843 ms
+
+--- 54.208.46.203 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.843/0.843/0.843/0.000 ms
+54.208.46.203 is up!
+PING 3.80.179.101 (3.80.179.101) 56(84) bytes of data.
+64 bytes from 3.80.179.101: icmp_seq=1 ttl=63 time=0.855 ms
+
+--- 3.80.179.101 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.855/0.855/0.855/0.000 ms
+3.80.179.101 is up!
+PING 35.153.160.216 (35.153.160.216) 56(84) bytes of data.
+64 bytes from 35.153.160.216: icmp_seq=1 ttl=63 time=0.822 ms
+
+--- 35.153.160.216 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.822/0.822/0.822/0.000 ms
+35.153.160.216 is up!
+PING 3.94.249.48 (3.94.249.48) 56(84) bytes of data.
+64 bytes from 3.94.249.48: icmp_seq=1 ttl=63 time=0.873 ms
+
+--- 3.94.249.48 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.873/0.873/0.873/0.000 ms
+3.94.249.48 is up!
+PING 54.226.35.7 (54.226.35.7) 56(84) bytes of data.
+64 bytes from 54.226.35.7: icmp_seq=1 ttl=63 time=0.822 ms
+
+--- 54.226.35.7 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.822/0.822/0.822/0.000 ms
+54.226.35.7 is up!
+PING 34.238.162.153 (34.238.162.153) 56(84) bytes of data.
+64 bytes from 34.238.162.153: icmp_seq=1 ttl=63 time=0.777 ms
+
+--- 34.238.162.153 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.777/0.777/0.777/0.000 ms
+34.238.162.153 is up!
+PING 23.20.20.229 (23.20.20.229) 56(84) bytes of data.
+64 bytes from 23.20.20.229: icmp_seq=1 ttl=63 time=0.785 ms
+
+--- 23.20.20.229 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.785/0.785/0.785/0.000 ms
+23.20.20.229 is up!
+PING 54.89.93.218 (54.89.93.218) 56(84) bytes of data.
+64 bytes from 54.89.93.218: icmp_seq=1 ttl=63 time=0.797 ms
+
+--- 54.89.93.218 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.797/0.797/0.797/0.000 ms
+54.89.93.218 is up!
+PING 54.197.213.85 (54.197.213.85) 56(84) bytes of data.
+64 bytes from 54.197.213.85: icmp_seq=1 ttl=63 time=0.777 ms
+
+--- 54.197.213.85 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.777/0.777/0.777/0.000 ms
+54.197.213.85 is up!
+PING 54.87.169.131 (54.87.169.131) 56(84) bytes of data.
+64 bytes from 54.87.169.131: icmp_seq=1 ttl=63 time=0.803 ms
+
+--- 54.87.169.131 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.803/0.803/0.803/0.000 ms
+54.87.169.131 is up!
+PING 54.80.93.34 (54.80.93.34) 56(84) bytes of data.
+64 bytes from 54.80.93.34: icmp_seq=1 ttl=63 time=0.846 ms
+
+--- 54.80.93.34 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.846/0.846/0.846/0.000 ms
+54.80.93.34 is up!
+PING 3.81.144.236 (3.81.144.236) 56(84) bytes of data.
+64 bytes from 3.81.144.236: icmp_seq=1 ttl=63 time=0.808 ms
+
+--- 3.81.144.236 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.808/0.808/0.808/0.000 ms
+3.81.144.236 is up!
+PING 34.230.25.213 (34.230.25.213) 56(84) bytes of data.
+64 bytes from 34.230.25.213: icmp_seq=1 ttl=63 time=0.797 ms
+
+--- 34.230.25.213 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.797/0.797/0.797/0.000 ms
+34.230.25.213 is up!
+PING 35.171.185.191 (35.171.185.191) 56(84) bytes of data.
+64 bytes from 35.171.185.191: icmp_seq=1 ttl=63 time=0.890 ms
+
+--- 35.171.185.191 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.890/0.890/0.890/0.000 ms
+35.171.185.191 is up!
+PING 52.91.81.181 (52.91.81.181) 56(84) bytes of data.
+64 bytes from 52.91.81.181: icmp_seq=1 ttl=63 time=0.828 ms
+
+--- 52.91.81.181 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.828/0.828/0.828/0.000 ms
+52.91.81.181 is up!
+PING 18.212.141.155 (18.212.141.155) 56(84) bytes of data.
+64 bytes from 18.212.141.155: icmp_seq=1 ttl=63 time=0.858 ms
+
+--- 18.212.141.155 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.858/0.858/0.858/0.000 ms
+18.212.141.155 is up!
+PING 54.92.139.134 (54.92.139.134) 56(84) bytes of data.
+64 bytes from 54.92.139.134: icmp_seq=1 ttl=63 time=0.836 ms
+
+--- 54.92.139.134 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.836/0.836/0.836/0.000 ms
+54.92.139.134 is up!
+PING 35.153.211.133 (35.153.211.133) 56(84) bytes of data.
+64 bytes from 35.153.211.133: icmp_seq=1 ttl=63 time=0.834 ms
+
+--- 35.153.211.133 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.834/0.834/0.834/0.000 ms
+35.153.211.133 is up!
+PING 54.209.7.204 (54.209.7.204) 56(84) bytes of data.
+64 bytes from 54.209.7.204: icmp_seq=1 ttl=63 time=0.785 ms
+
+--- 54.209.7.204 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.785/0.785/0.785/0.000 ms
+54.209.7.204 is up!
+PING 3.87.179.134 (3.87.179.134) 56(84) bytes of data.
+64 bytes from 3.87.179.134: icmp_seq=1 ttl=63 time=0.846 ms
+
+--- 3.87.179.134 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.846/0.846/0.846/0.000 ms
+3.87.179.134 is up!
+PING 52.91.65.200 (52.91.65.200) 56(84) bytes of data.
+64 bytes from 52.91.65.200: icmp_seq=1 ttl=63 time=0.823 ms
+
+--- 52.91.65.200 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.823/0.823/0.823/0.000 ms
+52.91.65.200 is up!
+PING 18.232.92.242 (18.232.92.242) 56(84) bytes of data.
+64 bytes from 18.232.92.242: icmp_seq=1 ttl=63 time=0.782 ms
+
+--- 18.232.92.242 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.782/0.782/0.782/0.000 ms
+18.232.92.242 is up!
+PING 3.92.3.238 (3.92.3.238) 56(84) bytes of data.
+64 bytes from 3.92.3.238: icmp_seq=1 ttl=63 time=0.896 ms
+
+--- 3.92.3.238 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.896/0.896/0.896/0.000 ms
+3.92.3.238 is up!
+PING 54.226.113.92 (54.226.113.92) 56(84) bytes of data.
+64 bytes from 54.226.113.92: icmp_seq=1 ttl=63 time=0.744 ms
+
+--- 54.226.113.92 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.744/0.744/0.744/0.000 ms
+54.226.113.92 is up!
+PING 3.95.242.168 (3.95.242.168) 56(84) bytes of data.
+64 bytes from 3.95.242.168: icmp_seq=1 ttl=63 time=0.873 ms
+
+--- 3.95.242.168 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.873/0.873/0.873/0.000 ms
+3.95.242.168 is up!
+PING 35.173.195.136 (35.173.195.136) 56(84) bytes of data.
+64 bytes from 35.173.195.136: icmp_seq=1 ttl=63 time=0.832 ms
+
+--- 35.173.195.136 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.832/0.832/0.832/0.000 ms
+35.173.195.136 is up!
+PING 54.210.154.155 (54.210.154.155) 56(84) bytes of data.
+64 bytes from 54.210.154.155: icmp_seq=1 ttl=63 time=0.873 ms
+
+--- 54.210.154.155 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.873/0.873/0.873/0.000 ms
+54.210.154.155 is up!
+PING 54.147.199.242 (54.147.199.242) 56(84) bytes of data.
+64 bytes from 54.147.199.242: icmp_seq=1 ttl=63 time=0.845 ms
+
+--- 54.147.199.242 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.845/0.845/0.845/0.000 ms
+54.147.199.242 is up!
+PING 34.239.48.152 (34.239.48.152) 56(84) bytes of data.
+64 bytes from 34.239.48.152: icmp_seq=1 ttl=63 time=0.861 ms
+
+--- 34.239.48.152 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.861/0.861/0.861/0.000 ms
+34.239.48.152 is up!
+PING 54.81.70.70 (54.81.70.70) 56(84) bytes of data.
+64 bytes from 54.81.70.70: icmp_seq=1 ttl=63 time=0.813 ms
+
+--- 54.81.70.70 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.813/0.813/0.813/0.000 ms
+54.81.70.70 is up!
+PING 34.238.150.21 (34.238.150.21) 56(84) bytes of data.
+64 bytes from 34.238.150.21: icmp_seq=1 ttl=63 time=0.813 ms
+
+--- 34.238.150.21 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.813/0.813/0.813/0.000 ms
+34.238.150.21 is up!
+PING 54.237.208.245 (54.237.208.245) 56(84) bytes of data.
+64 bytes from 54.237.208.245: icmp_seq=1 ttl=63 time=0.804 ms
+
+--- 54.237.208.245 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.804/0.804/0.804/0.000 ms
+54.237.208.245 is up!
+PING 54.145.121.90 (54.145.121.90) 56(84) bytes of data.
+64 bytes from 54.145.121.90: icmp_seq=1 ttl=63 time=0.797 ms
+
+--- 54.145.121.90 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.797/0.797/0.797/0.000 ms
+54.145.121.90 is up!
+PING 54.164.31.254 (54.164.31.254) 56(84) bytes of data.
+64 bytes from 54.164.31.254: icmp_seq=1 ttl=63 time=0.791 ms
+
+--- 54.164.31.254 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.791/0.791/0.791/0.000 ms
+54.164.31.254 is up!
+PING 54.197.131.43 (54.197.131.43) 56(84) bytes of data.
+64 bytes from 54.197.131.43: icmp_seq=1 ttl=63 time=0.824 ms
+
+--- 54.197.131.43 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.824/0.824/0.824/0.000 ms
+54.197.131.43 is up!
+PING 3.87.249.20 (3.87.249.20) 56(84) bytes of data.
+64 bytes from 3.87.249.20: icmp_seq=1 ttl=63 time=0.817 ms
+
+--- 3.87.249.20 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.817/0.817/0.817/0.000 ms
+3.87.249.20 is up!
+PING 54.162.254.77 (54.162.254.77) 56(84) bytes of data.
+64 bytes from 54.162.254.77: icmp_seq=1 ttl=63 time=0.805 ms
+
+--- 54.162.254.77 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.805/0.805/0.805/0.000 ms
+54.162.254.77 is up!
+PING 3.95.1.68 (3.95.1.68) 56(84) bytes of data.
+64 bytes from 3.95.1.68: icmp_seq=1 ttl=63 time=0.850 ms
+
+--- 3.95.1.68 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.850/0.850/0.850/0.000 ms
+3.95.1.68 is up!
+PING 35.153.204.44 (35.153.204.44) 56(84) bytes of data.
+64 bytes from 35.153.204.44: icmp_seq=1 ttl=63 time=0.854 ms
+
+--- 35.153.204.44 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.854/0.854/0.854/0.000 ms
+35.153.204.44 is up!
+PING 3.80.169.7 (3.80.169.7) 56(84) bytes of data.
+64 bytes from 3.80.169.7: icmp_seq=1 ttl=63 time=0.798 ms
+
+--- 3.80.169.7 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.798/0.798/0.798/0.000 ms
+3.80.169.7 is up!
+PING 54.152.34.3 (54.152.34.3) 56(84) bytes of data.
+64 bytes from 54.152.34.3: icmp_seq=1 ttl=63 time=0.817 ms
+
+--- 54.152.34.3 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.817/0.817/0.817/0.000 ms
+54.152.34.3 is up!
+PING 34.226.219.152 (34.226.219.152) 56(84) bytes of data.
+64 bytes from 34.226.219.152: icmp_seq=1 ttl=63 time=0.818 ms
+
+--- 34.226.219.152 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.818/0.818/0.818/0.000 ms
+34.226.219.152 is up!
+PING 54.152.97.0 (54.152.97.0) 56(84) bytes of data.
+64 bytes from 54.152.97.0: icmp_seq=1 ttl=63 time=0.870 ms
+
+--- 54.152.97.0 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.870/0.870/0.870/0.000 ms
+54.152.97.0 is up!
+PING 54.81.97.151 (54.81.97.151) 56(84) bytes of data.
+64 bytes from 54.81.97.151: icmp_seq=1 ttl=63 time=0.875 ms
+
+--- 54.81.97.151 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.875/0.875/0.875/0.000 ms
+54.81.97.151 is up!
+Concluded Rejuvenation count:  2
+New instance details:  [
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-06a1e74bcdc2171ec",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-002d4bbacda7e652f",
+                "54.158.126.200"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-070d9d7fb44f8d4ba",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-072798dcbbef54b85",
+                "54.167.88.89"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0d10d0fd57bd2e647",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0c5494f6792f6fe86",
+                "3.85.194.225"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0318c90d7fb5d88bd",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-097d7e84339eef318",
+                "52.207.226.212"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-07660ac00b4411c57",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0d2df26a87a43784c",
+                "54.86.219.63"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-06964cb05d89a0606",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0bfccffbb73741e26",
+                "34.203.196.248"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-039d032389e206053",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0424e1fd161560745",
+                "54.208.46.203"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-02617cece5cb5dcef",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-029ef42c005636d98",
+                "3.80.179.101"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0e93b36e0036f1851",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-047d0229e549511b2",
+                "35.153.160.216"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-026f8ed527fb4b2c5",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-08dbf8af1f5fc5710",
+                "3.94.249.48"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-01cf03039558d5615",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-073c0ee958c18bffa",
+                "54.226.35.7"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0d1b07f30841720cb",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0a5f8a19b827d07b8",
+                "34.238.162.153"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-021f22728ccc7035e",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-05da60689eef4be3c",
+                "23.20.20.229"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0f307b474fff9d10c",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-05a8a3811d4e3b62d",
+                "54.89.93.218"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0177a2ceb0b0d8b07",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0e4b35f995071e5e3",
+                "54.197.213.85"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-00ce61b0d31f9db04",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-068e42c029927ed73",
+                "54.87.169.131"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0262bd60cf7304604",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-04564673aa7483baf",
+                "54.80.93.34"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0e5f52e21d7a515d8",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0697c85549f99e7cc",
+                "3.81.144.236"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-024f903d0212daa86",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0c69159dd4963b4a8",
+                "34.230.25.213"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0cb57fc5488008b8b",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-06ba85c1581897658",
+                "35.171.185.191"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0363dff5b2076c046",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0578d15924172713b",
+                "52.91.81.181"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0424fa01f6a3897cf",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0dadcbfa158e31698",
+                "18.212.141.155"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-076fa903dcc32ec3c",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-09dc3250018609433",
+                "54.92.139.134"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0a0687aef063e77e2",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0bc514e71b833960f",
+                "35.153.211.133"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0f909c409746bda93",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0631b171f43220529",
+                "54.209.7.204"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-08526f3764b143448",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0ffb612934ace06b0",
+                "3.87.179.134"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-05b86597d1af2fed4",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0d028fa65c27e6791",
+                "52.91.65.200"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0818514cd8e3646b2",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0235483c07dcf53e6",
+                "18.232.92.242"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-09f382182385573be",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0bbda7b6ebd6e33e7",
+                "3.92.3.238"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0988ee728c2df520e",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0c7a952d02d53b7c8",
+                "54.226.113.92"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-00ae431dfd48702d5",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0929ed858668c9a37",
+                "3.95.242.168"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0a82e99fc1bae1463",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0c7da3eab6ddadaac",
+                "35.173.195.136"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-034b0131b29397b04",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-07a5b17b6d33a7bf4",
+                "54.210.154.155"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0ab1f15d0f89e9821",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-01e489b4172516381",
+                "54.147.199.242"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-074b57d9c5ef5049f",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0a948b93d7409cbe4",
+                "34.239.48.152"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-03cf699109eb05388",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0a7f7ed0a5e5c6bbb",
+                "54.81.70.70"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-05295e13732d9dae6",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0e9d9f52cf70906b8",
+                "34.238.150.21"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0af27672943d75597",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0695d56c53e8ff13f",
+                "54.237.208.245"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-01b0a16936f13f2b4",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-048500c76356df054",
+                "54.145.121.90"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0016704181d83d7ab",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0c376d83cb9a3a7db",
+                "54.164.31.254"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0d8e0d932897ee6a1",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-04472fd2ba31386d7",
+                "54.197.131.43"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-070d1b5fbb3169ff6",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-03acad149b7b12db2",
+                "3.87.249.20"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0910a957797202164",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0e23f4043f4e68c3c",
+                "54.162.254.77"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-01e305fc50f1c24aa",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0dec04fadd33806b5",
+                "3.95.1.68"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0c190a6a2887a7cbe",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-011cf7f585f56f95e",
+                "35.153.204.44"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-04465f5c316836b40",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0a439adf8d0f6b40f",
+                "3.80.169.7"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-0bb9ef70b9c88169e",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0c4d766d36d76ce2c",
+                "54.152.34.3"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-00f35a52d2396a51b",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-003bdc338757fa35d",
+                "34.226.219.152"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-01854ec23d991da5f",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0992db6be5a08d02c",
+                "54.152.97.0"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.0502,
+        "InstanceID": "i-09dfd0e068ee9e407",
+        "InstanceType": "m6id.large",
+        "NICs": [
+            [
+                "eni-0de50a04fee46885d",
+                "54.81.97.151"
+            ]
+        ]
+    }
+]
+Total cost of this instance rejuvenation experiment: 0.16733333333333325
+ubuntu@ip-172-31-68-121:~/instance-manager/misc/rejuvenation_eval$ 
