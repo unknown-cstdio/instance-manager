@@ -633,17 +633,45 @@ def calculate_cost(instance_list, rej_period, exp_duration, multi_NIC=True, rej_
 
     return total_cost 
 
-# Usage example: python3 rejuvenation-eval-script.py 20 2 1 2 1 2 wireguard UM all
+def parse_input_args(filename):
+    with open(filename, 'r') as j:
+        input_args = json.loads(j.read())
+        # Convert to list of keys only:
+        # excluded_instances = list(cred_json.values())
+        # print(excluded_instances)
+    return input_args
+
+# Usage example: python3 rejuvenation-eval-script.py data/setup1/input-args.json
 if __name__ == '__main__':
-    REJUVENATION_PERIOD = int(sys.argv[1]) # in seconds
-    EXPERIMENT_DURATION = int(sys.argv[2]) # in minutes
-    INITIAL_EXPERIMENT_INDEX = int(sys.argv[3])
-    PROXY_COUNT = int(sys.argv[4]) # aka fleet size 
-    MIN_VCPU = int(sys.argv[5]) # not used for now
-    MAX_VCPU = int(sys.argv[6]) # not used for now
-    PROXY_IMPL = sys.argv[7] # wireguard | snowflake | baseline
-    account_type = sys.argv[8] # UM | anything else
-    mode = sys.argv[9] # liveip | instance | all
+    """
+        Reference input args: 
+            # REJUVENATION_PERIOD = int(sys.argv[1]) # in seconds
+            # EXPERIMENT_DURATION = int(sys.argv[2]) # in minutes
+            # INITIAL_EXPERIMENT_INDEX = int(sys.argv[3])
+            # PROXY_COUNT = int(sys.argv[4]) # aka fleet size 
+            # MIN_VCPU = int(sys.argv[5]) # not used for now
+            # MAX_VCPU = int(sys.argv[6]) # not used for now
+            # PROXY_IMPL = sys.argv[7] # wireguard | snowflake | baseline
+            # account_type = sys.argv[8] # UM | anything else
+            # mode = sys.argv[9] # liveip | instance | all
+            # dir = "data/setupX/" # used for placing the logs.
+    """
+    input_args_filename = sys.argv[1]
+    input_args = parse_input_args(input_args_filename)
+
+    REJUVENATION_PERIOD = int(input_args['REJUVENATION_PERIOD']) # in seconds
+    EXPERIMENT_DURATION = int(input_args['EXPERIMENT_DURATION']) # in minutes
+    INITIAL_EXPERIMENT_INDEX = int(input_args['INITIAL_EXPERIMENT_INDEX'])
+    PROXY_COUNT = int(input_args['PROXY_COUNT']) # aka fleet size 
+    MIN_VCPU = int(input_args['MIN_VCPU']) # not used for now
+    MAX_VCPU = int(input_args['MAX_VCPU']) # not used for now
+    MIN_COST = float(input_args['MIN_COST']),
+    MAX_COST = float(input_args['MAX_COST']),
+    PROXY_IMPL = input_args['PROXY_IMPL'] # wireguard | snowflake | baseline
+    account_type = input_args['account_type'] # UM | anything else
+    mode = input_args['mode'] # liveip | instance | all
+    data_dir = input_args['dir'] # used for placing the logs.
+    regions = input_args['regions']
 
     is_UM = account_type == 'UM'
 
@@ -656,29 +684,29 @@ if __name__ == '__main__':
     #     X=1
     
     filter = {
-        "min_cost": 0.05, #0.002 for first round of exps..
-        "max_cost": 0.3,
-        "regions": ["us-east-1"]
+        "min_cost": MIN_COST, #0.002 for first round of exps..
+        "max_cost": MAX_COST,
+        "regions": regions
     }
     wait_time_after_create = 30
     # try: 
     if mode == "instance":
         tag_prefix = "instance-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
-        filename = "data/" + tag_prefix + ".txt"
+        filename = data_dir + tag_prefix + ".txt"
         file = open(filename, 'w+')
         instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
     elif mode == "liveip":
         tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
-        filename = "data/" + tag_prefix + ".txt"
+        filename = data_dir + tag_prefix + ".txt"
         file = open(filename, 'w+')
         live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
     elif mode == "all":
         tag_prefix = "instance-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
-        filename = "data/" + tag_prefix + ".txt"
+        filename = data_dir + tag_prefix + ".txt"
         file = open(filename, 'w+')
         instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
         tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
-        filename = "data/" + tag_prefix + ".txt"
+        filename = data_dir + tag_prefix + ".txt"
         file = open(filename, 'w+')
         live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
     # except Exception as e:
