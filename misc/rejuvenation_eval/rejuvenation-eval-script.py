@@ -28,6 +28,7 @@
 
 import time 
 import sys, os
+import threading
 import math
 import json
 import warnings
@@ -335,6 +336,7 @@ def create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter
                         ...
                 ]
     """
+    start_time = time.time()
     if multi_NIC:
         prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=True)
         _ , cheapest_instance = get_instance_row_with_supported_architecture(initial_ec2, prices)
@@ -345,12 +347,16 @@ def create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter
         instance_list = create_fleet_live_ip_rejuvenation(ec2, cheapest_instance, proxy_count, proxy_impl, tag_prefix, wait_time_after_create, print_filename=print_filename) # expected tag_prefix: "liveip-expX" where X is the user-provided experiment number
         # print("Create fleet success with details: ", pretty_json(instance_list))
         print_stdout_and_filename("Create fleet success with details: " + pretty_json(instance_list), print_filename)
+        end_time = time.time()
+        print_stdout_and_filename("Time taken to create fleet: " + str(end_time - start_time), print_filename)
         return instance_list, ec2, ce
     else:
         prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=False)
         instance_list = loop_create_fleet_instance_rejuvenation(initial_ec2, is_UM, prices, proxy_count, proxy_impl, tag_prefix, wait_time_after_create, print_filename=print_filename)
         # print("Create fleet success with details: ", pretty_json(instance_list))
         print_stdout_and_filename("Create fleet success with details: " + pretty_json(instance_list), print_filename)
+        end_time = time.time()
+        print_stdout_and_filename("Time taken to create fleet: " + str(end_time - start_time), print_filename)
         return instance_list
 
 def loop_create_fleet_instance_rejuvenation(initial_ec2, is_UM, prices, proxy_count, proxy_impl, tag_prefix, wait_time_after_create=15, print_filename="data/output-general.txt"):
@@ -641,6 +647,80 @@ def parse_input_args(filename):
         # print(excluded_instances)
     return input_args
 
+def start_rej_threads(input_args):
+    """
+        Purpose: large groups of instances can take long to create. This function creates divides the instances into smaller groups, to be created by separate threads. 
+    """
+    REJUVENATION_PERIOD = int(input_args['REJUVENATION_PERIOD']) # in seconds
+    EXPERIMENT_DURATION = int(input_args['EXPERIMENT_DURATION']) # in minutes
+    INITIAL_EXPERIMENT_INDEX = int(input_args['INITIAL_EXPERIMENT_INDEX'])
+    PROXY_COUNT = int(input_args['PROXY_COUNT']) # aka fleet size 
+    MIN_VCPU = int(input_args['MIN_VCPU']) # not used for now
+    MAX_VCPU = int(input_args['MAX_VCPU']) # not used for now
+    MIN_COST = float(input_args['MIN_COST']),
+    MAX_COST = float(input_args['MAX_COST']),
+    PROXY_IMPL = input_args['PROXY_IMPL'] # wireguard | snowflake | baseline
+    account_type = input_args['account_type'] # UM | anything else
+    mode = input_args['mode'] # liveip | instance | all
+    data_dir = input_args['dir'] # used for placing the logs.
+    regions = input_args['regions'] # ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
+    batch_size = input_args['batch_size'] # number of instances to create per thread. Currently, we assume this is completely divisible by PROXY_COUNT.
+    wait_time_after_create = input_args['wait_time_after_create'] # e.g., 30
+    wait_time_after_nic = input_args['wait_time_after_nic'] # e.g., 30
+
+    is_UM = account_type == 'UM'
+
+    initial_ec2, initial_ce = api.choose_session(is_UM_AWS=is_UM, region='us-east-1') # used for whatever is needed. but may not be the same as that used for creating the instance fleet, as that depends on the region of the instance type.
+    
+    filter = {
+        "min_cost": MIN_COST, #0.002 for first round of exps..
+        "max_cost": MAX_COST,
+        "regions": regions
+    }
+
+    batch_count = math.ceil(PROXY_COUNT/batch_size)
+    threads = []
+    for i in range(batch_count):
+        if mode == "instance":
+            tag_prefix = "instance-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
+            filename = data_dir + tag_prefix + "-batch-count-{}".format(i) + ".txt"
+            file = open(filename, 'w+')
+            thread = threading.Thread(target=instance_rejuvenation, args=(initial_ec2, is_UM, REJUVENATION_PERIOD, batch_size, EXPERIMENT_DURATION, PROXY_IMPL), kwargs={
+                "filter":filter, "tag_prefix":tag_prefix, "wait_time_after_create":wait_time_after_create, "wait_time_after_nic": wait_time_after_nic, "print_filename":filename
+            })
+            thread.start()
+            threads.append(thread)
+        elif mode == "liveip":
+            tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
+            filename = data_dir + tag_prefix + "-batch-count-{}".format(i) + ".txt"
+            file = open(filename, 'w+')
+            live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
+            thread = threading.Thread(target=live_ip_rejuvenation, args=(initial_ec2, is_UM, REJUVENATION_PERIOD, batch_size, EXPERIMENT_DURATION, PROXY_IMPL), kwargs={
+                "filter":filter, "tag_prefix":tag_prefix, "wait_time_after_create":wait_time_after_create, "wait_time_after_nic": wait_time_after_nic, "print_filename":filename
+            })
+            thread.start()
+            threads.append(thread)
+        elif mode == "all":
+            tag_prefix = "instance-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
+            filename = data_dir + tag_prefix + "-batch-count-{}".format(i) + ".txt"
+            file = open(filename, 'w+')
+            thread = threading.Thread(target=instance_rejuvenation, args=(initial_ec2, is_UM, REJUVENATION_PERIOD, batch_size, EXPERIMENT_DURATION, PROXY_IMPL), kwargs={
+                "filter":filter, "tag_prefix":tag_prefix, "wait_time_after_create":wait_time_after_create, "wait_time_after_nic": wait_time_after_nic, "print_filename":filename
+            })
+            thread.start()
+            threads.append(thread)
+
+            tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
+            filename = data_dir + tag_prefix + "-batch-count-{}".format(i) + ".txt"
+            file = open(filename, 'w+')
+            thread = threading.Thread(target=live_ip_rejuvenation, args=(initial_ec2, is_UM, REJUVENATION_PERIOD, batch_size, EXPERIMENT_DURATION, PROXY_IMPL), kwargs={
+                "filter":filter, "tag_prefix":tag_prefix, "wait_time_after_create":wait_time_after_create, "wait_time_after_nic": wait_time_after_nic, "print_filename":filename
+            })
+            thread.start()
+            threads.append(thread)
+
+    return threads
+
 # Usage example: python3 rejuvenation-eval-script.py data/setup1/input-args.json
 if __name__ == '__main__':
     """
@@ -654,61 +734,18 @@ if __name__ == '__main__':
             # PROXY_IMPL = sys.argv[7] # wireguard | snowflake | baseline
             # account_type = sys.argv[8] # UM | anything else
             # mode = sys.argv[9] # liveip | instance | all
-            # dir = "data/setupX/" # used for placing the logs.
+            # data_dir = "data/setupX/" # used for placing the logs.
+            # wait_time_after_nic = int(sys.argv[10]) # e.g., 30. This is time to wait before pinging the NICs after instance/EIP creation
     """
     input_args_filename = sys.argv[1]
     input_args = parse_input_args(input_args_filename)
 
-    REJUVENATION_PERIOD = int(input_args['REJUVENATION_PERIOD']) # in seconds
-    EXPERIMENT_DURATION = int(input_args['EXPERIMENT_DURATION']) # in minutes
-    INITIAL_EXPERIMENT_INDEX = int(input_args['INITIAL_EXPERIMENT_INDEX'])
-    PROXY_COUNT = int(input_args['PROXY_COUNT']) # aka fleet size 
-    MIN_VCPU = int(input_args['MIN_VCPU']) # not used for now
-    MAX_VCPU = int(input_args['MAX_VCPU']) # not used for now
-    MIN_COST = float(input_args['MIN_COST']),
-    MAX_COST = float(input_args['MAX_COST']),
-    PROXY_IMPL = input_args['PROXY_IMPL'] # wireguard | snowflake | baseline
-    account_type = input_args['account_type'] # UM | anything else
-    mode = input_args['mode'] # liveip | instance | all
-    data_dir = input_args['dir'] # used for placing the logs.
-    regions = input_args['regions']
-
-    is_UM = account_type == 'UM'
-
-    initial_ec2, initial_ce = api.choose_session(is_UM_AWS=is_UM, region='us-east-1') # used for whatever is needed. but may not be the same as that used for creating the instance fleet, as that depends on the region of the instance type.
-
-    # Convenient way to nuke everything (for debugging only, uncomment to use... Need to move this elsewhere later):
-    # api.nuke_all_instances(initial_ec2, ['i-035f88ca820e399e7'])
-    # print("NUKED EVERYTING")
-    # while True:
-    #     X=1
-    
-    filter = {
-        "min_cost": MIN_COST, #0.002 for first round of exps..
-        "max_cost": MAX_COST,
-        "regions": regions
-    }
-    wait_time_after_create = 30
     # try: 
-    if mode == "instance":
-        tag_prefix = "instance-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
-        filename = data_dir + tag_prefix + ".txt"
-        file = open(filename, 'w+')
-        instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
-    elif mode == "liveip":
-        tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
-        filename = data_dir + tag_prefix + ".txt"
-        file = open(filename, 'w+')
-        live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
-    elif mode == "all":
-        tag_prefix = "instance-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
-        filename = data_dir + tag_prefix + ".txt"
-        file = open(filename, 'w+')
-        instance_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
-        tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
-        filename = data_dir + tag_prefix + ".txt"
-        file = open(filename, 'w+')
-        live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
+    threads = start_rej_threads(input_args)
+    for thread in threads:
+        # Wait for threads to end:
+        thread.join()
+    
     # except Exception as e:
     #     print("Exception occurred: ", e)
     #     api.nuke_all_instances(initial_ec2, ['i-035f88ca820e399e7']) # TODO: this assumes that all instances were created in initial_ec2, which is not necessarily true. fix this later.
