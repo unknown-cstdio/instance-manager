@@ -206,7 +206,7 @@ def get_cheapest_instance_types_df(ec2, filter=None, multi_NIC=False):
 
     return prices
 
-def get_instance_row_with_supported_architecture(ec2, prices, supported_architecture=['x86_64']):
+def get_instance_row_with_supported_architecture(ec2, prices, supported_architecture=['x86_64'], print_filename="data/output-general.txt"):
     """
         Parameters:
             supported_architecture: list of architectures to support. Default is x86_64 (i.e., Intel/AMD)
@@ -217,8 +217,12 @@ def get_instance_row_with_supported_architecture(ec2, prices, supported_architec
     for index, row in prices.iterrows():
         instance_type = row['InstanceType']
         instance_info = api.get_instance_type(ec2, [instance_type])
-        if instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures'][0] in supported_architecture:
-            return index, row
+        # print_stdout_and_filename("Instance type: " + str(instance_type) + " supports architecture: " + str(instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures']), print_filename)
+        for arch in instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures']:
+            if arch in supported_architecture:
+                return index, row
+        # if instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures'][0] in supported_architecture:
+        #     return index, row
     raise Exception("No instance type supports the architecture: " + str(supported_architecture))
 
 def create_fleet_live_ip_rejuvenation(ec2, cheapest_instance, proxy_count, proxy_impl, tag_prefix, wait_time_after_create=15, print_filename="data/output-general.txt"):
@@ -335,7 +339,7 @@ def create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count, prox
         instance = original_instance_details['InstanceId']
         # Tag created instance:
         instance_tag = tag_prefix + "-instance{}".format(str(index))
-        api.assign_name_tags(ec2, instance, instance_tag) 
+        # api.assign_name_tags(ec2, instance, instance_tag) # TODO: removed for now pending increase limit..
         
         instance_details = {'InstanceID': instance, 'InstanceCost': instance_type_cost, 'InstanceType': instance_type, 'NICs': []}
         # Get original NIC attached to the instance:
@@ -347,7 +351,7 @@ def create_fleet_instance_rejuvenation(ec2, cheapest_instance, proxy_count, prox
         # Tag the original NIC:
         instance_details['NICs'] = [(original_nic, original_pub_ip)]
         nic_tag = instance_tag + "-nic{}".format(str(1))
-        api.assign_name_tags(ec2, original_nic, nic_tag)
+        # api.assign_name_tags(ec2, original_nic, nic_tag) # TODO: removed for now pending increase limit..
 
         instance_list.append(instance_details) 
 
@@ -390,7 +394,7 @@ def create_fleet(initial_ec2, is_UM, proxy_count, proxy_impl, tag_prefix, filter
     start_time = time.time()
     if multi_NIC:
         prices = get_cheapest_instance_types_df(initial_ec2, filter, multi_NIC=True)
-        _ , cheapest_instance = get_instance_row_with_supported_architecture(initial_ec2, prices)
+        _ , cheapest_instance = get_instance_row_with_supported_architecture(initial_ec2, prices, print_filename=print_filename)
         # cheapest_instance = prices.iloc[0]
         cheapest_instance_region = cheapest_instance['AvailabilityZone'][:-1]
         # NOTE: by assigning a session here directly, we are assuming that the instance will be created successfully and completely with only this cheapest_instance that is in this region. We can expand this in future with little code modifications. 
@@ -425,7 +429,7 @@ def loop_create_fleet_instance_rejuvenation(initial_ec2, is_UM, prices, proxy_co
     first_iteration = True
 
     while proxy_count_remaining > 0:
-        index, cheapest_instance = get_instance_row_with_supported_architecture(initial_ec2, prices)
+        index, cheapest_instance = get_instance_row_with_supported_architecture(initial_ec2, prices, print_filename=print_filename)
 
         if first_iteration:
             optimal_cheapest_instance_details = {"OptimalInstanceCost": cheapest_instance['SpotPrice'], "OptimalInstanceType": cheapest_instance['InstanceType'], "OptimalInstanceZone": cheapest_instance['AvailabilityZone']}
@@ -839,6 +843,13 @@ if __name__ == '__main__':
             # data_dir = "data/setupX/" # used for placing the logs.
             # wait_time_after_nic = int(sys.argv[10]) # e.g., 30. This is time to wait before pinging the NICs after instance/EIP creation
     """
+    # ec2, ce = api.choose_session(is_UM_AWS=1, region="us-east-1")
+    # instance_info = api.get_instance_type(ec2, ["c1.medium"])
+    # print("Instance type: " + str("c1.medium") + " supports architecture: " + str(instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures']))
+
+    # while True:
+    #     x=1
+
     input_args_filename = sys.argv[1]
     input_args = parse_input_args(input_args_filename)
 

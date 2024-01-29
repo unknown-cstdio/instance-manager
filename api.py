@@ -210,6 +210,21 @@ def get_all_instances(ec2):
     instance_ids = [instance['InstanceId'] for instance in extract_instance_details_from_describe_instances_response(response)]
     return instance_ids
 
+def get_all_running_instances(ec2):
+    response = ec2.describe_instances(
+        Filters=[
+            {
+                'Name': 'instance-state-name',
+                'Values': [
+                    'running',
+                ]
+            }
+    ])
+    # response['Reservations'][0]['Instances'][0]['InstanceId']
+    # print(pretty_json(response))
+    instance_ids = [instance['InstanceId'] for instance in extract_instance_details_from_describe_instances_response(response)]
+    return instance_ids
+
 def extract_instance_details_from_describe_instances_response(response):
     """
         Purpose: each element of the response['Reservations'] list only holds 25 instances. 
@@ -343,7 +358,7 @@ def nuke_all_instances(ec2, excluded_instance_ids):
     """
         Terminates all instances, and spot requests except for the ones specified in excluded_instance_ids
     """
-    instances = get_all_instances(ec2)
+    instances = get_all_running_instances(ec2)
     instances_to_terminate = []
     for instance in instances:
         if instance not in excluded_instance_ids:
@@ -705,7 +720,7 @@ def use_UM_launch_templates(ec2, region, proxy_impl, type="main"):
     if region == "us-east-1":
         if proxy_impl == "wireguard":
             if type == "main": # Sina specific for migration efficacy test
-                launch_template_wireguard = "lt-0fc69e0cce8b5aedb" # not working yet
+                launch_template_wireguard = "lt-038b6b20362bdfbc8" # not working yet
             elif type == "side": # Sina specific for migration efficacy test
                 launch_template_wireguard = "lt-0e9b68603a74b345b"
             else:
@@ -799,8 +814,11 @@ def get_instance_row_with_supported_architecture(ec2, prices, supported_architec
     for index, row in prices.iterrows():
         instance_type = row['InstanceType']
         instance_info = get_instance_type(ec2, [instance_type])
-        if instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures'][0] in supported_architecture:
-            return index, row
+        for arch in instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures']:
+            if arch in supported_architecture:
+                return index, row
+        # if instance_info['InstanceTypes'][0]['ProcessorInfo']['SupportedArchitectures'][0] in supported_architecture:
+        #     return index, row
     raise Exception("No instance type supports the architecture: " + str(supported_architecture))
 
 # example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1 2 main
