@@ -1,0 +1,12 @@
+{
+    "Credentials": {
+        "AccessKeyId": "ASIAYS2NWBKCR7OLASOZ",
+        "SecretAccessKey": "g9IAS1N+pPdxB7jzJaQe5EuKttSxaNN8N0Dn+ZdW",
+        "SessionToken": "IQoJb3JpZ2luX2VjECkaCXVzLWVhc3QtMSJGMEQCIGrZKBPa9r7vL/J4IuP6qNUkkTlM3DizhpMAqpK4Y0ZvAiAFpb046Xz9c3fXlvzYeR2xFpwpvulfdssHJIv/SLvoDiquAgji//////////8BEAAaDDU5MDE4NDA1NzQ3NyIM987xu8nYNBEVLxlQKoICD1Ir3GcdqXUiRZmKICV/Zdwd9BtpBaTqRwQQeNqhNsWU+3PJQwAYgTWDMkp+9qT7tP9kdKHoG3WFOM8xIizr8J5wi0tG4WRFEdgK8gJnj+m03foUzYeR5KVmP4iO89cLv1tpFuzPewBkSSUcweBVxRUzTVmrjzwXgSLwwLliIxNeKrBCyBcAvT9LxBBE3BivQ84pXsfcnfpsSXJeJTv0RHpLQZE7xsS6JCJqy5sK8EvWCaGuMD0+m+ICdj0SktfJmpDTwSJdd7ASZN77K/KC0rMwZsn+nOWzVCOEwLp57LO31TkkmD/FXr1Hua/Tf3tKDB2W+dWqC/irg9eaiDzwmv0zMKnr260GOp4BOiNqZUShSeMG4JIUQem+Z95oI2H9BcQ908oINkOyxnJAVsrSFNuLihx06J8eGi6voj4wnbWdQSpGfmF7fcJbVRuyfm5UJDVsQErf75XiDovgaUE0QcMUYQ7LivfgdoSdi6uhjRyhmpdEHbjNbgxkijSCrK8i4RNyiQ5B4mLiPTEiFrH30/PidEh37CLt3RYgZwRP7Pf+sw9rvYQjaHc=",
+        "Expiration": "2024-01-29T01:47:37+00:00"
+    },
+    "AssumedRoleUser": {
+        "AssumedRoleId": "AROAYS2NWBKCZCYEKMLUP:SpotProxyPatRoleSession1",
+        "Arn": "arn:aws:sts::590184057477:assumed-role/spotproxy-pat-umich/SpotProxyPatRoleSession1"
+    }
+}
