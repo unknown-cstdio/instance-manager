@@ -366,7 +366,7 @@ def nuke_all_instances(ec2, excluded_instance_ids):
     #     TerminateInstances=True
     # )
 
-    return
+    return instances_to_terminate
 
 def create_fleet_archive(instance_type, region, launch_template, num):
     # feel free to delete this in the future
