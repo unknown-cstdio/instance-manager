@@ -569,6 +569,8 @@ def create_nics(ec2, instanceID, nic_count, az):
     """
         Creates the specified number of NICs for a given instance (based on its type) and attaches the NICs to this instance. 
 
+        NOTE: assumes the instance currently only has the default original NIC attached, i.e., only one NIC. 
+
         Parameters:
             nic_count: NICs to create for this instance
         Returns: 
@@ -593,12 +595,14 @@ def create_nics(ec2, instanceID, nic_count, az):
         response = ec2.create_network_interface(SubnetId=subnet_id)
         nic_ids.append(response['NetworkInterface']['NetworkInterfaceId'])
 
+    device_index = 1
     for nic_id in nic_ids:
         response = ec2.attach_network_interface(
             NetworkInterfaceId=nic_id,
             InstanceId=instanceID,
-            DeviceIndex=1
+            DeviceIndex=device_index
         )
+        device_index += 1
     return nic_ids 
 
 def get_cost(ce, StartTime, EndTime):

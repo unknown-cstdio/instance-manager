@@ -1,0 +1,1107 @@
+Begin Rejuvenation count: 1
+Created 7 instances of type r6a.4xlarge with 8 NICs each, and hourly cost 0.3738
+Create fleet success with details: [
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-08d0e8328119ff949",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-00d34a895f91f1e8c",
+                "eipalloc-07ea8eb00a820b338",
+                "eipassoc-05e142d6afbde137f"
+            ],
+            [
+                "eni-0f00df876f9865886",
+                "eipalloc-03f175e9721ce72b0",
+                "eipassoc-013cfdbc660cb6f8c"
+            ],
+            [
+                "eni-08c94b0a1f67f0e8b",
+                "eipalloc-0eef59fb6d51e1ac6",
+                "eipassoc-07ee44a4241a14831"
+            ],
+            [
+                "eni-0c7515456d4f2f9b5",
+                "eipalloc-07bf892bb8661f581",
+                "eipassoc-001f7597d97d7439b"
+            ],
+            [
+                "eni-0104bd92665212da5",
+                "eipalloc-051613f5e407523fe",
+                "eipassoc-0b8ab57e5128f4a35"
+            ],
+            [
+                "eni-0efabedbb7babc54a",
+                "eipalloc-03db3b1efd20a45c0",
+                "eipassoc-0865d28cea0a9bbdf"
+            ],
+            [
+                "eni-0f867c795e2512bf2",
+                "eipalloc-08c2234a4327bc55c",
+                "eipassoc-0811c6d1d5257e85d"
+            ],
+            [
+                "eni-01a88e1a973348d9a",
+                "eipalloc-00e5b1230eb057dae",
+                "eipassoc-006b19f9bb9937b03"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0a0e239e7d75502d7",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-0be79a65e9408ff24",
+                "eipalloc-0ef11bb181d2af310",
+                "eipassoc-0b1a38be9d663ed3e"
+            ],
+            [
+                "eni-0e5d90354d5093d84",
+                "eipalloc-0061cc727958adc09",
+                "eipassoc-0028f8aaaf4acd1a2"
+            ],
+            [
+                "eni-0dce5e39b2dfe2081",
+                "eipalloc-0e44b9e4dda06699e",
+                "eipassoc-022f721fb350203cc"
+            ],
+            [
+                "eni-0aefbaf19fbb1c11d",
+                "eipalloc-0d0f47242e1314a92",
+                "eipassoc-05eb80da987d39871"
+            ],
+            [
+                "eni-0c023e5d09438f0bd",
+                "eipalloc-0d6ab9fc90c4649aa",
+                "eipassoc-06f4b1e6da518b2d6"
+            ],
+            [
+                "eni-07fe5473a0ca9e6d9",
+                "eipalloc-09562b7e55f2203bc",
+                "eipassoc-01e5ff9a2c5ef441a"
+            ],
+            [
+                "eni-04bf4467a331f7e59",
+                "eipalloc-0c37b4998e4c12a36",
+                "eipassoc-0f4963ff58076ad85"
+            ],
+            [
+                "eni-0f355599446d373f7",
+                "eipalloc-0ee3b6c4eac5d0652",
+                "eipassoc-0a8a0fb8cf41cccdf"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-01994915f78d116f4",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-0148b69dae6858585",
+                "eipalloc-0ae10b9943d479004",
+                "eipassoc-046e8ad13d8b81381"
+            ],
+            [
+                "eni-0b178b41be01f5c76",
+                "eipalloc-08ecda2451c79adce",
+                "eipassoc-0616f121f95301408"
+            ],
+            [
+                "eni-0dd2e9a841b54f2e4",
+                "eipalloc-0a709b269373f9e07",
+                "eipassoc-09390d5ef7a9298d0"
+            ],
+            [
+                "eni-0a329ea59a5d1e423",
+                "eipalloc-02c911fe27a0f1540",
+                "eipassoc-048c17de9d3c09ea9"
+            ],
+            [
+                "eni-009ee9520dd855946",
+                "eipalloc-0133ec8899af76e24",
+                "eipassoc-03724e2018f3fbae8"
+            ],
+            [
+                "eni-03f16800184596f2c",
+                "eipalloc-0736245524115ee9c",
+                "eipassoc-097fac690c814142b"
+            ],
+            [
+                "eni-06f747636836370eb",
+                "eipalloc-0e31d5fdcb1438514",
+                "eipassoc-003d684035b416bb0"
+            ],
+            [
+                "eni-0ebc506d230564222",
+                "eipalloc-01c048076330e4013",
+                "eipassoc-000e00c33a2a4027e"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0a3d909ef44849d8c",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-0aea2a39ca8ea872a",
+                "eipalloc-0a099be681cbac76e",
+                "eipassoc-017c4ca583704f32f"
+            ],
+            [
+                "eni-0036658ef6bb5f0a2",
+                "eipalloc-08aacd63b288a5d92",
+                "eipassoc-08e2abf0303f664b3"
+            ],
+            [
+                "eni-04c70bc26b9bb47ba",
+                "eipalloc-0ca3a3cc3a8c6ba97",
+                "eipassoc-09c4df659f90136b8"
+            ],
+            [
+                "eni-0dea9581e31a6f95a",
+                "eipalloc-0873ce561bca6c538",
+                "eipassoc-0f8430763d97d5186"
+            ],
+            [
+                "eni-05740120a245a23db",
+                "eipalloc-07979cea1a5a59d49",
+                "eipassoc-095fb064ac18cf7da"
+            ],
+            [
+                "eni-08eace4fea7582993",
+                "eipalloc-0edd510e9e33a05c0",
+                "eipassoc-0bc43742f8a83ef5e"
+            ],
+            [
+                "eni-0a4a6779c4c20f8e2",
+                "eipalloc-0facc643ceb243416",
+                "eipassoc-0746e101bcfd2d563"
+            ],
+            [
+                "eni-0ecc07e68b1e84bbe",
+                "eipalloc-037c62fb8d9b5acfe",
+                "eipassoc-03286cb711fa2f023"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0ef7731e0e8c529dd",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-07f5c872c4290e234",
+                "eipalloc-01303c8a962c00514",
+                "eipassoc-0d1f14e5db332dd98"
+            ],
+            [
+                "eni-08d6b9d7f151219f3",
+                "eipalloc-0fdb859dbd2c70472",
+                "eipassoc-09e41488f0bd2b88d"
+            ],
+            [
+                "eni-0b8be83a084670053",
+                "eipalloc-0d83f842f2581d30f",
+                "eipassoc-03792bcd2a6ecfd7d"
+            ],
+            [
+                "eni-05a37b40bc024bd22",
+                "eipalloc-0b1a71d2f39174ba8",
+                "eipassoc-062858f31722644cc"
+            ],
+            [
+                "eni-06b89f71b8c65887d",
+                "eipalloc-0114fdf5813238435",
+                "eipassoc-0308efad586e37a9a"
+            ],
+            [
+                "eni-0d09d3f904a580e52",
+                "eipalloc-06c9ef88a775bd0be",
+                "eipassoc-0de855cc2f85d080c"
+            ],
+            [
+                "eni-03e74dceb1de5f387",
+                "eipalloc-0433150e06ff6ded6",
+                "eipassoc-0c28511511ef3f14e"
+            ],
+            [
+                "eni-0e442a12a84ad4884",
+                "eipalloc-0c59238e398b6ddbf",
+                "eipassoc-01ed4ede4186a7c2c"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-089907bb2d1cbbde5",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-0a0527f1ce2195735",
+                "eipalloc-042c12491fe3fea0d",
+                "eipassoc-0615b64e749357487"
+            ],
+            [
+                "eni-0d014196f4823d6f8",
+                "eipalloc-0f5e6e66d4b8259eb",
+                "eipassoc-09edfbeb93435ca2d"
+            ],
+            [
+                "eni-028a34a7e28c29f6b",
+                "eipalloc-0e663af8c78004d1c",
+                "eipassoc-0b9385b935d37b2cc"
+            ],
+            [
+                "eni-077e317b9c4f7eb20",
+                "eipalloc-06e9c1ec15539e6c3",
+                "eipassoc-07d78aac34c19c246"
+            ],
+            [
+                "eni-07c3328457603be64",
+                "eipalloc-0fbe860ad1bd61a9e",
+                "eipassoc-007db526067d6ee4f"
+            ],
+            [
+                "eni-09e1249c0be041e19",
+                "eipalloc-09ac24d979fc62b49",
+                "eipassoc-03cc9595c1472abf7"
+            ],
+            [
+                "eni-07478ce6fcc3e6fe1",
+                "eipalloc-03816d4b9e0049afb",
+                "eipassoc-0d1ae5c257db96bf5"
+            ],
+            [
+                "eni-0e01650cae752bb0c",
+                "eipalloc-0298716466ab1b373",
+                "eipassoc-010711706b4883799"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-03d2fe7f7946fa981",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-07865db6a84ec2e08",
+                "eipalloc-0a6aa592bf16b56d2",
+                "eipassoc-0ad656a7b98653e49"
+            ],
+            [
+                "eni-0aa7479035d9df1fc",
+                "eipalloc-06d2381fe38cb4112",
+                "eipassoc-08bda19c77ef40432"
+            ],
+            [
+                "eni-058199b43cff98c41",
+                "eipalloc-089b1b839cae04c05",
+                "eipassoc-06748aeb5a8f09dee"
+            ],
+            [
+                "eni-098476bb29fc9945b",
+                "eipalloc-08bd67cb0fd596e4d",
+                "eipassoc-0d7d6a558d453f20d"
+            ],
+            [
+                "eni-09ab36adc0e96deab",
+                "eipalloc-0b376f2d2727c8af7",
+                "eipassoc-0f45e8e98e531f43b"
+            ],
+            [
+                "eni-06ce28160ff1bb21e",
+                "eipalloc-0e4574370b5590bd9",
+                "eipassoc-01e68d35d4befd705"
+            ],
+            [
+                "eni-0c3e2c92cf9b5179b",
+                "eipalloc-09066635e5d6917a2",
+                "eipassoc-0f0bf99b944ced2f5"
+            ],
+            [
+                "eni-0f818dc3ecbe79c2e",
+                "eipalloc-0cc3718e49c04da4e",
+                "eipassoc-0d2d16d3b2612a53d"
+            ]
+        ]
+    }
+]
+Time taken to create fleet: 186.1930685043335
+Begin Rejuvenation count: 2
+Concluded Rejuvenation count: 2
+New instance details: [
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-08d0e8328119ff949",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-00d34a895f91f1e8c",
+                "eipalloc-068a8ba7daf2fd0c2",
+                "eipassoc-0b82db907ed74741a"
+            ],
+            [
+                "eni-0f00df876f9865886",
+                "eipalloc-086218be7cc4be96b",
+                "eipassoc-03362ee0b0c10d5cd"
+            ],
+            [
+                "eni-08c94b0a1f67f0e8b",
+                "eipalloc-0d1575852f090b329",
+                "eipassoc-0f2b8584d4170d425"
+            ],
+            [
+                "eni-0c7515456d4f2f9b5",
+                "eipalloc-079996bf27044d80e",
+                "eipassoc-05b008d4ff917d685"
+            ],
+            [
+                "eni-0104bd92665212da5",
+                "eipalloc-019a1bec81dca3aa8",
+                "eipassoc-0840dea434e3355c3"
+            ],
+            [
+                "eni-0efabedbb7babc54a",
+                "eipalloc-041af573c9a390596",
+                "eipassoc-0e5f72dd9b1370423"
+            ],
+            [
+                "eni-0f867c795e2512bf2",
+                "eipalloc-0657a93d96c8a6b89",
+                "eipassoc-086e3a84654435ac0"
+            ],
+            [
+                "eni-01a88e1a973348d9a",
+                "eipalloc-0f845d13d9aa1f45a",
+                "eipassoc-04c62c0156467d702"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0a0e239e7d75502d7",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-0be79a65e9408ff24",
+                "eipalloc-0b882d21704a78190",
+                "eipassoc-0d08691a5f39bc5ad"
+            ],
+            [
+                "eni-0e5d90354d5093d84",
+                "eipalloc-00dbe1209dd31c4b1",
+                "eipassoc-049f52476c79dec5f"
+            ],
+            [
+                "eni-0dce5e39b2dfe2081",
+                "eipalloc-06eb9bef1f6d5002f",
+                "eipassoc-0b16d55c223dc9852"
+            ],
+            [
+                "eni-0aefbaf19fbb1c11d",
+                "eipalloc-050360af05ad5dcf1",
+                "eipassoc-0a68615dc4a6b7283"
+            ],
+            [
+                "eni-0c023e5d09438f0bd",
+                "eipalloc-0255e6aa66b80fc69",
+                "eipassoc-07ad999810f88c7dc"
+            ],
+            [
+                "eni-07fe5473a0ca9e6d9",
+                "eipalloc-03029889b5fc8f502",
+                "eipassoc-0dce804877b1b3339"
+            ],
+            [
+                "eni-04bf4467a331f7e59",
+                "eipalloc-0556a9f3493814249",
+                "eipassoc-0e75abd75e176a939"
+            ],
+            [
+                "eni-0f355599446d373f7",
+                "eipalloc-03bb84e776cf359bf",
+                "eipassoc-08fcdbc015ec21c4e"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-01994915f78d116f4",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-0148b69dae6858585",
+                "eipalloc-00d360aa325a3e9e4",
+                "eipassoc-00966cbd9c8618cea"
+            ],
+            [
+                "eni-0b178b41be01f5c76",
+                "eipalloc-07bc907cab64d7026",
+                "eipassoc-085a77f4c163acdb2"
+            ],
+            [
+                "eni-0dd2e9a841b54f2e4",
+                "eipalloc-0ee4cdd6f451f5bba",
+                "eipassoc-084c63c73931bb22c"
+            ],
+            [
+                "eni-0a329ea59a5d1e423",
+                "eipalloc-02c48c50919c89697",
+                "eipassoc-0afc35efd02bb0a15"
+            ],
+            [
+                "eni-009ee9520dd855946",
+                "eipalloc-0602e1d9a255d3368",
+                "eipassoc-064bb115178dbe5df"
+            ],
+            [
+                "eni-03f16800184596f2c",
+                "eipalloc-02b08ef5fb54850ef",
+                "eipassoc-0659eaf14fc3eab37"
+            ],
+            [
+                "eni-06f747636836370eb",
+                "eipalloc-061c5873e67d30418",
+                "eipassoc-03b6626fe31d311c9"
+            ],
+            [
+                "eni-0ebc506d230564222",
+                "eipalloc-05b95e684a55a6d44",
+                "eipassoc-02f5f833ec005777c"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0a3d909ef44849d8c",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-0aea2a39ca8ea872a",
+                "eipalloc-0a7f2c6c48a1966f8",
+                "eipassoc-086912d62682bbe23"
+            ],
+            [
+                "eni-0036658ef6bb5f0a2",
+                "eipalloc-034bfb80e37271255",
+                "eipassoc-0e569f63fb1bb5a49"
+            ],
+            [
+                "eni-04c70bc26b9bb47ba",
+                "eipalloc-0f87d6421c185b859",
+                "eipassoc-06c4939de66719500"
+            ],
+            [
+                "eni-0dea9581e31a6f95a",
+                "eipalloc-0f26fc0012e17cedc",
+                "eipassoc-04296499f7af81a9f"
+            ],
+            [
+                "eni-05740120a245a23db",
+                "eipalloc-0229e7f478262ccc4",
+                "eipassoc-0f9ce34b5636e5156"
+            ],
+            [
+                "eni-08eace4fea7582993",
+                "eipalloc-0a71150dc03652a2f",
+                "eipassoc-06a9461f22550cf50"
+            ],
+            [
+                "eni-0a4a6779c4c20f8e2",
+                "eipalloc-03b68d7e7d970b5c7",
+                "eipassoc-09df6939ca40bdbb6"
+            ],
+            [
+                "eni-0ecc07e68b1e84bbe",
+                "eipalloc-0396f4b7222ac0102",
+                "eipassoc-0d1c180e9335753a1"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0ef7731e0e8c529dd",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-07f5c872c4290e234",
+                "eipalloc-0b10e7baa0a766c2b",
+                "eipassoc-06ff47074b8c4108f"
+            ],
+            [
+                "eni-08d6b9d7f151219f3",
+                "eipalloc-0458750ad67d492e5",
+                "eipassoc-0d6fc544c955756b3"
+            ],
+            [
+                "eni-0b8be83a084670053",
+                "eipalloc-02706d5c2b4195a9c",
+                "eipassoc-078b0eca420032946"
+            ],
+            [
+                "eni-05a37b40bc024bd22",
+                "eipalloc-08901e22f8301a598",
+                "eipassoc-0fbbf4939cf1d71cc"
+            ],
+            [
+                "eni-06b89f71b8c65887d",
+                "eipalloc-03ce52bdb84aaf7cb",
+                "eipassoc-03658154edf3718c7"
+            ],
+            [
+                "eni-0d09d3f904a580e52",
+                "eipalloc-07b855d3afcf5dbad",
+                "eipassoc-088cd8bf17c411aa7"
+            ],
+            [
+                "eni-03e74dceb1de5f387",
+                "eipalloc-06b923ffcbc7e9155",
+                "eipassoc-0959d07231babb432"
+            ],
+            [
+                "eni-0e442a12a84ad4884",
+                "eipalloc-041da98b126a1b9fe",
+                "eipassoc-0689292d35b3a67bf"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-089907bb2d1cbbde5",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-0a0527f1ce2195735",
+                "eipalloc-0c141f3be279002f7",
+                "eipassoc-096f3218a259746b8"
+            ],
+            [
+                "eni-0d014196f4823d6f8",
+                "eipalloc-0d605c557759b5722",
+                "eipassoc-09d00516013084f72"
+            ],
+            [
+                "eni-028a34a7e28c29f6b",
+                "eipalloc-042c1dcd85cdd5b9d",
+                "eipassoc-09e0ed390503f698c"
+            ],
+            [
+                "eni-077e317b9c4f7eb20",
+                "eipalloc-0e20615c4071a689c",
+                "eipassoc-04ec37847853e949b"
+            ],
+            [
+                "eni-07c3328457603be64",
+                "eipalloc-05fa5825b1b9bf112",
+                "eipassoc-0a703706195705def"
+            ],
+            [
+                "eni-09e1249c0be041e19",
+                "eipalloc-0767af7229b3dc034",
+                "eipassoc-03a633ac9cb524b29"
+            ],
+            [
+                "eni-07478ce6fcc3e6fe1",
+                "eipalloc-06002b6dc826d513c",
+                "eipassoc-0c04aa4d0a7829a9d"
+            ],
+            [
+                "eni-0e01650cae752bb0c",
+                "eipalloc-001a29a91c3aa253c",
+                "eipassoc-0b0cc7c4633837536"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-03d2fe7f7946fa981",
+        "InstanceType": "r6a.4xlarge",
+        "NICs": [
+            [
+                "eni-07865db6a84ec2e08",
+                "eipalloc-0ec541ccbe60ed1a1",
+                "eipassoc-0fbbd9ab6787a0c97"
+            ],
+            [
+                "eni-0aa7479035d9df1fc",
+                "eipalloc-0bc12e21bc25a6854",
+                "eipassoc-0a84096c5b7e20fa4"
+            ],
+            [
+                "eni-058199b43cff98c41",
+                "eipalloc-044ff8d1a09727efc",
+                "eipassoc-0f23ce940dc8bdd65"
+            ],
+            [
+                "eni-098476bb29fc9945b",
+                "eipalloc-07ae940b558a232fc",
+                "eipassoc-012d52097d18adf50"
+            ],
+            [
+                "eni-09ab36adc0e96deab",
+                "eipalloc-08aaf44c0074e80c9",
+                "eipassoc-0236cebe1592357cd"
+            ],
+            [
+                "eni-06ce28160ff1bb21e",
+                "eipalloc-05cca17cff946a0e0",
+                "eipassoc-046025028d383b4b2"
+            ],
+            [
+                "eni-0c3e2c92cf9b5179b",
+                "eipalloc-005b795b76a4acd05",
+                "eipassoc-0496217f205579e56"
+            ],
+            [
+                "eni-0f818dc3ecbe79c2e",
+                "eipalloc-0467f1a7d5d7017fe",
+                "eipassoc-05bca17087ae081a4"
+            ]
+        ]
+    }
+]
+Total cost of this live IP rejuvenation experiment: 23.396100000000004. Optimal total cost (multi-NIC) is: 0.7161000000000002
+Total monthly cost of this live IP rejuvenation experiment: 101071.15200000002. Optimal monthly cost (multi-NIC) is: 3093.552000000001
+Begin Rejuvenation count: 1
+Created 3 instances of type m4.4xlarge with 8 NICs each, and hourly cost 0.3738
+Create fleet success with details: [
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-03b60ab421a7bf655",
+        "InstanceType": "m4.4xlarge",
+        "NICs": [
+            [
+                "eni-0fe46731e43897458",
+                "eipalloc-079222f045f999df2",
+                "eipassoc-0256114251cb4d479"
+            ],
+            [
+                "eni-090085c990bb1216a",
+                "eipalloc-035b26ba5560d9b93",
+                "eipassoc-0ab6768f88dc08538"
+            ],
+            [
+                "eni-0c586d0760b800040",
+                "eipalloc-040682a546c89bb6f",
+                "eipassoc-0a0028272261e5b0e"
+            ],
+            [
+                "eni-0826da24b1e50d61c",
+                "eipalloc-05a0e55a117317c77",
+                "eipassoc-02e250aaa31377181"
+            ],
+            [
+                "eni-01597b5958f154b8c",
+                "eipalloc-0274f4df3daffdc33",
+                "eipassoc-01d35133fd6efbf11"
+            ],
+            [
+                "eni-03cfbdecfd076df70",
+                "eipalloc-0dffc55c8235dd01c",
+                "eipassoc-007c8f811ea6ef870"
+            ],
+            [
+                "eni-09129f42098d63a65",
+                "eipalloc-03bf1daee8a60d479",
+                "eipassoc-03fbaa97b30886833"
+            ],
+            [
+                "eni-03a99ab09f27fd9cc",
+                "eipalloc-067b76e951fea921e",
+                "eipassoc-049b5bb80bcf18944"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0cd59c663202a0ffd",
+        "InstanceType": "m4.4xlarge",
+        "NICs": [
+            [
+                "eni-01bff14050ff130a1",
+                "eipalloc-060b7838e33a1c67c",
+                "eipassoc-0112b9ce2e87ff423"
+            ],
+            [
+                "eni-0a015d80a9c15e047",
+                "eipalloc-0666532d9ef3c2f8f",
+                "eipassoc-0eccce6adfe5a9264"
+            ],
+            [
+                "eni-0d60f9816169c02eb",
+                "eipalloc-07c576086e5ea33b3",
+                "eipassoc-0b3ca8cab40ce4d8d"
+            ],
+            [
+                "eni-0fe0da229f01f000a",
+                "eipalloc-070ac600cdb822e2d",
+                "eipassoc-0d1bd9b3a99c527a9"
+            ],
+            [
+                "eni-0ee1d6da6fef8a4bb",
+                "eipalloc-099f263a18278ae04",
+                "eipassoc-078d7729a4146d8b6"
+            ],
+            [
+                "eni-08797bb32551ddafe",
+                "eipalloc-01abe59c44c282b0b",
+                "eipassoc-0d7bd54ca99811d94"
+            ],
+            [
+                "eni-05a23a3474c72e91a",
+                "eipalloc-0d724da4b3573a7cc",
+                "eipassoc-0c43cd71ad99572fa"
+            ],
+            [
+                "eni-069469e71464dba87",
+                "eipalloc-0f330f457a4409f2b",
+                "eipassoc-0d6f89ee196fdef6e"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0d8499a23378860db",
+        "InstanceType": "m4.4xlarge",
+        "NICs": [
+            [
+                "eni-0524fb24d000aacb6",
+                "eipalloc-09bc7aff30aabf6aa",
+                "eipassoc-0a5d13c78451dff61"
+            ],
+            [
+                "eni-0fd6b2b413181cfd0",
+                "eipalloc-0c434f64fc1e90269",
+                "eipassoc-012c6f08775149719"
+            ],
+            [
+                "eni-07823d21a78711c96",
+                "eipalloc-0297b618fa6975167",
+                "eipassoc-0d279bc5086630e51"
+            ],
+            [
+                "eni-0ee08c2b5988cd5cd",
+                "eipalloc-08a2ca211ced82713",
+                "eipassoc-03be4151312a8d6bf"
+            ],
+            [
+                "eni-0aece932e1928a2fe",
+                "eipalloc-03c2ce93539d78e4b",
+                "eipassoc-0534be25e5309d169"
+            ],
+            [
+                "eni-008b69f6229c56864",
+                "eipalloc-06307311ff527fadb",
+                "eipassoc-0fd9d085461fc2caa"
+            ],
+            [
+                "eni-0984af52a25ca1550",
+                "eipalloc-0bc638a4d8ebfe8a8",
+                "eipassoc-004eaf23036d1d7cc"
+            ],
+            [
+                "eni-04d8fbd3f9fcc8b27",
+                "eipalloc-00ab1f64247e65e76",
+                "eipassoc-0269367a8ce9ef36b"
+            ]
+        ]
+    }
+]
+Time taken to create fleet: 98.04670262336731
+Begin Rejuvenation count: 2
+Concluded Rejuvenation count: 2
+New instance details: [
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-03b60ab421a7bf655",
+        "InstanceType": "m4.4xlarge",
+        "NICs": [
+            [
+                "eni-0fe46731e43897458",
+                "eipalloc-08e5b5e3e87119539",
+                "eipassoc-06a6c0685aa06d30e"
+            ],
+            [
+                "eni-090085c990bb1216a",
+                "eipalloc-0f6e07244d4686bf7",
+                "eipassoc-04c46e00ea9167126"
+            ],
+            [
+                "eni-0c586d0760b800040",
+                "eipalloc-00f0f94bd4dd5ca79",
+                "eipassoc-0dcc1eef6d91f9bf2"
+            ],
+            [
+                "eni-0826da24b1e50d61c",
+                "eipalloc-01bd9f0a5d9ba76e0",
+                "eipassoc-044d6d770db52700e"
+            ],
+            [
+                "eni-01597b5958f154b8c",
+                "eipalloc-0b337c7c3a1003768",
+                "eipassoc-0c6a0a5ad6a88bfef"
+            ],
+            [
+                "eni-03cfbdecfd076df70",
+                "eipalloc-0a33b218605e17b58",
+                "eipassoc-0776d75223aa33bf7"
+            ],
+            [
+                "eni-09129f42098d63a65",
+                "eipalloc-0e78b6c71c6f1ac5e",
+                "eipassoc-055a6ba92e33ca7f3"
+            ],
+            [
+                "eni-03a99ab09f27fd9cc",
+                "eipalloc-0f3aa7531101b26e6",
+                "eipassoc-0fb265a6cdfe1afaf"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0cd59c663202a0ffd",
+        "InstanceType": "m4.4xlarge",
+        "NICs": [
+            [
+                "eni-01bff14050ff130a1",
+                "eipalloc-02106a99bcd9ce3c1",
+                "eipassoc-07e077c9977b7ac6d"
+            ],
+            [
+                "eni-0a015d80a9c15e047",
+                "eipalloc-0e33b22a73e61a253",
+                "eipassoc-05b03f9c41377a2fb"
+            ],
+            [
+                "eni-0d60f9816169c02eb",
+                "eipalloc-0690ece57ab9d512f",
+                "eipassoc-0c79af785665352d5"
+            ],
+            [
+                "eni-0fe0da229f01f000a",
+                "eipalloc-0b4ec9be3d01fc8fd",
+                "eipassoc-093f4626f3695c779"
+            ],
+            [
+                "eni-0ee1d6da6fef8a4bb",
+                "eipalloc-0d85b8ea0749f0b10",
+                "eipassoc-0641b9268ad0539fc"
+            ],
+            [
+                "eni-08797bb32551ddafe",
+                "eipalloc-0de1dd010ccb22bb9",
+                "eipassoc-0f2b62f85e81665e3"
+            ],
+            [
+                "eni-05a23a3474c72e91a",
+                "eipalloc-05f5808f6c6719c8e",
+                "eipassoc-0bb7fa085ef842408"
+            ],
+            [
+                "eni-069469e71464dba87",
+                "eipalloc-014661706cc044b21",
+                "eipassoc-0808753f19c83c229"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0d8499a23378860db",
+        "InstanceType": "m4.4xlarge",
+        "NICs": [
+            [
+                "eni-0524fb24d000aacb6",
+                "eipalloc-01459a213c94637d1",
+                "eipassoc-0dc527703b65540aa"
+            ],
+            [
+                "eni-0fd6b2b413181cfd0",
+                "eipalloc-0549aac57259032a3",
+                "eipassoc-0490a3e3ff6668394"
+            ],
+            [
+                "eni-07823d21a78711c96",
+                "eipalloc-0ad0f0b966851aa7d",
+                "eipassoc-096ac5fbfc5a86e53"
+            ],
+            [
+                "eni-0ee08c2b5988cd5cd",
+                "eipalloc-017fa50e9700949f2",
+                "eipassoc-038c511d55964a16f"
+            ],
+            [
+                "eni-0aece932e1928a2fe",
+                "eipalloc-0fc6df665eb3920bb",
+                "eipassoc-0e6cb13c9fa6725e7"
+            ],
+            [
+                "eni-008b69f6229c56864",
+                "eipalloc-09db35da50a05e108",
+                "eipassoc-0c83a0b1c8689fc9f"
+            ],
+            [
+                "eni-0984af52a25ca1550",
+                "eipalloc-03e5ceef934de832c",
+                "eipassoc-02b28faa2c5053029"
+            ],
+            [
+                "eni-04d8fbd3f9fcc8b27",
+                "eipalloc-0b0d3ea825fb8c528",
+                "eipassoc-09a699a8720212762"
+            ]
+        ]
+    }
+]
+Begin Rejuvenation count: 3
+Concluded Rejuvenation count: 3
+New instance details: [
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-03b60ab421a7bf655",
+        "InstanceType": "m4.4xlarge",
+        "NICs": [
+            [
+                "eni-0fe46731e43897458",
+                "eipalloc-0b74f7da5647fe869",
+                "eipassoc-01055525a9a64c20d"
+            ],
+            [
+                "eni-090085c990bb1216a",
+                "eipalloc-07ecdbe45149cfa48",
+                "eipassoc-0579ca64bbc0f879e"
+            ],
+            [
+                "eni-0c586d0760b800040",
+                "eipalloc-05a8c53b1564ff204",
+                "eipassoc-06cf4b9593bc9bea0"
+            ],
+            [
+                "eni-0826da24b1e50d61c",
+                "eipalloc-07c767225e3f341ea",
+                "eipassoc-067adae6c547a0028"
+            ],
+            [
+                "eni-01597b5958f154b8c",
+                "eipalloc-01e363f8e51b66844",
+                "eipassoc-0dac3430e20163c0a"
+            ],
+            [
+                "eni-03cfbdecfd076df70",
+                "eipalloc-0e7a630bb214d70fd",
+                "eipassoc-024456ffe8660cba8"
+            ],
+            [
+                "eni-09129f42098d63a65",
+                "eipalloc-0ac2078515edbc87b",
+                "eipassoc-0284a275c4f53f61f"
+            ],
+            [
+                "eni-03a99ab09f27fd9cc",
+                "eipalloc-09cf9e1a07cc77b19",
+                "eipassoc-095ddf95538f1c07c"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0cd59c663202a0ffd",
+        "InstanceType": "m4.4xlarge",
+        "NICs": [
+            [
+                "eni-01bff14050ff130a1",
+                "eipalloc-0c166b077f0987375",
+                "eipassoc-006f3519a8b66d506"
+            ],
+            [
+                "eni-0a015d80a9c15e047",
+                "eipalloc-00bbcc54e1019aada",
+                "eipassoc-0fff5932b2e9be66f"
+            ],
+            [
+                "eni-0d60f9816169c02eb",
+                "eipalloc-0295557de1bd59094",
+                "eipassoc-015fb18e433f0e226"
+            ],
+            [
+                "eni-0fe0da229f01f000a",
+                "eipalloc-07531bb07cf955563",
+                "eipassoc-0f5246710fff3934b"
+            ],
+            [
+                "eni-0ee1d6da6fef8a4bb",
+                "eipalloc-032f5fee0576fd37c",
+                "eipassoc-0527d10d5d282e43a"
+            ],
+            [
+                "eni-08797bb32551ddafe",
+                "eipalloc-0323ff6c49ba57771",
+                "eipassoc-0aa37b0018e607a5a"
+            ],
+            [
+                "eni-05a23a3474c72e91a",
+                "eipalloc-0e58b05e1cb903c8d",
+                "eipassoc-0165f715b465d5d82"
+            ],
+            [
+                "eni-069469e71464dba87",
+                "eipalloc-0d51a56c134913506",
+                "eipassoc-09be41f64c34d9762"
+            ]
+        ]
+    },
+    {
+        "InstanceCost": 0.3738,
+        "InstanceID": "i-0d8499a23378860db",
+        "InstanceType": "m4.4xlarge",
+        "NICs": [
+            [
+                "eni-0524fb24d000aacb6",
+                "eipalloc-0449cb479266cb4e9",
+                "eipassoc-0e6573a0b2c4cb252"
+            ],
+            [
+                "eni-0fd6b2b413181cfd0",
+                "eipalloc-0eb8bda2a6cae29c8",
+                "eipassoc-0e25dfe2290867814"
+            ],
+            [
+                "eni-07823d21a78711c96",
+                "eipalloc-007ee02777bd8b1a5",
+                "eipassoc-02ba2cda5b6385427"
+            ],
+            [
+                "eni-0ee08c2b5988cd5cd",
+                "eipalloc-07ec45a91746a9581",
+                "eipassoc-0527662a522da3cb4"
+            ],
+            [
+                "eni-0aece932e1928a2fe",
+                "eipalloc-0bc02134e9109285f",
+                "eipassoc-0d2cb71d008b4cbf3"
+            ],
+            [
+                "eni-008b69f6229c56864",
+                "eipalloc-0806ccbe7514e1389",
+                "eipassoc-0ab1a1818340ef193"
+            ],
+            [
+                "eni-0984af52a25ca1550",
+                "eipalloc-06279698dd17ae103",
+                "eipassoc-00ce481bcbad665ab"
+            ],
+            [
+                "eni-04d8fbd3f9fcc8b27",
+                "eipalloc-00ad63773d07e36ae",
+                "eipassoc-05f4d83cec5773905"
+            ]
+        ]
+    }
+]
+Total cost of this live IP rejuvenation experiment: 14.946900000000001. Optimal total cost (multi-NIC) is: 0.3069
+Total monthly cost of this live IP rejuvenation experiment: 64570.60800000001. Optimal monthly cost (multi-NIC) is: 1325.808

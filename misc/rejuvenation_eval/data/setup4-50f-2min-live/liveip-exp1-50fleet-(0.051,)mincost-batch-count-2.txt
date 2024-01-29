@@ -1,0 +1,2 @@
+Begin Rejuvenation count: 1
+Created 7 instances of type m4.4xlarge with 8 NICs each, and hourly cost 0.3738
