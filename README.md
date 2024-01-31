@@ -52,6 +52,10 @@ UPDATE:
 python3 api.py [UM] [region] [num of instances]
 example: python3 api.py UM us-east-1 2 main
 example 2: python3 api.py UM us-east-1 2 side
+
+# Utility scripts:
+python3 nuke.py # remove running instances. To add exclusion, populate: misc/exclude-from-termination-list.json
+python3 remove-unused-ips.py # remove EIPs that are not attached to an instance
 ```
 
 Some points to note:

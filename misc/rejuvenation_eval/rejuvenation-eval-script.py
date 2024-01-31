@@ -276,7 +276,7 @@ def create_fleet_live_ip_rejuvenation(ec2, cheapest_instance, proxy_count, proxy
         instance = original_instance_details['InstanceId']
         # Tag created instance:
         instance_tag = tag_prefix + "-instance{}".format(str(index))
-        api.assign_name_tags(ec2, instance, instance_tag) 
+        # api.assign_name_tags(ec2, instance, instance_tag) # TODO: bypass Request limit exceeded for now
         
         instance_details = {'InstanceID': instance, 'InstanceCost': instance_type_cost, 'InstanceType': instance_type, 'NICs': []}
         # Get original NIC attached to the instance:
@@ -299,8 +299,8 @@ def create_fleet_live_ip_rejuvenation(ec2, cheapest_instance, proxy_count, proxy
             # Tag NICs and EIPs:
             nic_tag = instance_tag + "-nic{}".format(str(index2))
             eip_tag = nic_tag + "-eip{}".format(str(index2))
-            api.assign_name_tags(ec2, nic, nic_tag)
-            api.assign_name_tags(ec2, eip, eip_tag)
+            # api.assign_name_tags(ec2, nic, nic_tag) # TODO: bypass Request limit exceeded for now
+            # api.assign_name_tags(ec2, eip, eip_tag) # TODO: bypass Request limit exceeded for now
 
         instance_list.append(instance_details) 
 
@@ -502,6 +502,12 @@ def loop_create_fleet(initial_ec2, is_UM, prices, proxy_count, proxy_impl, tag_p
 
 #     return instance_list
 
+def live_ip_rejuvenation_safe(initial_ec2_region, is_UM, rej_period, proxy_count, exp_duration, proxy_impl, filter=None, tag_prefix="liveip-expX", wait_time_after_create=15, wait_time_after_nic=30, print_filename="data/output-general.txt"):
+    try:
+        return live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp_duration, proxy_impl, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, wait_time_after_nic=wait_time_after_nic, print_filename=print_filename)
+    except Exception as e:
+        print_stdout_and_filename("Error occurred: " + str(e), print_filename)
+        return -1
 
 def live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp_duration, proxy_impl, filter=None, tag_prefix="liveip-expX", wait_time_after_create=15, wait_time_after_nic=30, print_filename="data/output-general.txt"):
     """
@@ -533,6 +539,7 @@ def live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp
 
     # Make sure instance can be sshed/pinged (fail rejuvenation if not):
     time.sleep(wait_time_after_nic)
+    start_time = time.time()
     ec2_region = instance_list[0]['ec2_session_region']
     ec2, ce = api.choose_session(is_UM_AWS=is_UM, region=ec2_region)
     for instance_details in instance_list:
@@ -544,6 +551,9 @@ def live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp
             print_stdout_and_filename("Failed to ssh/ping into instances: " + str(failed_ips), print_filename)
             raise Exception("Failed to ssh/ping into instances: " + str(failed_ips))
         # assert len(failed_ips) == 0, "Failed to ssh/ping into instances: " + str(failed_ips)
+    
+    end_time = time.time()
+    print_stdout_and_filename("Time taken to ping newly created fleet: " + str(end_time - start_time), print_filename)
 
     # Sleep for rej_period:
     time.sleep(rej_period)
@@ -552,6 +562,7 @@ def live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp
     rejuvenation_index = 2
     while time.time() < t_end:
         refresh_credentials()
+        start_time = time.time()
         # ec2, ce = api.choose_session(is_UM_AWS=is_UM, region=cheapest_instance_region)
         print_stdout_and_filename("Begin Rejuvenation count: " + str(rejuvenation_index), print_filename)
         ec2, ce = api.choose_session(is_UM_AWS=is_UM, region=ec2_region)
@@ -563,6 +574,7 @@ def live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp
             instance = instance_details['InstanceID']
             new_nic_details = []
             for index2, nic_details in enumerate(instance_details['NICs']):
+                start_time2 = time.time()
                  # Deassociate and deallocate NICs from instances (including original one) (with tag values as indicated above):
                 api.disassociate_address(ec2, nic_details[2])
                 api.release_address(ec2, nic_details[1])
@@ -576,11 +588,14 @@ def live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp
                 assoc_id = api.get_association_id_from_association_response(api.associate_address(ec2, instance, eip, nic))
                 new_nic_details.append((nic, eip, assoc_id))
 
+                end_time2 = time.time()
+                print_stdout_and_filename("Time taken to rejuvenate this NIC (EIP): " + str(end_time2 - start_time2), print_filename)
+
                 # Tag NICs and EIPs:
                 nic_tag = instance_tag + "-nic{}".format(str(index2))
                 eip_tag = nic_tag + "-eip{}".format(str(index2))
-                api.assign_name_tags(ec2, nic, nic_tag)
-                api.assign_name_tags(ec2, eip, eip_tag)
+                # api.assign_name_tags(ec2, nic, nic_tag) # TODO: bypass Request limit exceeded for now
+                # api.assign_name_tags(ec2, eip, eip_tag) # TODO: bypass Request limit exceeded for now
             instance_details['NICs'] = new_nic_details
     
         # Make sure instance can be sshed/pinged (fail rejuvenation if not):
@@ -599,6 +614,8 @@ def live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp
         # Print new details:
         # print("Concluded Rejuvenation count: ", rejuvenation_index)
         print_stdout_and_filename("Concluded Rejuvenation count: " + str(rejuvenation_index), print_filename)
+        end_time = time.time()
+        print_stdout_and_filename("Time taken to ping newly created fleet: " + str(end_time - start_time), print_filename)
         # print("New instance details: ", pretty_json(instance_list))
         print_stdout_and_filename("New instance details: " + pretty_json(instance_list), print_filename)
         rejuvenation_index += 1
@@ -615,6 +632,7 @@ def live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp
     print_stdout_and_filename("Total monthly cost of this live IP rejuvenation experiment: {}. Optimal monthly cost (multi-NIC) is: {}".format(total_monthly_cost, optimal_monthly_cost), print_filename)
 
     # Remove instances (and NICs) and EIPs:
+    start_time = time.time()
     ec2, ce = api.choose_session(is_UM_AWS=is_UM, region=ec2_region)
     for instance_details in instance_list:
         if instance_details['ec2_session_region'] != ec2_region:
@@ -625,6 +643,8 @@ def live_ip_rejuvenation(initial_ec2_region, is_UM, rej_period, proxy_count, exp
             api.release_address(ec2, nic_details[1])
         instance = instance_details['InstanceID']
         api.terminate_instances(ec2, [instance])
+    end_time = time.time()
+    print_stdout_and_filename("Time taken to clean up after rejuvenation has completed: " + str(end_time - start_time), print_filename)
     
     return 
 
@@ -877,7 +897,7 @@ def start_rej_threads(input_args):
             filename = data_dir + tag_prefix + "-batch-count-{}".format(i) + ".txt"
             file = open(filename, 'w+')
             # live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
-            thread = threading.Thread(target=live_ip_rejuvenation, args=(initial_region, is_UM, REJUVENATION_PERIOD, batch_size, EXPERIMENT_DURATION, PROXY_IMPL), kwargs={
+            thread = threading.Thread(target=live_ip_rejuvenation_safe, args=(initial_region, is_UM, REJUVENATION_PERIOD, batch_size, EXPERIMENT_DURATION, PROXY_IMPL), kwargs={
                 "filter":filter, "tag_prefix":tag_prefix, "wait_time_after_create":wait_time_after_create, "wait_time_after_nic": wait_time_after_nic, "print_filename":filename
             })
             thread.start()
@@ -895,7 +915,7 @@ def start_rej_threads(input_args):
             tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
             filename = data_dir + tag_prefix + "-batch-count-{}".format(i) + ".txt"
             file = open(filename, 'w+')
-            thread = threading.Thread(target=live_ip_rejuvenation, args=(initial_region, is_UM, REJUVENATION_PERIOD, batch_size, EXPERIMENT_DURATION, PROXY_IMPL), kwargs={
+            thread = threading.Thread(target=live_ip_rejuvenation_safe, args=(initial_region, is_UM, REJUVENATION_PERIOD, batch_size, EXPERIMENT_DURATION, PROXY_IMPL), kwargs={
                 "filter":filter, "tag_prefix":tag_prefix, "wait_time_after_create":wait_time_after_create, "wait_time_after_nic": wait_time_after_nic, "print_filename":filename
             })
             thread.start()
