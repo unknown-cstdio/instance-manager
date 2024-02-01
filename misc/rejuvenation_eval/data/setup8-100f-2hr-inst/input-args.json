@@ -10,7 +10,7 @@
     "PROXY_IMPL" : "wireguard",
     "account_type" : "UM",
     "mode": "instance",
-    "dir": "data/setup7-100f-1hr-inst/",
+    "dir": "data/setup8-100f-2hr-inst/",
     "regions": ["us-east-1"],
     "batch_size": 20,
     "wait_time_after_create": 30,
