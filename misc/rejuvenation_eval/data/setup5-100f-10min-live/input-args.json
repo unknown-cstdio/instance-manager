@@ -1,0 +1,18 @@
+{
+    "REJUVENATION_PERIOD" : 600,
+    "EXPERIMENT_DURATION" : 16,
+    "INITIAL_EXPERIMENT_INDEX" : 1,
+    "PROXY_COUNT": 100,
+    "MIN_VCPU" : 1,
+    "MAX_VCPU" : 2,
+    "MIN_COST" : 0.051,
+    "MAX_COST" : 0.3,
+    "PROXY_IMPL" : "wireguard",
+    "account_type" : "UM",
+    "mode": "liveip",
+    "dir": "data/setup5-100f-10min-live/",
+    "regions": ["us-east-1"],
+    "batch_size": 20,
+    "wait_time_after_create": 30,
+    "wait_time_after_nic": 60
+}
