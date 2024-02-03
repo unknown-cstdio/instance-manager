@@ -720,9 +720,11 @@ def use_UM_launch_templates(ec2, region, proxy_impl, type="main"):
     if region == "us-east-1":
         if proxy_impl == "wireguard":
             if type == "main": # Sina specific for migration efficacy test
-                launch_template_wireguard = "lt-038b6b20362bdfbc8" # not working yet
+                launch_template_wireguard = "lt-0bd60ca5ce983af4d" # not working yet
             elif type == "side": # Sina specific for migration efficacy test
                 launch_template_wireguard = "lt-0e9b68603a74b345b"
+            elif type == "peer": # Sina specific for migration efficacy test
+                launch_template_wireguard = "lt-030cc4985a958fb55"
             else:
                 raise Exception("Invalid type: " + type)
             launch_template = launch_template_wireguard 

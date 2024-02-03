@@ -7,5 +7,7 @@
     "spotproxy_service" : "i-0dd2ca9d91838f3c8",
     "spotproxy_client" : "i-0c7adc535b262d69e",
     "i-07f4f77a621542a19" : "i-07f4f77a621542a19",
-    "spotproxy_misc": "i-0af84b91480c8c737"
+    "spotproxy_misc": "i-0af84b91480c8c737",
+    "controller-do-not-delete": "i-08cdba0c527574ecb",
+    "main-proxy-do-not-delete" : "i-0946b5c61bad263aa"
 }
