@@ -1,7 +1,7 @@
 {
-    "snowflake_broker" : "i-0c34efdc126a212a0",
-    "snowflake_proxy" : "i-02721a59cf6854a99",
-    "snowflake_proxy2" : "i-0b2d981eee0f98d97",
+    "snowflake_broker" : "i-0ed1751be68da8f24",
+    "snowflake_proxy1" : "i-03f78eddf47dd9fe4",
+    "snowflake_proxy2" : "i-022fbe5bfc874ecef",
     "spotproxy_controller" : "i-035f88ca820e399e7",
     "spotproxy_nat" : "i-0975320cbe3a681df",
     "spotproxy_service" : "i-0dd2ca9d91838f3c8",
