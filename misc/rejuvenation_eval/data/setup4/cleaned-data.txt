@@ -1,0 +1,122 @@
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-7.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-24.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-14.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-20.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-12.txt
+Created 0 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 20
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-9.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-100fleet-(0.051,)mincost-batch-count-4.txt
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.1726666666666669. Optimal total cost (single-NIC) is: 0.17066666666666674
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-18.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-23.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-17.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-16.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-21.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-0.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-15.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-1.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-11.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-5.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-100fleet-(0.051,)mincost-batch-count-3.txt
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.1726666666666669. Optimal total cost (single-NIC) is: 0.17066666666666674
+
+Starting new file: setup4/instance-exp1-100fleet-(0.051,)mincost-batch-count-1.txt
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.1726666666666669. Optimal total cost (single-NIC) is: 0.17066666666666674
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-22.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-19.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-100fleet-(0.051,)mincost-batch-count-0.txt
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 13 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 7
+Created 7 instances of type r5a.large, and hourly cost 0.0543. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.1736388888888891. Optimal total cost (single-NIC) is: 0.17066666666666674
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-13.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-100fleet-(0.051,)mincost-batch-count-2.txt
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 13 instances of type r6a.large, and hourly cost 0.0518. Remaining instances to create: 7
+Created 7 instances of type r5a.large, and hourly cost 0.0543. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.1736388888888891. Optimal total cost (single-NIC) is: 0.17066666666666674
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-8.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-10.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-2.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-3.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-4.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+
+Starting new file: setup4/instance-exp1-500fleet-(0.051,)mincost-batch-count-6.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0513. Remaining instances to create: 0
+

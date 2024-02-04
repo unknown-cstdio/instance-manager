@@ -1,0 +1,46 @@
+Starting new file: setup8-100f-2hr-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-4.txt
+Created 0 instances of type c6in.large, and hourly cost 0.054. Remaining instances to create: 20
+Created 0 instances of type r5.large, and hourly cost 0.0562. Remaining instances to create: 20
+Created 0 instances of type m6idn.large, and hourly cost 0.0576. Remaining instances to create: 20
+Created 6 instances of type r5n.large, and hourly cost 0.0599. Remaining instances to create: 14
+Created 14 instances of type r3.large, and hourly cost 0.0675. Remaining instances to create: 0
+Created 20 instances of type m5ad.large, and hourly cost 0.0511. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 4.6527999999999965. Optimal total cost (single-NIC) is: 4.203999999999998
+Total monthly cost of this instance rejuvenation experiment: 837.5039999999995. Optimal total monthly cost (single-NIC) is: 756.7199999999997
+
+Starting new file: setup8-100f-2hr-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-3.txt
+Created 0 instances of type c6in.large, and hourly cost 0.054. Remaining instances to create: 20
+Created 0 instances of type r5.large, and hourly cost 0.0562. Remaining instances to create: 20
+Created 0 instances of type m6idn.large, and hourly cost 0.0576. Remaining instances to create: 20
+Created 0 instances of type r5n.large, and hourly cost 0.0599. Remaining instances to create: 20
+Created 20 instances of type r3.large, and hourly cost 0.0675. Remaining instances to create: 0
+Created 20 instances of type m5ad.large, and hourly cost 0.0511. Remaining instances to create: 0
+
+Starting new file: setup8-100f-2hr-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-1.txt
+Created 14 instances of type c6in.large, and hourly cost 0.054. Remaining instances to create: 6
+Created 0 instances of type r5.large, and hourly cost 0.0562. Remaining instances to create: 6
+Created 0 instances of type m6idn.large, and hourly cost 0.0576. Remaining instances to create: 6
+Created 0 instances of type r5n.large, and hourly cost 0.0599. Remaining instances to create: 6
+Created 6 instances of type r3.large, and hourly cost 0.0675. Remaining instances to create: 0
+Created 5 instances of type m5ad.large, and hourly cost 0.0511. Remaining instances to create: 15
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 15
+Created 15 instances of type r6i.large, and hourly cost 0.0516. Remaining instances to create: 0
+
+Starting new file: setup8-100f-2hr-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-0.txt
+Created 0 instances of type c6in.large, and hourly cost 0.054. Remaining instances to create: 20
+Created 0 instances of type r5.large, and hourly cost 0.0562. Remaining instances to create: 20
+Created 4 instances of type m6idn.large, and hourly cost 0.0576. Remaining instances to create: 16
+Created 0 instances of type r5n.large, and hourly cost 0.0599. Remaining instances to create: 16
+Created 16 instances of type r3.large, and hourly cost 0.0675. Remaining instances to create: 0
+Created 20 instances of type m5ad.large, and hourly cost 0.0511. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 4.664799999999996. Optimal total cost (single-NIC) is: 4.203999999999998
+Total monthly cost of this instance rejuvenation experiment: 839.6639999999993. Optimal total monthly cost (single-NIC) is: 756.7199999999997
+
+Starting new file: setup8-100f-2hr-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-2.txt
+Created 0 instances of type c6in.large, and hourly cost 0.054. Remaining instances to create: 20
+Created 0 instances of type r5.large, and hourly cost 0.0562. Remaining instances to create: 20
+Created 0 instances of type m6idn.large, and hourly cost 0.0576. Remaining instances to create: 20
+Created 0 instances of type r5n.large, and hourly cost 0.0599. Remaining instances to create: 20
+Created 20 instances of type r3.large, and hourly cost 0.0675. Remaining instances to create: 0
+Created 20 instances of type m5ad.large, and hourly cost 0.0511. Remaining instances to create: 0
+

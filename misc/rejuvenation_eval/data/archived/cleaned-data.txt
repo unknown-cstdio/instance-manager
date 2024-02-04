@@ -1,0 +1,57 @@
+Starting new file: archived/notes2.txt
+Created 1 instances of type t3a.micro with 2 NICs each, and hourly cost 0.004100
+Created 1 instances of type t3a.micro with 2 NICs each, and hourly cost 0.004100
+Total cost of this live IP rejuvenation experiment: 1.6402050000000001
+Created 10 instances of type t3a.micro with 2 NICs each, and hourly cost 0.004100
+Created 10 instances of type t3a.micro with 2 NICs each, and hourly cost 0.004100
+Created 10 instances of type t3a.micro with 2 NICs each, and hourly cost 0.004100
+Total cost of this live IP rejuvenation experiment: 8.201366666666667
+
+Starting new file: archived/ins-rej-note3-150fleet-mincost0.05.txt
+Total cost of this instance rejuvenation experiment: 0.2509999999999999
+
+Starting new file: archived/output-general.txt
+Created 175 instances of type m6id.large, and hourly cost 0.0502. Remaining instances to create: 175
+Created 175 instances of type c4.large, and hourly cost 0.0501. Remaining instances to create: 175
+Created 142 instances of type r5a.xlarge, and hourly cost 0.1242. Remaining instances to create: 33
+
+Starting new file: archived/ins-rej-notes.txt
+Total cost of this live IP rejuvenation experiment: 8.201366666666667
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Created 3 instances of type t3a.micro, and hourly cost 0.0041
+Created 10 instances of type t3a.micro, and hourly cost 0.0041
+Created 10 instances of type t3a.micro, and hourly cost 0.0041
+Total cost of this instance rejuvenation experiment: 0.0027333333333333346
+
+Starting new file: archived/instance-exp1.txt
+Created 87 instances of type c5n.large, and hourly cost 0.0501. Remaining instances to create: 263
+Created 175 instances of type c4.large, and hourly cost 0.0501. Remaining instances to create: 88
+Created 71 instances of type c5n.large, and hourly cost 0.0526. Remaining instances to create: 17
+Created 17 instances of type r5a.large, and hourly cost 0.0547. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.5930233333333352
+
+Starting new file: archived/notes.txt
+Created 1 instances of type t3.nano with 2 NICs each, and hourly cost 0.00355
+Created 1 instances of type t3.nano with 2 NICs each, and hourly cost 0.00355
+Created 1 instances of type t3.nano with 2 NICs each, and hourly cost 0.00355
+Total cost of this live IP rejuvenation experiment: 9.840118333333335
+Starting new file: archived/instance-exp2-350fleet-0.05mincost.txt
+Created 96 instances of type c5n.large, and hourly cost 0.0501. Remaining instances to create: 254
+Created 175 instances of type c4.large, and hourly cost 0.0501. Remaining instances to create: 79
+Created 79 instances of type m3.large, and hourly cost 0.0516. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.5884500000000039
+
+Starting new file: archived/ins-rej-notes2.txt
+Total cost of this instance rejuvenation experiment: 0.16733333333333325
+
+Starting new file: archived/live-ip-rej-note3.txt
+Created 10 instances of type t3a.micro, and hourly cost 0.0041
+Total cost of this instance rejuvenation experiment: 0.0027333333333333346
+Created 25 instances of type t3a.micro with 2 NICs each, and hourly cost 0.0041
+Created 25 instances of type t3a.micro with 2 NICs each, and hourly cost 0.0041
+Total cost of this live IP rejuvenation experiment: 10.253416666666663
+
