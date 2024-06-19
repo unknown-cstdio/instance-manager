@@ -1,0 +1,19 @@
+Starting new file: setup4-50f-2min-live/liveip-exp1-50fleet-(0.051,)mincost-batch-count-2.txt
+Created 7 instances of type m4.4xlarge with 8 NICs each, and hourly cost 0.3738
+
+Starting new file: setup4-50f-2min-live/liveip-exp1-50fleet-(0.051,)mincost-batch-count-0.txt
+Created 7 instances of type r6a.4xlarge with 8 NICs each, and hourly cost 0.3738
+Total cost of this live IP rejuvenation experiment: 23.396100000000004. Optimal total cost (multi-NIC) is: 0.7161000000000002
+Total monthly cost of this live IP rejuvenation experiment: 101071.15200000002. Optimal monthly cost (multi-NIC) is: 3093.552000000001
+Created 3 instances of type r6a.4xlarge with 8 NICs each, and hourly cost 0.3738
+Total cost of this live IP rejuvenation experiment: 14.946900000000001. Optimal total cost (multi-NIC) is: 0.3069
+Total monthly cost of this live IP rejuvenation experiment: 64570.60800000001. Optimal monthly cost (multi-NIC) is: 1325.808
+
+Starting new file: setup4-50f-2min-live/liveip-exp1-50fleet-(0.051,)mincost-batch-count-1.txt
+Created 7 instances of type r6a.4xlarge with 8 NICs each, and hourly cost 0.3738
+Total cost of this live IP rejuvenation experiment: 23.396100000000004. Optimal total cost (multi-NIC) is: 0.7161000000000002
+Total monthly cost of this live IP rejuvenation experiment: 101071.15200000002. Optimal monthly cost (multi-NIC) is: 3093.552000000001
+Created 3 instances of type m4.4xlarge with 8 NICs each, and hourly cost 0.3738
+Total cost of this live IP rejuvenation experiment: 14.946900000000001. Optimal total cost (multi-NIC) is: 0.3069
+Total monthly cost of this live IP rejuvenation experiment: 64570.60800000001. Optimal monthly cost (multi-NIC) is: 1325.808
+

@@ -1,0 +1,24 @@
+Starting new file: setup1/instance-exp1-30fleet-(0.05,)mincost.txt
+Created 30 instances of type m6id.large, and hourly cost 0.05. Remaining instances to create: 0
+Created 30 instances of type m6id.large, and hourly cost 0.05. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.15000000000000008
+
+Starting new file: setup1/instance-exp1-30fleet-(0.051,)mincost.txt
+Created 30 instances of type m3.large, and hourly cost 0.0514. Remaining instances to create: 0
+
+Starting new file: setup1/instance-exp1-40fleet-(0.051,)mincost.txt
+Created 40 instances of type m3.large, and hourly cost 0.0514. Remaining instances to create: 0
+
+Starting new file: setup1/instance-exp1-100fleet-(0.051,)mincost.txt
+Created 100 instances of type m3.large, and hourly cost 0.0514. Remaining instances to create: 0
+Created 100 instances of type m3.large, and hourly cost 0.0514. Remaining instances to create: 0
+
+Starting new file: setup1/instance-exp1-60fleet-(0.051,)mincost.txt
+Created 60 instances of type m3.large, and hourly cost 0.0514. Remaining instances to create: 0
+
+Starting new file: setup1/instance-exp1-20fleet-(0.051,)mincost.txt
+Created 20 instances of type m3.large, and hourly cost 0.0514. Remaining instances to create: 0
+Created 20 instances of type m3.large, and hourly cost 0.0514. Remaining instances to create: 0
+Created 20 instances of type m3.large, and hourly cost 0.0514. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.2055999999999998
+

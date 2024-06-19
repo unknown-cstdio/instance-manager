@@ -1,0 +1,15 @@
+Starting new file: setup6-100f-30mins-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-4.txt
+Created 20 instances of type m5n.large, and hourly cost 0.051. Remaining instances to create: 0
+
+Starting new file: setup6-100f-30mins-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-3.txt
+Created 20 instances of type m5n.large, and hourly cost 0.051. Remaining instances to create: 0
+
+Starting new file: setup6-100f-30mins-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-1.txt
+Created 20 instances of type m5n.large, and hourly cost 0.051. Remaining instances to create: 0
+
+Starting new file: setup6-100f-30mins-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-0.txt
+Created 20 instances of type m5n.large, and hourly cost 0.051. Remaining instances to create: 0
+
+Starting new file: setup6-100f-30mins-inst/instance-exp1-100fleet-(0.051,)mincost-batch-count-2.txt
+Created 20 instances of type m5n.large, and hourly cost 0.051. Remaining instances to create: 0
+

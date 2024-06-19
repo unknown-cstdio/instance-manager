@@ -1,0 +1,10 @@
+Starting new file: setup5-100f-10min-live/liveip-exp1-100fleet-(0.051,)mincost-batch-count-1.txt
+
+Starting new file: setup5-100f-10min-live/liveip-exp1-100fleet-(0.051,)mincost-batch-count-2.txt
+
+Starting new file: setup5-100f-10min-live/liveip-exp1-100fleet-(0.051,)mincost-batch-count-4.txt
+
+Starting new file: setup5-100f-10min-live/liveip-exp1-100fleet-(0.051,)mincost-batch-count-3.txt
+
+Starting new file: setup5-100f-10min-live/liveip-exp1-100fleet-(0.051,)mincost-batch-count-0.txt
+

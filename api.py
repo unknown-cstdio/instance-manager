@@ -56,13 +56,13 @@ ec2, ce = None, None
 def get_azure_token():
     tenant = "baf0d65c-c774-4040-a1a6-0ff03fd61dd6"
     client_id = "b1ccd7c7-3a4f-442b-a7cd-a32d230c9027"
-    secret = "7ah8Q~noLahye3SSl~HjLVpo.DdojpGe2Sl36dll"
+    sec = "7ah8Q~noLahye3SSl~HjLVpo.DdojpGe2Sl36dll"
     authority_url = 'https://login.microsoftonline.com/'+tenant
     context = adal.AuthenticationContext(authority_url)
     token = context.acquire_token_with_client_credentials(
         resource = 'https://management.azure.com/',
         client_id = client_id,
-        client_secret = secret
+        client_secret = sec
     )
     return token['accessToken']
 
@@ -720,9 +720,11 @@ def use_UM_launch_templates(ec2, region, proxy_impl, type="main"):
     if region == "us-east-1":
         if proxy_impl == "wireguard":
             if type == "main": # Sina specific for migration efficacy test
-                launch_template_wireguard = "lt-038b6b20362bdfbc8" # not working yet
+                launch_template_wireguard = "lt-0bd60ca5ce983af4d" # not working yet
             elif type == "side": # Sina specific for migration efficacy test
                 launch_template_wireguard = "lt-0e9b68603a74b345b"
+            elif type == "peer": # Sina specific for migration efficacy test
+                launch_template_wireguard = "lt-0fefbd231bf2265e9"
             else:
                 raise Exception("Invalid type: " + type)
             launch_template = launch_template_wireguard 

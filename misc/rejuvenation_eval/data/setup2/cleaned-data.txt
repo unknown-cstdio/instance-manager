@@ -1,0 +1,28 @@
+Starting new file: setup2/instance-exp1-100fleet-(0.051,)mincostbatch-count-4.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.20479999999999984
+
+Starting new file: setup2/instance-exp1-100fleet-(0.051,)mincostbatch-count-2.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.20479999999999984
+
+Starting new file: setup2/instance-exp1-100fleet-(0.051,)mincostbatch-count-1.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+
+Starting new file: setup2/instance-exp1-100fleet-(0.051,)mincostbatch-count-0.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.20479999999999984
+
+Starting new file: setup2/instance-exp1-100fleet-(0.051,)mincostbatch-count-3.txt
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Created 20 instances of type m5d.large, and hourly cost 0.0512. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.20479999999999984
+

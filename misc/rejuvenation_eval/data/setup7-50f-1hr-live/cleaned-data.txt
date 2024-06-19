@@ -1,0 +1,24 @@
+Starting new file: setup7-50f-1hr-live/instance-exp1-50fleet-(0.051,)mincost-batch-count-1.txt
+Created 20 instances of type r6a.large, and hourly cost 0.0525. Remaining instances to create: 0
+
+Starting new file: setup7-50f-1hr-live/liveip-exp1-50fleet-(0.051,)mincost-batch-count-2.txt
+Created 5 instances of type r5ad.xlarge with 4 NICs each, and hourly cost 0.1897. Remaining proxies to create: 0
+Total cost of this live IP rejuvenation experiment: 10.097000000000001. Optimal total cost (multi-NIC) is: 2.097
+Total monthly cost of this live IP rejuvenation experiment: 3634.9200000000005. Optimal monthly cost (multi-NIC) is: 754.9200000000001
+
+Starting new file: setup7-50f-1hr-live/liveip-exp1-50fleet-(0.051,)mincost-batch-count-0.txt
+Created 5 instances of type r5ad.xlarge with 4 NICs each, and hourly cost 0.1897. Remaining proxies to create: 0
+Total cost of this live IP rejuvenation experiment: 10.097000000000001. Optimal total cost (multi-NIC) is: 2.097
+Total monthly cost of this live IP rejuvenation experiment: 3634.9200000000005. Optimal monthly cost (multi-NIC) is: 754.9200000000001
+
+Starting new file: setup7-50f-1hr-live/instance-exp1-50fleet-(0.051,)mincost-batch-count-2.txt
+Created 20 instances of type r6a.large, and hourly cost 0.0525. Remaining instances to create: 0
+
+Starting new file: setup7-50f-1hr-live/instance-exp1-50fleet-(0.051,)mincost-batch-count-0.txt
+Created 20 instances of type r6a.large, and hourly cost 0.0525. Remaining instances to create: 0
+
+Starting new file: setup7-50f-1hr-live/liveip-exp1-50fleet-(0.051,)mincost-batch-count-1.txt
+Created 5 instances of type r5ad.xlarge with 4 NICs each, and hourly cost 0.1897. Remaining proxies to create: 0
+Total cost of this live IP rejuvenation experiment: 10.097000000000001. Optimal total cost (multi-NIC) is: 2.097
+Total monthly cost of this live IP rejuvenation experiment: 3634.9200000000005. Optimal monthly cost (multi-NIC) is: 754.9200000000001
+

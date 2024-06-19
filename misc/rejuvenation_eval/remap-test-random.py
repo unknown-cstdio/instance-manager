@@ -15,7 +15,7 @@ zone = "us-east-1a"
 region = zone[:-1]
 proxy_impl = "wireguard"
 instance_type = "t3.micro"
-iterations = 100 # one iteration goes through both NICs
+iterations = 30 # one iteration goes through both NICs
 
 def ping(ip, backoff_time, trials):
     """

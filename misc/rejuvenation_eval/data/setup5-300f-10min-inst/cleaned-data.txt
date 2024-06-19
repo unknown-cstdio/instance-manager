@@ -1,0 +1,101 @@
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-3.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-0.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 19 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 1
+Created 1 instances of type c1.medium, and hourly cost 0.0559. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3655166666666665. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.5159999999996. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-13.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-8.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-9.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-7.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-5.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-1.txt
+Created 19 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 1
+Created 1 instances of type m6id.large, and hourly cost 0.0551. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653833333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.2279999999995. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-2.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-14.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-4.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-6.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-12.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-11.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
+Starting new file: setup5-300f-10min-inst/instance-exp1-300fleet-(0.051,)mincost-batch-count-10.txt
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Created 0 instances of type m7a.large, and hourly cost 0.0512. Remaining instances to create: 20
+Created 20 instances of type r5.large, and hourly cost 0.0548. Remaining instances to create: 0
+Total cost of this instance rejuvenation experiment: 0.3653333333333331. Optimal total cost (single-NIC) is: 0.35333333333333333
+Total monthly cost of this instance rejuvenation experiment: 789.1199999999997. Optimal total monthly cost (single-NIC) is: 763.2
+
