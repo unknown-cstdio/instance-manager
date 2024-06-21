@@ -51,21 +51,6 @@ def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
-#ec2, ce = choose_session(is_UM_AWS=True, region=US_REGIONS[0]) # Set this to false if you're not using UM AWS
-ec2, ce = None, None
-def get_azure_token():
-    tenant = "baf0d65c-c774-4040-a1a6-0ff03fd61dd6"
-    client_id = "b1ccd7c7-3a4f-442b-a7cd-a32d230c9027"
-    sec = "7ah8Q~noLahye3SSl~HjLVpo.DdojpGe2Sl36dll"
-    authority_url = 'https://login.microsoftonline.com/'+tenant
-    context = adal.AuthenticationContext(authority_url)
-    token = context.acquire_token_with_client_credentials(
-        resource = 'https://management.azure.com/',
-        client_id = client_id,
-        client_secret = sec
-    )
-    return token['accessToken']
-
 def get_instance_type(ec2, types):
     response = ec2.describe_instance_types(
         InstanceTypes=types
@@ -383,163 +368,6 @@ def nuke_all_instances(ec2, excluded_instance_ids):
 
     return instances_to_terminate
 
-def create_fleet_archive(instance_type, region, launch_template, num):
-    # feel free to delete this in the future
-    response = ec2.create_fleet(
-        # DryRun=True|False,
-        # ClientToken='string',
-        SpotOptions={
-            'AllocationStrategy': 'lowest-price',
-            # 'MaintenanceStrategies': {
-            #     'CapacityRebalance': {
-            #         'ReplacementStrategy': 'launch'|'launch-before-terminate',
-            #         'TerminationDelay': 123
-            #     }
-            # },
-            # 'InstanceInterruptionBehavior': 'stop',
-            # 'InstancePoolsToUseCount': 123,
-            # 'SingleInstanceType': True|False,
-            # 'SingleAvailabilityZone': True|False,
-            # 'MinTargetCapacity': 123,
-            # 'MaxTotalPrice': 'string'
-        },
-        # OnDemandOptions={
-        #     'AllocationStrategy': 'lowest-price',
-        #     # 'CapacityReservationOptions': {
-        #     #     'UsageStrategy': 'use-capacity-reservations-first'
-        #     # },
-        #     # 'SingleInstanceType': True|False,
-        #     # 'SingleAvailabilityZone': True|False,
-        #     # 'MinTargetCapacity': 123,
-        #     # 'MaxTotalPrice': 'string'
-        # },
-        # ExcessCapacityTerminationPolicy='no-termination'|'termination',
-        LaunchTemplateConfigs=[
-            {
-                'LaunchTemplateSpecification': {
-                    'LaunchTemplateId': 'lt-07c37429821503fca',
-                    # 'LaunchTemplateName': 'string',
-                    'Version': '$Default'
-                },
-                'Overrides': [
-                    {
-                        # 'InstanceType': 'a1.medium',
-                        # 'MaxPrice': 'string',
-                        # 'SubnetId': 'subnet-0925791c09f3d6792',
-                        # 'AvailabilityZone': 'us-east-1e',
-                        # 'WeightedCapacity': 123.0,
-                        # 'Priority': 123.0,
-                        # 'Placement': {
-                        #     'AvailabilityZone': 'string',
-                        #     'Affinity': 'string',
-                        #     'GroupName': 'string',
-                        #     'PartitionNumber': 123,
-                        #     'HostId': 'string',
-                        #     'Tenancy': 'default'|'dedicated'|'host',
-                        #     'SpreadDomain': 'string',
-                        #     'HostResourceGroupArn': 'string',
-                        #     'GroupId': 'string'
-                        # },
-                        'InstanceRequirements': {
-                            'VCpuCount': {
-                                'Min': 1,
-                                'Max': 10
-                            },
-                            'MemoryMiB': {
-                                'Min': 2,
-                                'Max': 10
-                            },
-                            # 'CpuManufacturers': [
-                            #     'intel'|'amd'|'amazon-web-services',
-                            # ],
-                            # 'MemoryGiBPerVCpu': {
-                            #     'Min': 123.0,
-                            #     'Max': 123.0
-                            # },
-                            # 'ExcludedInstanceTypes': [
-                            #     'string',
-                            # ],
-                            # 'InstanceGenerations': [
-                            #     'current'|'previous',
-                            # ],
-                            # 'SpotMaxPricePercentageOverLowestPrice': 123,
-                            # 'OnDemandMaxPricePercentageOverLowestPrice': 123,
-                            # 'BareMetal': 'included'|'required'|'excluded',
-                            # 'BurstablePerformance': 'included'|'required'|'excluded',
-                            # 'RequireHibernateSupport': True|False,
-                            # 'NetworkInterfaceCount': {
-                            #     'Min': 123,
-                            #     'Max': 123
-                            # },
-                            # 'LocalStorage': 'included'|'required'|'excluded',
-                            # 'LocalStorageTypes': [
-                            #     'hdd'|'ssd',
-                            # # ],
-                            # 'TotalLocalStorageGB': {
-                            #     'Min': 123.0,
-                            #     'Max': 123.0
-                            # },
-                            # 'BaselineEbsBandwidthMbps': {
-                            #     'Min': 123,
-                            #     'Max': 123
-                            # },
-                            # 'AcceleratorTypes': [
-                            #     'gpu'|'fpga'|'inference',
-                            # ],
-                            # 'AcceleratorCount': {
-                            #     'Min': 123,
-                            #     'Max': 123
-                            # },
-                            # 'AcceleratorManufacturers': [
-                            #     'amazon-web-services'|'amd'|'nvidia'|'xilinx'|'habana',
-                            # ],
-                            # 'AcceleratorNames': [
-                            #     'a100'|'inferentia'|'k520'|'k80'|'m60'|'radeon-pro-v520'|'t4'|'vu9p'|'v100'|'a10g'|'h100'|'t4g',
-                            # ],
-                            # 'AcceleratorTotalMemoryMiB': {
-                            #     'Min': 123,
-                            #     'Max': 123
-                            # },
-                            # 'NetworkBandwidthGbps': {
-                            #     'Min': 123.0,
-                            #     'Max': 123.0
-                            # },
-                            # 'AllowedInstanceTypes': [
-                            #     'string',
-                            # ]
-                        },
-                        # 'ImageId': 'string'
-                    },
-                ]
-            },
-        ],
-        TargetCapacitySpecification={
-            'TotalTargetCapacity': 2,
-            'OnDemandTargetCapacity': 0,
-            'SpotTargetCapacity': 2,
-            'DefaultTargetCapacityType': 'spot',
-            # 'TargetCapacityUnitType': 'vcpu'|'memory-mib'|'units'
-        },
-        # TerminateInstancesWithExpiration=True|False,
-        Type='request',
-        # ValidFrom=datetime(2015, 1, 1),
-        # ValidUntil=datetime(2015, 1, 1),
-        # ReplaceUnhealthyInstances=True|False,
-        # TagSpecifications=[
-        #     {
-        #         'ResourceType': 'capacity-reservation'|'client-vpn-endpoint'|'customer-gateway'|'carrier-gateway'|'coip-pool'|'dedicated-host'|'dhcp-options'|'egress-only-internet-gateway'|'elastic-ip'|'elastic-gpu'|'export-image-task'|'export-instance-task'|'fleet'|'fpga-image'|'host-reservation'|'image'|'import-image-task'|'import-snapshot-task'|'instance'|'instance-event-window'|'internet-gateway'|'ipam'|'ipam-pool'|'ipam-scope'|'ipv4pool-ec2'|'ipv6pool-ec2'|'key-pair'|'launch-template'|'local-gateway'|'local-gateway-route-table'|'local-gateway-virtual-interface'|'local-gateway-virtual-interface-group'|'local-gateway-route-table-vpc-association'|'local-gateway-route-table-virtual-interface-group-association'|'natgateway'|'network-acl'|'network-interface'|'network-insights-analysis'|'network-insights-path'|'network-insights-access-scope'|'network-insights-access-scope-analysis'|'placement-group'|'prefix-list'|'replace-root-volume-task'|'reserved-instances'|'route-table'|'security-group'|'security-group-rule'|'snapshot'|'spot-fleet-request'|'spot-instances-request'|'subnet'|'subnet-cidr-reservation'|'traffic-mirror-filter'|'traffic-mirror-session'|'traffic-mirror-target'|'transit-gateway'|'transit-gateway-attachment'|'transit-gateway-connect-peer'|'transit-gateway-multicast-domain'|'transit-gateway-policy-table'|'transit-gateway-route-table'|'transit-gateway-route-table-announcement'|'volume'|'vpc'|'vpc-endpoint'|'vpc-endpoint-connection'|'vpc-endpoint-service'|'vpc-endpoint-service-permission'|'vpc-peering-connection'|'vpn-connection'|'vpn-gateway'|'vpc-flow-log'|'capacity-reservation-fleet'|'traffic-mirror-filter-rule'|'vpc-endpoint-connection-device-type'|'verified-access-instance'|'verified-access-group'|'verified-access-endpoint'|'verified-access-policy'|'verified-access-trust-provider'|'vpn-connection-device-type'|'vpc-block-public-access-exclusion'|'ipam-resource-discovery'|'ipam-resource-discovery-association'|'instance-connect-endpoint',
-        #         'Tags': [
-        #             {
-        #                 'Key': 'string',
-        #                 'Value': 'string'
-        #             },
-        #         ]
-        #     },
-        # ],
-        # Context='string'
-    )
-    return response
-
 def create_fleet(ec2, instance_type, region, launch_template, num):
     print("creating " + instance_type + " fleet with " + str(num) + " instances")
     response = ec2.create_fleet(
@@ -682,7 +510,7 @@ def disassociate_address(ec2, association_id):
     response = ec2.disassociate_address(
         AssociationId=association_id
     )
-    return response
+    return response    
 
 def assign_name_tags(ec2, resource_id, name):
     response = ec2.create_tags(
