@@ -1,5 +1,6 @@
 from time import sleep
 import time
+import os
 import boto3
 import pandas as pd
 import numpy as np
@@ -7,12 +8,15 @@ import datetime
 import urllib.request, json 
 import requests
 import adal
+import math
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from functools import partial 
 from typing import List, Dict
 import threading
 import sys
 from collections import defaultdict 
+
+import rejuvenation
 
 US_REGIONS = ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2']
 clients = {}
@@ -26,14 +30,17 @@ SERVICE_INSTANCE_ID = "i-0dd2ca9d91838f3c8"
 def pretty_json(obj):
     return json.dumps(obj, sort_keys=True, indent=4, default=str)
 
-def choose_session(is_UM_AWS, region):
-    if is_UM_AWS:
-        my_session = boto3.session.Session(profile_name='spotproxy-pat-umich-role')
-        ec2 = my_session.client('ec2', region)
-        ce = my_session.client('ce')
-    else:
-        ec2 = boto3.client('ec2', region)
-        ce = boto3.client('ce')
+def parse_input_args(filename):
+    with open(filename, 'r') as j:
+        input_args = json.loads(j.read())
+        # Convert to list of keys only:
+        # excluded_instances = list(cred_json.values())
+        # print(excluded_instances)
+    return input_args
+
+def choose_session(region):
+    ec2 = boto3.client('ec2', region)
+    ce = boto3.client('ce')
     return ec2, ce
 
 def chunks(lst, n):
@@ -369,7 +376,7 @@ def nuke_all_instances(ec2, excluded_instance_ids):
     return instances_to_terminate
 
 def create_fleet(ec2, instance_type, region, launch_template, num):
-    print("creating " + instance_type + " fleet with " + str(num) + " instances")
+    print("creating " + instance_type + " fleet with " + str(num) + " instances in region " + region)
     response = ec2.create_fleet(
         SpotOptions={
             'AllocationStrategy': 'lowestPrice',
@@ -525,6 +532,67 @@ def assign_name_tags(ec2, resource_id, name):
         ]
     )
     return response
+
+def ping(ip, backoff_time, trials):
+    """
+        Parameters:
+            ip: string
+            backoff_time: int # seconds
+            trials: int
+        Returns:
+            True if ping is successful, False otherwise
+    """
+    for i in range(trials):
+        response = os.system("ping -c 1 " + ip)
+        if response == 0:
+            return 0
+        else:
+            time.sleep(backoff_time)
+    return 1
+
+def ping_instances(ec2, nic_list, multi_NIC=True, not_fixed=True):
+    """
+        Checks if instances are pingable.
+
+        Parameters:
+            nic_list: list of NIC IDs
+            not_fixed: True | False
+                - True: # TODO Minor quirk that will be removed later: only the default NIC (i.e., original_nic) is configured to accept pings for now. We will need to fix this later. Will remove this parameter altogether once fixed. 
+    """
+    failed_ips = []
+
+    # Retry details:
+    backoff_time = 10 # seconds
+    trials = 3
+
+    # time.sleep(wait_time)
+    if not_fixed: # only ping the original NIC
+        nic_details = nic_list[-1] # this is the position of the original_nic, since we append it last..
+        if multi_NIC:
+            ip = get_public_ip_address(ec2, nic_details[1])
+        else:
+            ip = nic_details[1]
+        response = ping(ip, backoff_time, trials)
+        if response == 0:
+            print(f"{ip} is up!")
+        else:
+            print(f"{ip} is down!")
+            # if ping fails, add to failed_ips
+            failed_ips.append(ip)
+    else: # ping all NICs
+        for nic_details in nic_list:
+            if multi_NIC:
+                ip = get_public_ip_address(ec2, nic_details[1])
+            else:
+                ip = nic_details[1]
+            response = ping(ip, backoff_time, trials)
+            if response == 0:
+                print(f"{ip} is up!")
+            else:
+                print(f"{ip} is down!")
+                # if ping fails, add to failed_ips
+                failed_ips.append(ip)
+    return failed_ips
  
 def use_jinyu_launch_templates(ec2, instance_type):
     instance_info = get_instance_type(ec2, [instance_type])
@@ -563,34 +631,81 @@ def use_UM_launch_templates(ec2, region, proxy_impl, type="main"):
         launch_template = 'NOT-SUPPORTED-YET'
     return launch_template
 
-def replace_instance_loop(ec2, type):
-    cheapest_type = type
-    while True:
-        sleep(5*60)
-        print("updating spot prices")
-        instances = get_all_instances(ec2)
-        prices = update_spot_prices(ec2)
-        prices = prices.sort_values(by=['SpotPrice'], ascending=True)
-        new_instance_type = prices.iloc[0]['InstanceType']
-        print("new instance type: " + new_instance_type)
-        zone = prices.iloc[0]['AvailabilityZone']
-        if new_instance_type != cheapest_type:
-            print("terminating instances")
-            response = terminate_instances(ec2, instances)
-            print(response)
-            launch_template = use_jinyu_launch_templates(ec2, new_instance_type)
-            print("creating new instances")
-            create_fleet(ec2, new_instance_type, zone, launch_template, capacity)
-            cheapest_type = new_instance_type
-        elif len(instances) < capacity:
-            print("creating new instances")
-            launch_template = use_jinyu_launch_templates(ec2, new_instance_type)
-            create_fleet(ec2, new_instance_type, zone, launch_template, capacity - len(instances))
-            #send update to controller
-        
+def print_create_fleet_response(ec2, response):
+    print(response['FleetId'])
+    all_instance_details = get_specific_instances_with_fleet_id_tag(ec2, response['FleetId']) 
+    print(all_instance_details)
+
+def create_initial_fleet_and_periodic_rejuvenation_thread(ec2, input_args):
+
+    # Extract required input args:
+    REJUVENATION_PERIOD = int(input_args['REJUVENATION_PERIOD']) # in seconds
+    regions = input_args['regions']
+    PROXY_COUNT = int(input_args['PROXY_COUNT']) # aka fleet size 
+    PROXY_IMPL = input_args['PROXY_IMPL'] # wireguard | snowflake
+    batch_size = input_args['batch_size'] # number of instances to create per thread. Currently, we assume this is completely divisible by PROXY_COUNT.
+    MIN_COST = float(input_args['MIN_COST'])
+    MAX_COST = float(input_args['MAX_COST'])
+    MIN_VCPU = int(input_args['MIN_VCPU']) # not used for now
+    MAX_VCPU = int(input_args['MAX_VCPU']) # not used for now
+    INITIAL_EXPERIMENT_INDEX = int(input_args['INITIAL_EXPERIMENT_INDEX'])
+    multi_nic = input_args['multi_NIC'] # boolean
+    mode = input_args['mode'] # liveip | instance 
+    data_dir = input_args['dir'] # used for placing the logs.
+    wait_time_after_create = input_args['wait_time_after_create'] # e.g., 30
+    wait_time_after_nic = input_args['wait_time_after_nic'] # e.g., 30
+
+    filter = {
+        "min_cost": MIN_COST, #0.002 for first round of exps..
+        "max_cost": MAX_COST,
+        "regions": regions
+    }
+
+    launch_templates = []
+
+    if PROXY_IMPL == 'snowflake':
+        # launch_template_arm64 = input_args['launch-template-arm64']
+        launch_templates.append(input_args['launch-template-x86_64'])
+    elif PROXY_IMPL == 'wireguard':
+        # launch_templates.extend([input_args['launch-template-main'], input_args['launch-template-side'], input_args['launch-template-peer']]) # main: is the first (and is a single) proxy to connect to, and peer is a client. side is the rest of the proxies. TODO: add creation of a single main and peer later here in this script. 
+        launch_templates.append(input_args['launch-template-side'])
+    else:
+        raise Exception("Invalid proxy implementation: " + PROXY_IMPL)  
+
+    # # Get cheapest instance:
+    # prices = update_spot_prices(ec2)
+    # prices = prices.sort_values(by=['SpotPrice'], ascending=True)
+    # # print(prices.iloc[0])
+    # index, cheapest_instance = get_instance_row_with_supported_architecture_and_regions(ec2, prices, regions=regions)
+    # instance_type = cheapest_instance['InstanceType']
+    # zone = cheapest_instance['AvailabilityZone']
+    
+    # Create fleet by batch:
+    batch_count = math.ceil(PROXY_COUNT/batch_size)
+    initial_region = "us-east-1" # used for initialization purposes
+    threads = []
+    for i in range(batch_count):
+        if mode == "instance":
+            tag_prefix = "instance-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
+            filename = data_dir + tag_prefix + "-batch-count-{}".format(i) + ".txt"
+            file = open(filename, 'w+')
+            rejuvenator = rejuvenation.InstanceRejuvenator(initial_region, launch_templates, input_args, filter, tag_prefix, filename)
+            
+        elif mode == "liveip":
+            tag_prefix = "liveip-exp{}-{}fleet-{}mincost".format(str(INITIAL_EXPERIMENT_INDEX), str(PROXY_COUNT), str(filter['min_cost']))
+            filename = data_dir + tag_prefix + "-batch-count-{}".format(i) + ".txt"
+            file = open(filename, 'w+')
+            # live_ip_rejuvenation(initial_ec2, is_UM, REJUVENATION_PERIOD, PROXY_COUNT, EXPERIMENT_DURATION, PROXY_IMPL, filter=filter, tag_prefix=tag_prefix, wait_time_after_create=wait_time_after_create, print_filename=filename)
+            rejuvenator = rejuvenation.LiveIPRejuvenator(initial_region, launch_templates, input_args, filter, tag_prefix, filename)
+
+        thread = threading.Thread(target=rejuvenator.rejuvenate)
+        thread.start()
+        threads.append(thread)
+
+    return threads
 
 class RequestHandler(BaseHTTPRequestHandler):
-    def __init__(self, ec2, *args, **kwargs):
+    def __init__(self, ec2, input_args, *args, **kwargs):
         self.ec2 = ec2
         super().__init__(*args, **kwargs)
 
@@ -621,16 +736,91 @@ class RequestHandler(BaseHTTPRequestHandler):
                 instances_details = get_all_instances_init_details(self.ec2)
                 self._set_response()
                 self.wfile.write(pretty_json(instances_details).encode('utf-8'))
+            case "createWireguardMain": # hardcoded. only for the convenience of artifact evaluation.
+                response = create_fleet(self.ec2, "m7a.large", "us-east-1", input_args["launch-template-main"], 1)
+                self._set_response()
+                self.wfile.write(response.encode('utf-8'))
+                # TODO: respond to controller..
+            case "createWireguardClient": # hardcoded. only for the convenience of artifact evaluation. 
+                # print("Enter createClient")
+                response = create_fleet(self.ec2, "m7a.medium", "us-east-1", input_args["launch-template-peer"], 1) 
+                self._set_response()
+                self.wfile.write(response.encode('utf-8'))
+            # case "createSnowflakeClient": # TODO: uncomment later. not working yet. Probably need to figure out how to do this with Jinyu separately
+            #     # print("Enter createClient")
+            #     response = create_fleet(self.ec2, "m7a.medium", "us-east-1", input_args["launch-template-peer"], 1) 
+            #     self._set_response()
+            #     self.wfile.write(response.encode('utf-8'))
+            # case "createNAT": # TODO: uncomment later. not working yet. Probably need to figure out how to do this with Sina and Jinyu separately
+            #     # print("Enter createNAT")
+            #     response = create_fleet(self.ec2, current_type, region, launch_template, 1)
+            #     self._set_response()
+            #     self.wfile.write(response.encode('utf-8'))
 
-def run(ec2):
+def run_server(ec2):
     server_address = ('', 8000)
     # https://stackoverflow.com/questions/21631799/how-can-i-pass-parameters-to-a-requesthandler
     handler = partial(RequestHandler, ec2)
     httpd = HTTPServer(server_address, handler)
     print('Starting server...')
-    x = threading.Thread(target=replace_instance_loop, daemon=True, args=(ec2, current_type,))
-    x.start()
     httpd.serve_forever()
+
+def get_cheapest_instance_types_df(ec2, filter=None, multi_NIC=False):
+    """
+        Parameters:
+            multi_NIC == True, used for liveIP and optimal 
+            filter: price filter and region filter for now
+                Format: {
+                    "min_cost": float,
+                    "max_cost": float,
+                    "regions": ["us-east-1", ...], # list of regions to include in the creation process. Note: make sure a suitable launch template exists for each region listed
+                    }
+
+        df format:
+        spot_prices.append({
+            'AvailabilityZone': response['AvailabilityZone'],
+            'InstanceType': response['InstanceType'],
+            'MaximumNetworkInterfaces': type_to_NIC[response['InstanceType']],
+            'SpotPrice': response['SpotPrice'],
+            'PricePerInterface': (float(response['SpotPrice']) + 0.005 * (type_to_NIC[response['InstanceType']] - 1)) / type_to_NIC[response['InstanceType']],
+            'Timestamp': response['Timestamp']  
+        })
+
+        returns the entire df sorted accordingly
+    """
+
+    # Look into cost catalogue and sort based on multi_NIC or not:
+    prices = update_spot_prices(ec2) # AWS prices
+    
+    # Get sorted prices:
+    if multi_NIC:
+        prices = prices.sort_values(by=['PricePerInterface'], ascending=True)
+    else:
+        prices = prices.sort_values(by=['SpotPrice'], ascending=True)
+
+    # Filter based on min_cost and max_cost, if filter exists:
+    if isinstance(filter, dict):
+        min_cost = filter['min_cost']
+        max_cost = filter['max_cost']
+        regions = filter['regions']
+        if regions:
+            # Only keep rows where AvailabilityZone contains one of the values in the regions list:
+            prices = prices[prices['AvailabilityZone'].str.startswith(tuple(regions))] # https://stackoverflow.com/a/20461857/13336187
+        if min_cost:
+            if multi_NIC:
+                prices = prices[prices['PricePerInterface'] >= min_cost]
+            else:
+                # print(prices.dtypes)
+                # print(isinstance(prices['PricePerInterface'], float))
+                # print(isinstance(min_cost, float))
+                prices = prices[prices['SpotPrice'] >= min_cost]
+        if max_cost:
+            if multi_NIC:
+                prices = prices[prices['PricePerInterface'] <= max_cost]
+            else:
+                prices = prices[prices['SpotPrice'] <= max_cost]
+
+    return prices
 
 def get_instance_row_with_supported_architecture(ec2, prices, supported_architecture=['x86_64']):
     """
@@ -654,44 +844,20 @@ def get_instance_row_with_supported_architecture(ec2, prices, supported_architec
 # example usage of creating 2 instances in us-east-1 with UM account: python3 api.py UM us-east-1 2 main
 # explanation of above example: this creates 2 instances in the us-east-1a az, in the UM AWS account
 if __name__ == '__main__':
-    account_type = sys.argv[1]
-    region = sys.argv[2]
-    capacity = int(sys.argv[3])
-    type = sys.argv[4] # Current supported: "main", "side"
-    #clean up instances
-    #for instance in instances:
-    #    response = terminate_instances([instance])
-    is_UM = account_type == 'UM'
-    ec2, ce = choose_session(is_UM_AWS=is_UM, region=region)
-    prices = update_spot_prices(ec2)
-    prices = prices.sort_values(by=['SpotPrice'], ascending=True)
-    print(prices.iloc[0])
-    index, cheapest_instance = get_instance_row_with_supported_architecture(ec2, prices)
-    instance_type = cheapest_instance['InstanceType']
-    zone = cheapest_instance['AvailabilityZone']
-    current_type = instance_type
-    launch_template = None
-    if account_type == 'UM':
-        launch_template = use_UM_launch_templates(ec2, 'us-east-1', 'wireguard', type=type) # hardcode everything for now 
-    else: # Basically, Jinyu account for now:
-        launch_template = use_jinyu_launch_templates(ec2, instance_type)
-        #use x86 launch template for now because proxy hasn't been compiled for arm yet, delete this in the future
-        count = 0
-        while launch_template != 'lt-04d9c8ac5d00a2078':
-            count += 1
-            instance_type = prices.iloc[count]['InstanceType']
-            launch_template = use_jinyu_launch_templates(ec2, instance_type)
-            zone = prices.iloc[count]['AvailabilityZone']
-    print("using launch template: " + launch_template)
+    input_args_filename = sys.argv[1]
+    input_args = parse_input_args(input_args_filename)
+
+    ec2, ce = choose_session(region=region)
     
-    response = create_fleet(ec2, instance_type, zone, launch_template, capacity)
-    print(response)
-    # make sure that the required instances have been acquired: 
-    time.sleep(15) # wait awhile for fleet to be created
-    print(response['FleetId'])
-    all_instance_details = get_specific_instances_with_fleet_id_tag(ec2, response['FleetId']) 
-    print(all_instance_details)
-    run(ec2)
+    threads = create_initial_fleet_and_periodic_rejuvenation_thread(ec2, input_args)
+
+    time.sleep(10) # wait for threads to start
+
+    run_server(ec2)
+
+    for thread in threads:
+        # Wait for threads to end:
+        thread.join()
 
     # Some example usage from Patrick:
     """
